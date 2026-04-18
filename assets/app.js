@@ -1,0 +1,508 @@
+const UI_TEXT = {
+  zh: {
+    pageTitle: 'Media Helper AI · 智能评估报告中心',
+    brandSubtitle: 'Insight Docs Experience',
+    navGuide: '指南',
+    navReference: '参考',
+    navExamples: '示例',
+    navReport: '评估报告',
+    navCta: '立即分析',
+    langButton: 'EN',
+    themeDark: '🌙 深色',
+    themeLight: '☀️ 浅色',
+    heroPill: 'AI 内容评估工作台 · 高端展示版',
+    heroTitlePrefix: '输入账号与问题数据，',
+    heroTitleAccent: '自动生成知乎问题评估报告',
+    heroDesc: '现在的完整流程已经升级为：填写账号定位、问题链接、时间与流量数据，后台直接组装提示词并调用模型，最后把结果回填到下方高端报告视图。',
+    heroPrimaryCta: '开始分析',
+    heroSecondaryCta: '浏览站点结构',
+    totalLabel: '综合评估得分',
+    followersLabel: '关注人数',
+    viewsLabel: '浏览量',
+    heroOverview: '后台能力概览',
+    heroEngineTitle: '提示词 + 模型分析引擎',
+    heroActionLabel: '推荐动作',
+    evaluatorKicker: '智能评估入口',
+    evaluatorTitle: '最小核心链路已经打通',
+    evaluatorDesc: '用户提交后，后台会直接按你的模板填充提示词，请求大模型接口，让模型自行补全标题与描述，解析结构化 JSON，最后回填到本页的分析报告区。',
+    accountPositioningLabel: '账号定位',
+    accountPositioningPlaceholder: '例如：程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司',
+    defaultAccountPositioning: '程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司',
+    questionUrlLabel: '问题链接',
+    questionUrlPlaceholder: 'https://www.zhihu.com/question/xxxxxx',
+    createdLabel: '问题创建时间',
+    followersFormLabel: '关注人数',
+    viewsFormLabel: '浏览量',
+    submitLabel: '开始分析！',
+    formIdle: '提交后会直接调用模型分析，并由模型补全标题与描述后回填下方报告。',
+    flowKicker: '后台运算逻辑',
+    flowTitle: '这条链路现在如何工作',
+    flowStep1: '① 将问题链接、账号定位、创建时间、关注人数、浏览量直接组装进提示词。',
+    flowStep2: '② 按你给的请求方式调用大模型接口，请模型自行补全标题、描述并严格输出 JSON 结构结果。',
+    flowStep3: '③ 解析 JSON，映射为评分表、结论卡片、元数据和可视化图表，回填到当前页面。',
+    reportKicker: '智能生成报告',
+    reportSummary: (maxScore, total) => `满分 ${maxScore} 分 ｜ 综合总分 ${total} 分`,
+    reportConclusion: (text) => `结论：${text}`,
+    recommendLabel: '建议级别',
+    scoreWord: 'score',
+    scoreDimension: '评估维度',
+    scoreValue: '打分',
+    scoreComment: '分数评语',
+    trafficTitle: '流量增量',
+    answerTitle: '是否适合回答',
+    metaTitle: '问题元数据',
+    metaCreated: (value) => `创建时间：${value}`,
+    metaFollowers: (value) => `关注人数：${value}`,
+    metaViews: (value) => `总浏览量：${value}`,
+    metaQuestionTitle: (value) => `模型补全标题：${value}`,
+    metaSourceUrl: '问题来源链接',
+    metaQuestionDesc: (value) => `模型补全描述：${value}`,
+    metaQuestionDescEmpty: '模型补全描述会展示在这里。',
+    capabilitiesKicker: '核心能力',
+    capabilitiesTitle: '四个主卡片，延续参考站的展示节奏',
+    cap1Title: '链接理解',
+    cap1Desc: '把问题链接直接交给模型，让它结合上下文完成判断。',
+    cap2Title: '模型评分',
+    cap2Desc: '按你的提示词模板请求大模型并拿回结构化结果。',
+    cap3Title: '报告回填',
+    cap3Desc: '把 JSON 自动解析成高端可视化分析报告。',
+    cap4Title: '快速扩展',
+    cap4Desc: '后续可继续接入真实账号体系、历史记录和导出能力。',
+    siteKicker: '站点结构',
+    siteTitle: '文档型信息架构已同步搭建',
+    siteSummary: '首页 + 指南页 + 参考页 + 示例页',
+    guideCardDesc: '了解报告生成流程与页面组成。',
+    referenceCardDesc: '查看字段定义、评分逻辑与组件规范。',
+    examplesCardDesc: '查看更多报告版式与内容呈现模板。',
+    computing: '后台正在调用模型分析...',
+    done: '分析完成，报告已回填到下方页面。',
+    doneFallback: '已完成本地兜底分析；配置模型密钥后会自动切换为真实大模型结果。',
+    error: '生成失败，请确认本地后台服务与模型配置可用。'
+  },
+  en: {
+    pageTitle: 'Media Helper AI · Smart Evaluation Center',
+    brandSubtitle: 'Insight Docs Experience',
+    navGuide: 'Guide',
+    navReference: 'Reference',
+    navExamples: 'Examples',
+    navReport: 'Report',
+    navCta: 'Analyze Now',
+    langButton: '中文',
+    themeDark: '🌙 Dark',
+    themeLight: '☀️ Light',
+    heroPill: 'AI Content Evaluation Workspace · Premium Edition',
+    heroTitlePrefix: 'Input your account and question data,',
+    heroTitleAccent: 'then generate a Zhihu evaluation report automatically',
+    heroDesc: 'The full flow now works like this: enter account positioning, question link, time, and traffic data; the backend builds the prompt, calls the model, and fills the report below.',
+    heroPrimaryCta: 'Start Analysis',
+    heroSecondaryCta: 'Browse Structure',
+    totalLabel: 'Overall Score',
+    followersLabel: 'Followers',
+    viewsLabel: 'Views',
+    heroOverview: 'Backend Overview',
+    heroEngineTitle: 'Prompt + LLM Engine',
+    heroActionLabel: 'Suggested Action',
+    evaluatorKicker: 'Evaluation Entry',
+    evaluatorTitle: 'The minimal core loop is ready',
+    evaluatorDesc: 'After submission, the backend fills your prompt template, asks the model to infer the title and description, parses the structured JSON, and writes the result back into the report section.',
+    accountPositioningLabel: 'Account Positioning',
+    accountPositioningPlaceholder: 'For example: Programmer / AI Engineer / Indie Developer / Solo AI Founder',
+    defaultAccountPositioning: 'Programmer / AI Engineer / Indie Developer / Solo AI Founder',
+    questionUrlLabel: 'Question URL',
+    questionUrlPlaceholder: 'https://www.zhihu.com/question/xxxxxx',
+    createdLabel: 'Question Created Time',
+    followersFormLabel: 'Followers',
+    viewsFormLabel: 'Views',
+    submitLabel: 'Start Analysis!',
+    formIdle: 'After submission, the page will call the model directly and fill the report below.',
+    flowKicker: 'Backend Logic',
+    flowTitle: 'How the flow works now',
+    flowStep1: '① Combine the question URL, account positioning, and traffic metrics directly into the prompt.',
+    flowStep2: '② Call the LLM endpoint in your request format and ask the model to infer title/description and return strict JSON.',
+    flowStep3: '③ Parse the JSON into score tables, conclusion cards, metadata, and charts on this page.',
+    reportKicker: 'Generated Report',
+    reportSummary: (maxScore, total) => `Max ${maxScore} points ｜ Total ${total} points`,
+    reportConclusion: (text) => `Conclusion: ${text}`,
+    recommendLabel: 'Recommendation Level',
+    scoreWord: 'score',
+    scoreDimension: 'Dimension',
+    scoreValue: 'Score',
+    scoreComment: 'Comment',
+    trafficTitle: 'Traffic Growth',
+    answerTitle: 'Suitability for Answering',
+    metaTitle: 'Question Metadata',
+    metaCreated: (value) => `Created: ${value}`,
+    metaFollowers: (value) => `Followers: ${value}`,
+    metaViews: (value) => `Views: ${value}`,
+    metaQuestionTitle: (value) => `Model-inferred Title: ${value}`,
+    metaSourceUrl: 'Source Link',
+    metaQuestionDesc: (value) => `Model-inferred Description: ${value}`,
+    metaQuestionDescEmpty: 'The model-inferred description will appear here.',
+    capabilitiesKicker: 'Core Capabilities',
+    capabilitiesTitle: 'Four cards continuing the product-site rhythm',
+    cap1Title: 'URL Understanding',
+    cap1Desc: 'Pass the question URL straight into the model and let it reason with context.',
+    cap2Title: 'LLM Scoring',
+    cap2Desc: 'Send your prompt template to the model and receive a structured result.',
+    cap3Title: 'Report Fillback',
+    cap3Desc: 'Parse the JSON and transform it into a premium visual report.',
+    cap4Title: 'Fast Expansion',
+    cap4Desc: 'This can later grow into account history, exports, and deeper analysis.',
+    siteKicker: 'Site Structure',
+    siteTitle: 'The documentation-style information architecture is ready',
+    siteSummary: 'Homepage + Guide + Reference + Examples',
+    guideCardDesc: 'Learn the report flow and page composition.',
+    referenceCardDesc: 'Check field definitions, scoring logic, and component rules.',
+    examplesCardDesc: 'See more layout patterns and report presentation ideas.',
+    computing: 'Calling the model now...',
+    done: 'Analysis completed and the report has been filled in below.',
+    doneFallback: 'Fallback analysis is complete. Add your model key to enable the live LLM path automatically.',
+    error: 'Generation failed. Please confirm the local backend and model configuration are available.'
+  }
+};
+
+const DEFAULT_REPORTS = {
+  zh: {
+    title: '知乎问题多维度打分评估表',
+    total: 36,
+    maxScore: 60,
+    level: '谨慎投入',
+    conclusion: '不适合作为主攻回答题',
+    trafficVerdict: '无自然流量增量，问题已过生命周期黄金期，无推荐与搜索增长空间。',
+    answerVerdict: '不适合回答，投入产出比偏低，难以获得曝光与涨粉。',
+    summary: '系统正在等待真实问题链接与账号定位数据，收到后会自动调用模型并生成完整评估报告。',
+    heroAction: '等待数据输入',
+    heroBadge: '待分析',
+    metadata: {
+      createdAt: '2026-01-30 12:39:01',
+      followers: 14,
+      views: 2243,
+      questionTitle: '等待模型补全',
+      questionDescription: '模型补全描述会展示在这里。',
+      sourceUrl: ''
+    },
+    metrics: [
+      { label: '情绪 / 痛点 / 争议强度', score: 9, comment: '直击程序员职场选择核心痛点，全职独立开发利弊争议鲜明。' },
+      { label: '关注者数量 & 活跃度', score: 1, comment: '当前示例的互动基础较弱，活跃度接近停滞。' },
+      { label: '搜索流量潜力', score: 7, comment: '关键词具备垂直搜索需求，但实际曝光空间有限。' },
+      { label: '赛道竞争饱和度', score: 4, comment: '整体赛道竞争激烈，但单题仍存在局部切入空间。' },
+      { label: '赛道与账号匹配度', score: 10, comment: '与程序员 / AI / 独立开发相关账号定位高度契合。' },
+      { label: '变现 / 涨粉价值', score: 5, comment: '受众精准，但流量底盘偏小，转化效率仍有限。' }
+    ]
+  },
+  en: {
+    title: 'Zhihu Question Multi-factor Evaluation',
+    total: 36,
+    maxScore: 60,
+    level: 'Cautious Investment',
+    conclusion: 'Not ideal as a primary answer target',
+    trafficVerdict: 'There is no strong natural traffic upside left and recommendation growth is limited.',
+    answerVerdict: 'It is not ideal for heavy investment because exposure and follower growth may stay weak.',
+    summary: 'The system is waiting for a real question URL and account positioning so it can call the model and produce the final report.',
+    heroAction: 'Waiting for your input',
+    heroBadge: 'Pending',
+    metadata: {
+      createdAt: '2026-01-30 12:39:01',
+      followers: 14,
+      views: 2243,
+      questionTitle: 'Waiting for model inference',
+      questionDescription: 'The model-inferred description will appear here.',
+      sourceUrl: ''
+    },
+    metrics: [
+      { label: 'Emotion / Pain Point / Controversy', score: 9, comment: 'It directly touches a strong developer pain point and invites debate.' },
+      { label: 'Followers & Activity', score: 1, comment: 'The current interaction base is weak and near stagnation.' },
+      { label: 'Search Traffic Potential', score: 7, comment: 'The keywords have vertical search intent, but overall exposure is still limited.' },
+      { label: 'Competition Saturation', score: 4, comment: 'The space is crowded overall, though a single question may still have room.' },
+      { label: 'Track-to-Account Fit', score: 10, comment: 'It is highly aligned with programmers, AI, and indie-builder positioning.' },
+      { label: 'Monetization / Growth Value', score: 5, comment: 'The audience is precise, but the traffic base is still relatively small.' }
+    ]
+  }
+};
+
+let currentLang = localStorage.getItem('mha-lang') === 'en' ? 'en' : 'zh';
+let currentTheme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
+let currentReport = DEFAULT_REPORTS[currentLang];
+
+function text(key, ...args) {
+  const entry = UI_TEXT[currentLang][key];
+  return typeof entry === 'function' ? entry(...args) : entry;
+}
+
+function setText(id, key, ...args) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.textContent = text(key, ...args);
+  }
+}
+
+function getFormPayload() {
+  return {
+    accountPositioning: document.getElementById('accountPositioning')?.value.trim() || '',
+    questionUrl: document.getElementById('questionUrl')?.value.trim() || '',
+    createdAt: document.getElementById('createdAt')?.value || '',
+    followers: Number(document.getElementById('followers')?.value || 0),
+    views: Number(document.getElementById('views')?.value || 0),
+    lang: currentLang
+  };
+}
+
+function renderMetrics(metrics) {
+  const metricList = document.getElementById('metric-list');
+  const scoreTableBody = document.getElementById('score-table-body');
+  const heroBars = document.getElementById('hero-bars');
+
+  if (metricList) {
+    metricList.innerHTML = metrics
+      .map(
+        (item) => `
+          <div>
+            <div class="mb-2 flex justify-between text-sm"><span>${item.label}</span><span>${item.score} / 10</span></div>
+            <div class="metric-line"><span style="width: ${item.score * 10}%"></span></div>
+          </div>
+        `
+      )
+      .join('');
+  }
+
+  if (scoreTableBody) {
+    scoreTableBody.innerHTML = metrics
+      .map(
+        (item) => `
+          <tr>
+            <td class="px-4 py-3">${item.label}</td>
+            <td class="px-4 py-3 font-semibold text-white">${item.score}</td>
+            <td class="px-4 py-3">${item.comment}</td>
+          </tr>
+        `
+      )
+      .join('');
+  }
+
+  if (heroBars) {
+    heroBars.innerHTML = metrics.map((item) => `<span style="height: ${Math.max(10, item.score * 10)}%"></span>`).join('');
+  }
+}
+
+function renderReport(report) {
+  currentReport = report;
+  setText('report-kicker', 'reportKicker');
+  setText('recommend-label', 'recommendLabel');
+  setText('score-word', 'scoreWord');
+  setText('score-th-dimension', 'scoreDimension');
+  setText('score-th-score', 'scoreValue');
+  setText('score-th-comment', 'scoreComment');
+  setText('traffic-title', 'trafficTitle');
+  setText('answer-title', 'answerTitle');
+  setText('meta-title', 'metaTitle');
+
+  document.getElementById('report-title').textContent = report.title;
+  document.getElementById('report-subtitle').textContent = text('reportSummary', report.maxScore, report.total);
+  document.getElementById('report-conclusion-badge').textContent = text('reportConclusion', report.conclusion);
+  document.getElementById('score-total').textContent = report.total;
+  document.getElementById('recommend-level').textContent = report.level;
+  document.getElementById('summary-text').textContent = report.summary;
+  document.getElementById('traffic-text').textContent = report.trafficVerdict;
+  document.getElementById('answer-text').textContent = report.answerVerdict;
+  document.getElementById('meta-created').textContent = text('metaCreated', report.metadata.createdAt);
+  document.getElementById('meta-followers').textContent = text('metaFollowers', report.metadata.followers);
+  document.getElementById('meta-views').textContent = text('metaViews', report.metadata.views);
+  document.getElementById('meta-question-title').textContent = text('metaQuestionTitle', report.metadata.questionTitle || '-');
+  document.getElementById('meta-question-desc').textContent = text('metaQuestionDesc', report.metadata.questionDescription || text('metaQuestionDescEmpty'));
+
+  const sourceLink = document.getElementById('meta-source-url');
+  if (sourceLink) {
+    sourceLink.textContent = text('metaSourceUrl');
+    if (report.metadata.sourceUrl) {
+      sourceLink.href = report.metadata.sourceUrl;
+      sourceLink.style.display = 'inline';
+    } else {
+      sourceLink.removeAttribute('href');
+      sourceLink.style.display = 'none';
+    }
+  }
+
+  document.getElementById('headline-total').textContent = `${report.total} / ${report.maxScore}`;
+  document.getElementById('headline-followers').textContent = String(report.metadata.followers);
+  document.getElementById('headline-views').textContent = String(report.metadata.views);
+  document.getElementById('hero-action').textContent = report.heroAction;
+  document.getElementById('hero-summary').textContent = report.summary;
+  document.getElementById('hero-decision-badge').textContent = report.heroBadge;
+
+  const degree = Math.round((report.total / report.maxScore) * 360);
+  document.getElementById('score-ring').style.background = `conic-gradient(#8b5cf6 0 ${degree}deg, #22c55e ${degree}deg ${Math.min(360, degree + 36)}deg, rgba(255,255,255,0.08) ${Math.min(360, degree + 36)}deg 360deg)`;
+
+  renderMetrics(report.metrics);
+}
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  localStorage.setItem('mha-theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  const themeButton = document.getElementById('theme-toggle');
+  if (themeButton) {
+    themeButton.textContent = theme === 'dark' ? text('themeDark') : text('themeLight');
+  }
+}
+
+function applyStaticText() {
+  document.title = text('pageTitle');
+  document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
+
+  setText('brand-subtitle', 'brandSubtitle');
+  setText('nav-guide', 'navGuide');
+  setText('nav-reference', 'navReference');
+  setText('nav-examples', 'navExamples');
+  setText('nav-report', 'navReport');
+  setText('nav-cta', 'navCta');
+  setText('hero-pill', 'heroPill');
+  setText('hero-title-prefix', 'heroTitlePrefix');
+  setText('hero-title-accent', 'heroTitleAccent');
+  setText('hero-desc', 'heroDesc');
+  setText('hero-primary-cta', 'heroPrimaryCta');
+  setText('hero-secondary-cta', 'heroSecondaryCta');
+  setText('stat-total-label', 'totalLabel');
+  setText('stat-followers-label', 'followersLabel');
+  setText('stat-views-label', 'viewsLabel');
+  setText('hero-overview', 'heroOverview');
+  setText('hero-engine-title', 'heroEngineTitle');
+  setText('hero-action-label', 'heroActionLabel');
+  setText('evaluator-kicker', 'evaluatorKicker');
+  setText('evaluator-title', 'evaluatorTitle');
+  setText('evaluator-desc', 'evaluatorDesc');
+  setText('label-account-positioning', 'accountPositioningLabel');
+  setText('label-question-url', 'questionUrlLabel');
+  setText('label-createdAt', 'createdLabel');
+  setText('label-followers', 'followersFormLabel');
+  setText('label-views', 'viewsFormLabel');
+  setText('submit-btn', 'submitLabel');
+  setText('form-status', 'formIdle');
+  setText('flow-kicker', 'flowKicker');
+  setText('flow-title', 'flowTitle');
+  setText('flow-step-1', 'flowStep1');
+  setText('flow-step-2', 'flowStep2');
+  setText('flow-step-3', 'flowStep3');
+  setText('capabilities-kicker', 'capabilitiesKicker');
+  setText('capabilities-title', 'capabilitiesTitle');
+  setText('cap-1-title', 'cap1Title');
+  setText('cap-1-desc', 'cap1Desc');
+  setText('cap-2-title', 'cap2Title');
+  setText('cap-2-desc', 'cap2Desc');
+  setText('cap-3-title', 'cap3Title');
+  setText('cap-3-desc', 'cap3Desc');
+  setText('cap-4-title', 'cap4Title');
+  setText('cap-4-desc', 'cap4Desc');
+  setText('site-kicker', 'siteKicker');
+  setText('site-title', 'siteTitle');
+  setText('site-summary', 'siteSummary');
+  setText('guide-card-desc', 'guideCardDesc');
+  setText('reference-card-desc', 'referenceCardDesc');
+  setText('examples-card-desc', 'examplesCardDesc');
+
+  const langButton = document.getElementById('lang-toggle');
+  if (langButton) {
+    langButton.textContent = text('langButton');
+  }
+
+  const accountPositioning = document.getElementById('accountPositioning');
+  if (accountPositioning) {
+    accountPositioning.placeholder = text('accountPositioningPlaceholder');
+    const knownDefaults = [UI_TEXT.zh.defaultAccountPositioning, UI_TEXT.en.defaultAccountPositioning];
+    if (knownDefaults.includes(accountPositioning.value.trim())) {
+      accountPositioning.value = text('defaultAccountPositioning');
+    }
+  }
+
+  const questionUrl = document.getElementById('questionUrl');
+  if (questionUrl) {
+    questionUrl.placeholder = text('questionUrlPlaceholder');
+  }
+
+  applyTheme(currentTheme);
+}
+
+async function requestReport(payload) {
+  const response = await fetch('/api/evaluate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw new Error('Service error');
+  }
+
+  return response.json();
+}
+
+async function refreshLocalizedReport(silent = true) {
+  const status = document.getElementById('form-status');
+  const payload = getFormPayload();
+
+  if (!payload.accountPositioning && !payload.questionUrl) {
+    renderReport(DEFAULT_REPORTS[currentLang]);
+    if (status) {
+      status.textContent = text('formIdle');
+    }
+    return;
+  }
+
+  if (!silent && status) {
+    status.textContent = text('computing');
+  }
+
+  try {
+    const report = await requestReport(payload);
+    renderReport(report);
+    if (status) {
+      status.textContent = silent ? text('formIdle') : (report.source === 'llm' ? text('done') : text('doneFallback'));
+    }
+  } catch (error) {
+    console.error(error);
+    if (status) {
+      status.textContent = silent ? text('formIdle') : text('error');
+    }
+  }
+}
+
+async function submitEvaluation(event) {
+  event.preventDefault();
+  const status = document.getElementById('form-status');
+  const submitButton = document.getElementById('submit-btn');
+
+  submitButton.disabled = true;
+  submitButton.classList.add('opacity-70');
+  status.textContent = text('computing');
+
+  try {
+    const report = await requestReport(getFormPayload());
+    renderReport(report);
+    status.textContent = report.source === 'llm' ? text('done') : text('doneFallback');
+    document.getElementById('report').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (error) {
+    console.error(error);
+    status.textContent = text('error');
+  } finally {
+    submitButton.disabled = false;
+    submitButton.classList.remove('opacity-70');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyStaticText();
+  renderReport(DEFAULT_REPORTS[currentLang]);
+
+  document.getElementById('evaluation-form').addEventListener('submit', submitEvaluation);
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
+
+  document.getElementById('lang-toggle').addEventListener('click', async () => {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('mha-lang', currentLang);
+    applyStaticText();
+    await refreshLocalizedReport(true);
+  });
+});
