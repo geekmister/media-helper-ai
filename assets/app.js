@@ -77,7 +77,7 @@ const UI_TEXT = {
     computing: '后台正在调用模型分析...',
     done: '分析完成，报告已回填到下方页面。',
     doneFallback: '已完成本地兜底分析；配置模型密钥后会自动切换为真实大模型结果。',
-    error: '生成失败，请确认本地后台服务与模型配置可用。'
+    error: '生成失败，请确认 GMService 后台服务与模型配置可用。'
   },
   en: {
     pageTitle: 'Media Helper AI · Smart Evaluation Center',
@@ -157,7 +157,7 @@ const UI_TEXT = {
     computing: 'Calling the model now...',
     done: 'Analysis completed and the report has been filled in below.',
     doneFallback: 'Fallback analysis is complete. Add your model key to enable the live LLM path automatically.',
-    error: 'Generation failed. Please confirm the local backend and model configuration are available.'
+    error: 'Generation failed. Please confirm the GMService backend and model configuration are available.'
   }
 };
 
@@ -223,6 +223,14 @@ const DEFAULT_REPORTS = {
 let currentLang = localStorage.getItem('mha-lang') === 'en' ? 'en' : 'zh';
 let currentTheme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
 let currentReport = DEFAULT_REPORTS[currentLang];
+
+function resolveApiBase() {
+  const queryBase = new URLSearchParams(window.location.search).get('apiBase');
+  const explicitBase = queryBase || window.MHA_API_BASE || localStorage.getItem('mha-api-base');
+  const fallbackBase = 'http://127.0.0.1:8000';
+  const apiBase = (explicitBase || fallbackBase).trim();
+  return apiBase.endsWith('/') ? apiBase.slice(0, -1) : apiBase;
+}
 
 function text(key, ...args) {
   const entry = UI_TEXT[currentLang][key];
@@ -422,7 +430,8 @@ function applyStaticText() {
 }
 
 async function requestReport(payload) {
-  const response = await fetch('/api/evaluate', {
+  const endpoint = `${resolveApiBase()}/api/evaluate`;
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -431,7 +440,7 @@ async function requestReport(payload) {
   });
 
   if (!response.ok) {
-    throw new Error('Service error');
+    throw new Error(`Service error: ${response.status}`);
   }
 
   return response.json();

@@ -534,32 +534,25 @@ class AppHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self) -> None:
-        if self.path != '/api/evaluate':
-            self.send_error(404, 'Not Found')
-            return
-
-        content_length = int(self.headers.get('Content-Length', '0'))
-        body = self.rfile.read(content_length)
-
-        try:
-            payload = json.loads(body.decode('utf-8') or '{}')
-            report = evaluate_report(payload)
-        except Exception as exc:
-            log_event('request.error', error=exc)
-            traceback.print_exc()
-            self.send_response(400)
+        if self.path == '/api/evaluate':
+            self.send_response(410)
             self.send_header('Content-Type', 'application/json; charset=utf-8')
             self.end_headers()
-            self.wfile.write(json.dumps({'error': str(exc)}, ensure_ascii=False).encode('utf-8'))
+            self.wfile.write(
+                json.dumps(
+                    {
+                        'error': 'The evaluation backend now lives in GMService. Start http://127.0.0.1:8000 first.',
+                    },
+                    ensure_ascii=False,
+                ).encode('utf-8')
+            )
             return
 
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json; charset=utf-8')
-        self.end_headers()
-        self.wfile.write(json.dumps(report, ensure_ascii=False).encode('utf-8'))
+        self.send_error(404, 'Not Found')
 
 
 if __name__ == '__main__':
     server = ThreadingHTTPServer(('127.0.0.1', 4173), AppHandler)
-    print('Serving Media Helper AI at http://127.0.0.1:4173')
+    print('Serving Media Helper AI frontend at http://127.0.0.1:4173', flush=True)
+    print('Using GMService backend at http://127.0.0.1:8000', flush=True)
     server.serve_forever()
