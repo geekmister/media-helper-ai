@@ -1,19 +1,22 @@
 const UI_TEXT = {
   zh: {
     pageTitle: 'Media Helper AI · 智能评估报告中心',
-    brandSubtitle: 'Insight Docs Experience',
+    brandTitle: '媒体助手 AI',
+    brandSubtitle: 'AI 驱动的内容洞察、选题评估',
     navGuide: '指南',
     navReference: '参考',
     navExamples: '示例',
     navReport: '评估报告',
+    navBlog: '博客',
+    navVersion: 'v1.0.0',
     navCta: '立即分析',
     langButton: 'EN',
     themeDark: '🌙 深色',
     themeLight: '☀️ 浅色',
-    heroPill: 'AI 内容评估工作台',
-    heroTitlePrefix: '输入账号与问题数据，',
-    heroTitleAccent: '自动生成知乎问题评估报告',
-    heroDesc: '现在的完整流程已经升级为：填写账号定位、问题链接、时间与流量数据，后台直接组装提示词并调用模型，最后把结果回填到下方高端报告视图。',
+    heroPill: 'AI驱动的内容观察、选题评估',
+    heroTitlePrefix: '输入知乎问题元数据，',
+    heroTitleAccent: '自动生成知乎问题可答性评估报告',
+    heroDesc: '输入账号定位、问题链接、问题创建时间、关注人数、浏览量，AI 会快速给出多维评分、流量判断与回答建议。',
     heroPrimaryCta: '开始分析',
     heroSecondaryCta: '什么是 Media Helper AI?',
     heroGithubCta: 'GitHub',
@@ -23,25 +26,27 @@ const UI_TEXT = {
     heroOverview: '后台能力概览',
     heroEngineTitle: '提示词 + 模型分析引擎',
     heroActionLabel: '推荐动作',
-    evaluatorKicker: '智能评估入口',
-    evaluatorTitle: '最小核心链路已经打通',
-    evaluatorDesc: '用户提交后，后台会直接按你的模板填充提示词，请求大模型接口，让模型自行补全标题与描述，解析结构化 JSON，最后回填到本页的分析报告区。',
+    evaluatorKicker: '智能分析',
+    evaluatorTitle: '这个知乎问题，值不值得答？',
+    evaluatorDesc: '输入账号定位、问题链接、问题创建时间、关注人数、浏览量，AI 会快速给出多维评分、流量判断与回答建议。',
     accountPositioningLabel: '账号定位',
-    accountPositioningPlaceholder: '例如：程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司',
-    defaultAccountPositioning: '程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司',
+    accountPositioningPlaceholder: '程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司',
+    defaultAccountPositioning: '',
     questionUrlLabel: '问题链接',
     questionUrlPlaceholder: 'https://www.zhihu.com/question/xxxxxx',
     createdLabel: '问题创建时间',
     followersFormLabel: '关注人数',
     viewsFormLabel: '浏览量',
-    submitLabel: '开始分析！',
-    formIdle: '提交后会直接调用模型分析，并由模型补全标题与描述后回填下方报告。',
+    submitLabel: '生成评估报告',
+    formIdle: '填写完成后即可生成报告，AI 会自动补全问题标题与问题描述。',
     flowKicker: '后台运算逻辑',
-    flowTitle: '这条链路现在如何工作',
-    flowStep1: '① 将问题链接、账号定位、创建时间、关注人数、浏览量直接组装进提示词。',
-    flowStep2: '② 按你给的请求方式调用大模型接口，请模型自行补全标题、描述并严格输出 JSON 结构结果。',
-    flowStep3: '③ 解析 JSON，映射为评分表、结论卡片、元数据和可视化图表，回填到当前页面。',
+    flowTitle: 'AI 如何完成这次评估',
+    flowStep1: '① 读取问题元数据与账号定位，识别选题方向和内容场景。',
+    flowStep2: '② 结合创建时间、关注人数与浏览量，判断话题热度、生命周期和潜在价值。',
+    flowStep3: '③ 输出多维评分、结论建议与可视化报告，辅助内容决策。',
     reportKicker: '智能生成报告',
+    fakeDataToggle: '开启假数据',
+    fakeDataLoaded: '已加载假数据示例，可直接预览报告效果。',
     reportSummary: (maxScore, total) => `满分 ${maxScore} 分 ｜ 综合总分 ${total} 分`,
     reportConclusion: (text) => `结论：${text}`,
     recommendLabel: '建议级别',
@@ -51,16 +56,20 @@ const UI_TEXT = {
     scoreComment: '分数评语',
     trafficTitle: '流量增量',
     answerTitle: '是否适合回答',
-    metaTitle: '问题元数据',
-    metaCreated: (value) => `创建时间：${value}`,
+    metaTitle: '问题信息',
+    metaHelper: '问题标题与问题描述会由 AI 根据链接和上下文自动补全，其余字段来自你的输入。',
+    metaCreated: (value) => `问题创建时间：${value}`,
     metaFollowers: (value) => `关注人数：${value}`,
-    metaViews: (value) => `总浏览量：${value}`,
-    metaQuestionTitle: (value) => `模型补全标题：${value}`,
+    metaViews: (value) => `浏览量：${value}`,
+    metaQuestionTitle: (value) => `问题标题（模型补全）：${value}`,
+    metaSourceLabel: '问题链接：',
     metaSourceUrl: '问题来源链接',
-    metaQuestionDesc: (value) => `模型补全描述：${value}`,
-    metaQuestionDescEmpty: '模型补全描述会展示在这里。',
-    capabilitiesKicker: '核心能力',
-    capabilitiesTitle: '四个主卡片，延续参考站的展示节奏',
+    metaSourceUrlEmpty: '-',
+    metaDescLabel: '问题描述（模型补全）：',
+    metaQuestionDesc: (value) => value,
+    metaQuestionDescEmpty: '等待模型补全',
+    capabilitiesKicker: '',
+    capabilitiesTitle: '',
     cap1Title: '链接理解',
     cap1Desc: '把问题链接直接交给模型，让它结合上下文完成判断。',
     cap2Title: '模型评分',
@@ -75,6 +84,23 @@ const UI_TEXT = {
     guideCardDesc: '了解报告生成流程与页面组成。',
     referenceCardDesc: '查看字段定义、评分逻辑与组件规范。',
     examplesCardDesc: '查看更多报告版式与内容呈现模板。',
+    articlesKicker: '最新文章',
+    articlesTitle: '从内容洞察到增长决策的最新思考',
+    article1Tag: 'Insight',
+    article1Title: '如何判断一个知乎问题是否值得回答',
+    article1Desc: '从痛点、流量、竞争和账号匹配度四个方向，快速判断内容投入价值。',
+    article2Tag: 'Workflow',
+    article2Title: 'AI 评估链路如何帮助选题提效',
+    article2Desc: '把表单输入、提示词组装和模型判断串联起来，形成可复用的分析闭环。',
+    article3Tag: 'Growth',
+    article3Title: '从问题分析走向内容增长决策',
+    article3Desc: '不止是打分，更帮助你决定该不该投入、怎么回答以及如何放大结果。',
+    footerBrand: '媒体助手 AI',
+    footerDesc: '面向内容创作者与增长团队的 AI 内容洞察与选题评估工作台，帮助你更快判断问题价值、输出结论并形成高质量报告。',
+    footerGuide: '指南',
+    footerReference: '参考',
+    footerGithub: 'GitHub',
+    footerCopy: '© 2026 Media Helper AI · AI 驱动的内容观察与增长决策体验',
     computing: '后台正在调用模型分析...',
     done: '分析完成，报告已回填到下方页面。',
     doneFallback: '已完成纯前端本地分析；如连接 GMService，可自动切换为实时模型结果。',
@@ -82,19 +108,22 @@ const UI_TEXT = {
   },
   en: {
     pageTitle: 'Media Helper AI · Smart Evaluation Center',
-    brandSubtitle: 'Insight Docs Experience',
+    brandTitle: 'Media Helper AI',
+    brandSubtitle: 'AI-Powered Content Insight & Topic Evaluation',
     navGuide: 'Guide',
     navReference: 'Reference',
     navExamples: 'Examples',
     navReport: 'Report',
+    navBlog: 'Blog',
+    navVersion: 'v1.0.0',
     navCta: 'Analyze Now',
     langButton: '中文',
     themeDark: '🌙 Dark',
     themeLight: '☀️ Light',
-    heroPill: 'AI Content Evaluation Workspace',
-    heroTitlePrefix: 'Input your account and question data,',
-    heroTitleAccent: 'then generate a Zhihu evaluation report automatically',
-    heroDesc: 'The full flow now works like this: enter account positioning, question link, time, and traffic data; the backend builds the prompt, calls the model, and fills the report below.',
+    heroPill: 'AI-Driven Content Insight & Topic Evaluation',
+    heroTitlePrefix: 'Input Zhihu question metadata,',
+    heroTitleAccent: 'then generate an answerability evaluation report automatically',
+    heroDesc: 'Enter your positioning, question URL, created time, followers, and views, and AI will quickly return scoring, traffic judgment, and an answer recommendation.',
     heroPrimaryCta: 'Start Analysis',
     heroSecondaryCta: 'What is Media Helper AI?',
     heroGithubCta: 'GitHub',
@@ -104,25 +133,27 @@ const UI_TEXT = {
     heroOverview: 'Backend Overview',
     heroEngineTitle: 'Prompt + LLM Engine',
     heroActionLabel: 'Suggested Action',
-    evaluatorKicker: 'Evaluation Entry',
-    evaluatorTitle: 'The minimal core loop is ready',
-    evaluatorDesc: 'After submission, the backend fills your prompt template, asks the model to infer the title and description, parses the structured JSON, and writes the result back into the report section.',
+    evaluatorKicker: 'Smart Analysis',
+    evaluatorTitle: 'Is this Zhihu question worth answering?',
+    evaluatorDesc: 'Enter your positioning, question URL, created time, followers, and views to get scoring, traffic potential, and an answer recommendation.',
     accountPositioningLabel: 'Account Positioning',
-    accountPositioningPlaceholder: 'For example: Programmer / AI Engineer / Indie Developer / Solo AI Founder',
-    defaultAccountPositioning: 'Programmer / AI Engineer / Indie Developer / Solo AI Founder',
+    accountPositioningPlaceholder: 'Programmer / AI Engineer / Indie Developer / Solo AI Founder',
+    defaultAccountPositioning: '',
     questionUrlLabel: 'Question URL',
     questionUrlPlaceholder: 'https://www.zhihu.com/question/xxxxxx',
     createdLabel: 'Question Created Time',
     followersFormLabel: 'Followers',
     viewsFormLabel: 'Views',
-    submitLabel: 'Start Analysis!',
-    formIdle: 'After submission, the page will call the model directly and fill the report below.',
+    submitLabel: 'Generate Report',
+    formIdle: 'Complete the fields to generate the report. AI will infer the question title and description automatically.',
     flowKicker: 'Backend Logic',
-    flowTitle: 'How the flow works now',
-    flowStep1: '① Combine the question URL, account positioning, and traffic metrics directly into the prompt.',
-    flowStep2: '② Call the LLM endpoint in your request format and ask the model to infer title/description and return strict JSON.',
-    flowStep3: '③ Parse the JSON into score tables, conclusion cards, metadata, and charts on this page.',
+    flowTitle: 'How AI completes this evaluation',
+    flowStep1: '① Read the question metadata and account positioning to identify the topic direction and content context.',
+    flowStep2: '② Combine created time, followers, and views to judge heat, lifecycle, and potential value.',
+    flowStep3: '③ Output multi-factor scores, recommendations, and a visual report to support your content decision.',
     reportKicker: 'Generated Report',
+    fakeDataToggle: 'Use demo data',
+    fakeDataLoaded: 'Demo data has been loaded for preview.',
     reportSummary: (maxScore, total) => `Max ${maxScore} points ｜ Total ${total} points`,
     reportConclusion: (text) => `Conclusion: ${text}`,
     recommendLabel: 'Recommendation Level',
@@ -132,16 +163,20 @@ const UI_TEXT = {
     scoreComment: 'Comment',
     trafficTitle: 'Traffic Growth',
     answerTitle: 'Suitability for Answering',
-    metaTitle: 'Question Metadata',
-    metaCreated: (value) => `Created: ${value}`,
+    metaTitle: 'Question Info',
+    metaHelper: 'The question title and description are inferred by AI from the link and context, while the other fields come from your input.',
+    metaCreated: (value) => `Created Time: ${value}`,
     metaFollowers: (value) => `Followers: ${value}`,
     metaViews: (value) => `Views: ${value}`,
-    metaQuestionTitle: (value) => `Model-inferred Title: ${value}`,
+    metaQuestionTitle: (value) => `Question Title (AI-inferred): ${value}`,
+    metaSourceLabel: 'Question Link:',
     metaSourceUrl: 'Source Link',
-    metaQuestionDesc: (value) => `Model-inferred Description: ${value}`,
-    metaQuestionDescEmpty: 'The model-inferred description will appear here.',
-    capabilitiesKicker: 'Core Capabilities',
-    capabilitiesTitle: 'Four cards continuing the product-site rhythm',
+    metaSourceUrlEmpty: '-',
+    metaDescLabel: 'Question Description (AI-inferred):',
+    metaQuestionDesc: (value) => value,
+    metaQuestionDescEmpty: 'Waiting for model inference',
+    capabilitiesKicker: '',
+    capabilitiesTitle: '',
     cap1Title: 'URL Understanding',
     cap1Desc: 'Pass the question URL straight into the model and let it reason with context.',
     cap2Title: 'LLM Scoring',
@@ -156,6 +191,23 @@ const UI_TEXT = {
     guideCardDesc: 'Learn the report flow and page composition.',
     referenceCardDesc: 'Check field definitions, scoring logic, and component rules.',
     examplesCardDesc: 'See more layout patterns and report presentation ideas.',
+    articlesKicker: 'Latest Articles',
+    articlesTitle: 'Latest thinking on content insight and growth decisions',
+    article1Tag: 'Insight',
+    article1Title: 'How to judge whether a Zhihu question is worth answering',
+    article1Desc: 'Quickly evaluate the content opportunity from pain points, traffic, competition, and account fit.',
+    article2Tag: 'Workflow',
+    article2Title: 'How the AI evaluation loop improves topic selection',
+    article2Desc: 'Connect form input, prompt construction, and model reasoning into a reusable analysis workflow.',
+    article3Tag: 'Growth',
+    article3Title: 'From question analysis to growth decisions',
+    article3Desc: 'It is not only about scoring, but also about deciding whether to invest and how to amplify the result.',
+    footerBrand: 'Media Helper AI',
+    footerDesc: 'An AI content insight and topic evaluation workspace for creators and growth teams, helping you judge question value faster and produce clearer reports.',
+    footerGuide: 'Guide',
+    footerReference: 'Reference',
+    footerGithub: 'GitHub',
+    footerCopy: '© 2026 Media Helper AI · AI-driven content insight and growth decision experience',
     computing: 'Calling the model now...',
     done: 'Analysis completed and the report has been filled in below.',
     doneFallback: 'Pure frontend local analysis is complete. Connect GMService to enable live model results.',
@@ -165,7 +217,7 @@ const UI_TEXT = {
 
 const DEFAULT_REPORTS = {
   zh: {
-    title: '知乎问题多维度打分评估表',
+    title: '知乎问题选题多维度打分评估表',
     total: 36,
     maxScore: 60,
     level: '谨慎投入',
@@ -179,9 +231,9 @@ const DEFAULT_REPORTS = {
       createdAt: '2026-01-30 12:39:01',
       followers: 14,
       views: 2243,
-      questionTitle: '等待模型补全',
-      questionDescription: '模型补全描述会展示在这里。',
-      sourceUrl: ''
+      questionTitle: '程序员现在还有必要 All in AI 吗？',
+      questionDescription: '问题聚焦在程序员转型 AI 的投入产出比，讨论方向包括职业机会、学习成本、行业趋势以及普通开发者是否应该尽早布局。',
+      sourceUrl: 'https://www.zhihu.com/question/xxxxxx'
     },
     metrics: [
       { label: '情绪 / 痛点 / 争议强度', score: 9, comment: '直击程序员职场选择核心痛点，全职独立开发利弊争议鲜明。' },
@@ -207,9 +259,9 @@ const DEFAULT_REPORTS = {
       createdAt: '2026-01-30 12:39:01',
       followers: 14,
       views: 2243,
-      questionTitle: 'Waiting for model inference',
-      questionDescription: 'The model-inferred description will appear here.',
-      sourceUrl: ''
+      questionTitle: 'Is it still worth it for developers to go all in on AI now?',
+      questionDescription: 'This sample topic focuses on whether developers should seriously shift toward AI, covering career upside, learning cost, market timing, and long-term opportunity.',
+      sourceUrl: 'https://www.zhihu.com/question/xxxxxx'
     },
     metrics: [
       { label: 'Emotion / Pain Point / Controversy', score: 9, comment: 'It directly touches a strong developer pain point and invites debate.' },
@@ -222,9 +274,68 @@ const DEFAULT_REPORTS = {
   }
 };
 
+const EMPTY_REPORTS = {
+  zh: {
+    title: '知乎问题选题多维度打分评估表',
+    total: 0,
+    maxScore: 60,
+    level: '等待输入',
+    conclusion: '等待生成报告',
+    trafficVerdict: '填写并提交后，这里会显示流量判断。',
+    answerVerdict: '填写并提交后，这里会显示回答建议。',
+    summary: '当前暂无结果。你可以填写上方信息进行分析，或开启假数据快速预览。',
+    heroAction: '等待数据输入',
+    heroBadge: '未开始',
+    metadata: {
+      createdAt: '-',
+      followers: '-',
+      views: '-',
+      questionTitle: '等待模型补全',
+      questionDescription: '等待模型补全',
+      sourceUrl: ''
+    },
+    metrics: [
+      { label: '情绪 / 痛点 / 争议强度', score: 0, comment: '等待分析结果。' },
+      { label: '关注者数量 & 活跃度', score: 0, comment: '等待分析结果。' },
+      { label: '搜索流量潜力', score: 0, comment: '等待分析结果。' },
+      { label: '赛道竞争饱和度', score: 0, comment: '等待分析结果。' },
+      { label: '赛道与账号匹配度', score: 0, comment: '等待分析结果。' },
+      { label: '变现 / 涨粉价值', score: 0, comment: '等待分析结果。' }
+    ]
+  },
+  en: {
+    title: 'Zhihu Question Topic Evaluation',
+    total: 0,
+    maxScore: 60,
+    level: 'Waiting for input',
+    conclusion: 'Waiting for report generation',
+    trafficVerdict: 'Traffic judgment will appear here after submission.',
+    answerVerdict: 'The answer recommendation will appear here after submission.',
+    summary: 'No result is being shown yet. Fill in the form above or enable demo data for a quick preview.',
+    heroAction: 'Waiting for input',
+    heroBadge: 'Idle',
+    metadata: {
+      createdAt: '-',
+      followers: '-',
+      views: '-',
+      questionTitle: 'Waiting for model inference',
+      questionDescription: 'Waiting for model inference',
+      sourceUrl: ''
+    },
+    metrics: [
+      { label: 'Emotion / Pain Point / Controversy', score: 0, comment: 'Waiting for analysis.' },
+      { label: 'Followers & Activity', score: 0, comment: 'Waiting for analysis.' },
+      { label: 'Search Traffic Potential', score: 0, comment: 'Waiting for analysis.' },
+      { label: 'Competition Saturation', score: 0, comment: 'Waiting for analysis.' },
+      { label: 'Track-to-Account Fit', score: 0, comment: 'Waiting for analysis.' },
+      { label: 'Monetization / Growth Value', score: 0, comment: 'Waiting for analysis.' }
+    ]
+  }
+};
+
 let currentLang = localStorage.getItem('mha-lang') === 'en' ? 'en' : 'zh';
 let currentTheme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
-let currentReport = DEFAULT_REPORTS[currentLang];
+let currentReport = EMPTY_REPORTS[currentLang];
 
 function resolveApiBase() {
   const queryBase = new URLSearchParams(window.location.search).get('apiBase');
@@ -416,9 +527,9 @@ function renderMetrics(metrics) {
       .map(
         (item) => `
           <tr>
-            <td class="px-4 py-3">${item.label}</td>
-            <td class="px-4 py-3 font-semibold text-white">${item.score}</td>
-            <td class="px-4 py-3">${item.comment}</td>
+            <td class="px-4 py-3 align-top break-words">${item.label}</td>
+            <td class="px-4 py-3 align-top font-semibold text-white">${item.score}</td>
+            <td class="px-4 py-3 align-top break-words">${item.comment}</td>
           </tr>
         `
       )
@@ -433,6 +544,7 @@ function renderMetrics(metrics) {
 function renderReport(report) {
   currentReport = report;
   setText('report-kicker', 'reportKicker');
+  setText('fake-data-label', 'fakeDataToggle');
   setText('recommend-label', 'recommendLabel');
   setText('score-word', 'scoreWord');
   setText('score-th-dimension', 'scoreDimension');
@@ -441,6 +553,9 @@ function renderReport(report) {
   setText('traffic-title', 'trafficTitle');
   setText('answer-title', 'answerTitle');
   setText('meta-title', 'metaTitle');
+  setText('meta-helper', 'metaHelper');
+  setText('meta-source-label', 'metaSourceLabel');
+  setText('meta-desc-label', 'metaDescLabel');
 
   setElementText('report-title', report.title);
   setElementText('report-subtitle', text('reportSummary', report.maxScore, report.total));
@@ -458,14 +573,16 @@ function renderReport(report) {
 
   const sourceLink = document.getElementById('meta-source-url');
   if (sourceLink) {
-    sourceLink.textContent = text('metaSourceUrl');
     if (report.metadata.sourceUrl) {
+      sourceLink.textContent = report.metadata.sourceUrl;
       sourceLink.href = report.metadata.sourceUrl;
-      sourceLink.style.display = 'inline';
+      sourceLink.classList.add('underline');
     } else {
+      sourceLink.textContent = text('metaSourceUrlEmpty');
       sourceLink.removeAttribute('href');
-      sourceLink.style.display = 'none';
+      sourceLink.classList.remove('underline');
     }
+    sourceLink.style.display = 'inline';
   }
 
   setElementText('headline-total', `${report.total} / ${report.maxScore}`);
@@ -490,7 +607,19 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const themeButton = document.getElementById('theme-toggle');
   if (themeButton) {
-    themeButton.textContent = theme === 'dark' ? text('themeDark') : text('themeLight');
+    const label = theme === 'dark' ? text('themeDark') : text('themeLight');
+    themeButton.setAttribute('aria-label', label);
+    themeButton.setAttribute('title', label);
+  }
+  
+  // 更新主题图标
+  const themeIcon = document.getElementById('theme-icon');
+  if (themeIcon) {
+    if (theme === 'dark') {
+      themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+    } else {
+      themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+    }
   }
 }
 
@@ -498,11 +627,14 @@ function applyStaticText() {
   document.title = text('pageTitle');
   document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
 
+  setText('brand-title', 'brandTitle');
   setText('brand-subtitle', 'brandSubtitle');
   setText('nav-guide', 'navGuide');
   setText('nav-reference', 'navReference');
   setText('nav-examples', 'navExamples');
   setText('nav-report', 'navReport');
+  setText('nav-blog-label', 'navBlog');
+  setText('nav-version-label', 'navVersion');
   setText('nav-cta', 'navCta');
   setText('hero-pill', 'heroPill');
   setText('hero-title-prefix', 'heroTitlePrefix');
@@ -542,24 +674,38 @@ function applyStaticText() {
   setText('cap-3-desc', 'cap3Desc');
   setText('cap-4-title', 'cap4Title');
   setText('cap-4-desc', 'cap4Desc');
-  setText('site-kicker', 'siteKicker');
-  setText('site-title', 'siteTitle');
-  setText('site-summary', 'siteSummary');
-  setText('guide-card-desc', 'guideCardDesc');
-  setText('reference-card-desc', 'referenceCardDesc');
-  setText('examples-card-desc', 'examplesCardDesc');
+  setText('articles-kicker', 'articlesKicker');
+  setText('articles-title', 'articlesTitle');
+  setText('article-1-tag', 'article1Tag');
+  setText('article-1-title', 'article1Title');
+  setText('article-1-desc', 'article1Desc');
+  setText('article-2-tag', 'article2Tag');
+  setText('article-2-title', 'article2Title');
+  setText('article-2-desc', 'article2Desc');
+  setText('article-3-tag', 'article3Tag');
+  setText('article-3-title', 'article3Title');
+  setText('article-3-desc', 'article3Desc');
+  setText('footer-brand', 'footerBrand');
+  setText('footer-desc', 'footerDesc');
+  setText('footer-link-guide', 'footerGuide');
+  setText('footer-link-reference', 'footerReference');
+  setText('footer-link-github', 'footerGithub');
+  setText('footer-copy', 'footerCopy');
 
-  const langButton = document.getElementById('lang-toggle');
-  if (langButton) {
-    langButton.textContent = text('langButton');
+  const langButtonLabel = document.getElementById('lang-toggle-label');
+  if (langButtonLabel) {
+    langButtonLabel.textContent = text('langButton');
   }
 
   const accountPositioning = document.getElementById('accountPositioning');
   if (accountPositioning) {
     accountPositioning.placeholder = text('accountPositioningPlaceholder');
-    const knownDefaults = [UI_TEXT.zh.defaultAccountPositioning, UI_TEXT.en.defaultAccountPositioning];
+    const knownDefaults = [
+      '程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司',
+      'Programmer / AI Engineer / Indie Developer / Solo AI Founder'
+    ];
     if (knownDefaults.includes(accountPositioning.value.trim())) {
-      accountPositioning.value = text('defaultAccountPositioning');
+      accountPositioning.value = '';
     }
   }
 
@@ -597,9 +743,18 @@ async function requestReport(payload) {
 async function refreshLocalizedReport(silent = true) {
   const status = document.getElementById('form-status');
   const payload = getFormPayload();
+  const fakeToggle = document.getElementById('fake-data-toggle');
 
-  if (!payload.accountPositioning && !payload.questionUrl) {
+  if (fakeToggle?.checked) {
     renderReport(DEFAULT_REPORTS[currentLang]);
+    if (status) {
+      status.textContent = text('fakeDataLoaded');
+    }
+    return;
+  }
+
+  if (!payload.accountPositioning && !payload.questionUrl && !payload.createdAt && !payload.followers && !payload.views) {
+    renderReport(EMPTY_REPORTS[currentLang]);
     if (status) {
       status.textContent = text('formIdle');
     }
@@ -628,7 +783,15 @@ async function submitEvaluation(event) {
   event.preventDefault();
   const status = document.getElementById('form-status');
   const submitButton = document.getElementById('submit-btn');
+  const fakeToggle = document.getElementById('fake-data-toggle');
   const payload = getFormPayload();
+
+  if (fakeToggle?.checked) {
+    renderReport(DEFAULT_REPORTS[currentLang]);
+    status.textContent = text('fakeDataLoaded');
+    document.getElementById('report').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
   const loadingMetrics = (DEFAULT_REPORTS[currentLang].metrics || []).map((item) => ({
     ...item,
     score: 0,
@@ -672,6 +835,16 @@ async function submitEvaluation(event) {
     submitButton.disabled = false;
     submitButton.classList.remove('opacity-70');
   }
+}
+
+function initNumberInputGuard() {
+  const numericInputs = document.querySelectorAll('input[type="number"]');
+  numericInputs.forEach((input) => {
+    input.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      input.blur();
+    }, { passive: false });
+  });
 }
 
 function initHeroModelMotion() {
@@ -724,19 +897,109 @@ function initHeroModelMotion() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  if (window.location.hash) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+  window.scrollTo(0, 0);
+
   applyStaticText();
-  renderReport(DEFAULT_REPORTS[currentLang]);
+  renderReport(EMPTY_REPORTS[currentLang]);
+  initNumberInputGuard();
   initHeroModelMotion();
 
   document.getElementById('evaluation-form').addEventListener('submit', submitEvaluation);
+
+  const heroPrimaryCta = document.getElementById('hero-primary-cta');
+  const evaluatorHeading = document.getElementById('evaluator-heading');
+  if (heroPrimaryCta && evaluatorHeading) {
+    heroPrimaryCta.addEventListener('click', (event) => {
+      event.preventDefault();
+      evaluatorHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  const fakeDataToggle = document.getElementById('fake-data-toggle');
+  if (fakeDataToggle) {
+    fakeDataToggle.addEventListener('change', () => {
+      const status = document.getElementById('form-status');
+      if (fakeDataToggle.checked) {
+        renderReport(DEFAULT_REPORTS[currentLang]);
+        if (status) {
+          status.textContent = text('fakeDataLoaded');
+        }
+      } else {
+        renderReport(EMPTY_REPORTS[currentLang]);
+        if (status) {
+          status.textContent = text('formIdle');
+        }
+      }
+    });
+  }
+  
+  // 主题切换按钮交互
   document.getElementById('theme-toggle').addEventListener('click', () => {
     applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    // 更新主题图标
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeIcon) {
+      if (currentTheme === 'dark') {
+        themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+      } else {
+        themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+      }
+    }
   });
 
-  document.getElementById('lang-toggle').addEventListener('click', async () => {
-    currentLang = currentLang === 'zh' ? 'en' : 'zh';
-    localStorage.setItem('mha-lang', currentLang);
-    applyStaticText();
-    await refreshLocalizedReport(true);
-  });
+  const versionToggle = document.getElementById('nav-version');
+  const versionDropdown = document.getElementById('version-dropdown');
+
+  if (versionToggle && versionDropdown) {
+    versionToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      versionDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!versionToggle.contains(e.target) && !versionDropdown.contains(e.target)) {
+        versionDropdown.classList.add('hidden');
+      }
+    });
+  }
+
+  // 语言切换下拉菜单交互
+  const langToggle = document.getElementById('lang-toggle');
+  const langDropdown = document.getElementById('lang-dropdown');
+
+  if (langToggle && langDropdown) {
+    langToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      langDropdown.classList.toggle('hidden');
+    });
+
+    const langOptions = langDropdown.querySelectorAll('a');
+    langOptions.forEach((option) => {
+      option.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const lang = option.dataset.lang || 'zh';
+        if (lang !== currentLang) {
+          currentLang = lang;
+          localStorage.setItem('mha-lang', currentLang);
+          applyStaticText();
+          await refreshLocalizedReport(true);
+        }
+        langDropdown.classList.add('hidden');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+        langDropdown.classList.add('hidden');
+      }
+    });
+  }
 });

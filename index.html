@@ -40,21 +40,94 @@
           <a href="index.html" class="flex items-center gap-3">
             <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
             <div>
-              <div class="font-semibold">Media Helper AI</div>
-              <div id="brand-subtitle" class="text-xs text-slate-400">Insight Docs Experience</div>
+              <div id="brand-title" class="font-semibold">Media Helper AI</div>
+              <div id="brand-subtitle" class="text-xs text-slate-400">AI 驱动的内容洞察、选题评估</div>
             </div>
           </a>
-          <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex">
-            <a id="nav-guide" href="guide/index.html" class="hover:text-white">指南</a>
-            <a id="nav-reference" href="reference/index.html" class="hover:text-white">参考</a>
-            <a id="nav-examples" href="examples/index.html" class="hover:text-white">示例</a>
-            <a id="nav-report" href="#report" class="hover:text-white">评估报告</a>
-          </nav>
           <div class="flex items-center gap-2">
-            <button id="lang-toggle" type="button" class="nav-tool">EN</button>
-            <button id="theme-toggle" type="button" class="nav-tool">🌙</button>
+            <a id="nav-blog" href="guide/index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              <span id="nav-blog-label">博客</span>
+            </a>
+            <div class="relative">
+              <button id="nav-version" type="button" class="nav-tool nav-pill-secondary" aria-label="Version">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m12 3 7 4v10l-7 4-7-4V7l7-4z"></path>
+                  <path d="m12 12 7-4"></path>
+                  <path d="M12 12 5 8"></path>
+                  <path d="v9"></path>
+                </svg>
+                <span id="nav-version-label">v1.0.0</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+              <div id="version-dropdown" class="hidden absolute left-0 mt-2 w-44 rounded-lg border border-slate-700 bg-slate-900 shadow-lg z-50">
+                <a href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🚀</span>
+                  <span>v1.0.0 Stable</span>
+                </a>
+                <a href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🧪</span>
+                  <span>v1.1.0 Preview</span>
+                </a>
+              </div>
+            </div>
+            <!-- 语言切换下拉菜单 -->
+            <div class="relative">
+              <button id="lang-toggle" type="button" class="nav-tool flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m5 8 6 6"></path>
+                  <path d="m4 14 6-6 2-3"></path>
+                  <path d="M2 5h12"></path>
+                  <path d="M7 2h1"></path>
+                  <path d="m22 22-5-10-5 10"></path>
+                  <path d="M14 18h6"></path>
+                </svg>
+                <span id="lang-toggle-label">EN</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+              <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-40 rounded-lg border border-slate-700 bg-slate-900 shadow-lg z-50">
+                <a id="lang-option-en" data-lang="en" href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🇺🇸</span>
+                  <span>English</span>
+                </a>
+                <a id="lang-option-zh" data-lang="zh" href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🇨🇳</span>
+                  <span>中文</span>
+                </a>
+              </div>
+            </div>
+            
+            <!-- 分隔线 -->
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+            
+            <!-- 暗黑/亮色模式开关 -->
+            <button id="theme-toggle" type="button" class="nav-tool">
+              <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+            
+            <!-- 分隔线 -->
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+            
+            <!-- GitHub 图标 -->
             <a id="nav-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="nav-tool">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
                 <path d="M9 18c-4.51 2-5-2-7-2"></path>
               </svg>
@@ -66,15 +139,15 @@
       <main>
         <section class="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-24">
           <div class="space-y-8">
-            <span id="hero-pill" class="hero-pill inline-flex rounded-full px-3 py-1 text-sm text-violet-100">AI 内容评估工作台</span>
+            <span id="hero-pill" class="hero-pill inline-flex rounded-full px-3 py-1 text-sm text-violet-100">AI驱动的内容观察、选题评估</span>
             <div class="space-y-5">
-              <h1 class="max-w-3xl text-4xl font-black tracking-tight leading-[1.18] text-white md:text-6xl md:leading-[1.15]"><span id="hero-title-prefix" class="block">输入知乎问题元数据</span>
+              <h1 class="max-w-3xl text-4xl font-black tracking-tight leading-[1.18] text-white md:text-6xl md:leading-[1.15]"><span id="hero-title-prefix" class="block">输入知乎问题元数据，</span>
                 <span id="hero-title-accent" class="mt-3 block bg-gradient-to-r from-violet-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">自动生成知乎问题可答性评估报告</span>
               </h1>
-              <p id="hero-desc" class="max-w-2xl text-lg leading-8 text-slate-300">保持当前官网级视觉与文档式信息结构，在首页主视觉之后新增智能评估表单。提交后由后台完成运算，并即时回填为完整的多维度评分表与结论展示。</p>
+              <p id="hero-desc" class="max-w-2xl text-lg leading-8 text-slate-300">输入账号定位、问题链接、问题创建时间、关注人数、浏览量，AI 会快速给出多维评分、流量判断与回答建议。</p>
             </div>
             <div class="flex flex-wrap gap-4">
-              <a id="hero-primary-cta" href="#evaluator" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">开始智能评估</a>
+              <a id="hero-primary-cta" href="#" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">开始智能评估</a>
               <a id="hero-secondary-cta" href="guide/index.html" class="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200">什么是 Media Helper AI?</a>
               <a id="hero-github-cta" href="https://github.com/geekmister/media-helper-ai.git" target="_blank" rel="noreferrer" class="rounded-xl border border-cyan-400/50 bg-cyan-500/15 px-5 py-3 font-semibold text-cyan-100">GitHub</a>
             </div>
@@ -110,67 +183,65 @@
         </section>
 
         <section id="evaluator" class="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
-          <div class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-            <div class="hero-glow glass rounded-3xl p-6 lg:p-8">
-              <div class="max-w-2xl">
-                <p id="evaluator-kicker" class="text-sm uppercase tracking-[0.2em] text-violet-300">智能评估入口</p>
-                <h2 id="evaluator-title" class="mt-2 text-3xl font-bold">把表单放在这里最合适</h2>
-                <p id="evaluator-desc" class="mt-3 leading-7 text-slate-300">位置上承接首页主视觉，用户在理解产品价值后即可立即输入问题信息；结果区紧跟其后，形成“输入 → 运算 → 报告展示”的自然流程，不会打断现在的视觉节奏。</p>
+          <div id="evaluator-heading" class="mb-6 scroll-mt-28">
+            <p id="evaluator-kicker" class="text-sm uppercase tracking-[0.24em] text-violet-300">智能分析</p>
+            <h2 id="evaluator-title" class="mt-3 text-3xl font-black tracking-tight text-white lg:text-4xl">这个知乎问题，值不值得答？</h2>
+            <p id="evaluator-desc" class="mt-3 text-base leading-7 text-slate-300 lg:text-lg">输入账号定位、问题链接、问题创建时间、关注人数、浏览量，AI 会快速给出多维评分、流量判断与回答建议。</p>
+          </div>
+
+          <div class="hero-glow glass rounded-3xl p-6 lg:p-8">
+            <form id="evaluation-form" class="grid gap-4 lg:grid-cols-6">
+              <label class="field-block lg:col-span-6">
+                <span id="label-account-positioning" class="field-label">账号定位</span>
+                <textarea id="accountPositioning" name="accountPositioning" class="field-input field-textarea" placeholder="程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司" required></textarea>
+              </label>
+
+              <label class="field-block lg:col-span-6">
+                <span id="label-question-url" class="field-label">问题链接</span>
+                <input id="questionUrl" name="questionUrl" type="url" class="field-input" placeholder="https://www.zhihu.com/question/xxxxxx" required />
+              </label>
+
+              <label class="field-block lg:col-span-2">
+                <span id="label-createdAt" class="field-label">问题创建时间</span>
+                <input id="createdAt" name="createdAt" type="datetime-local" class="field-input" min="2000-01-01T00:00" max="2035-12-31T23:59" step="60" required />
+              </label>
+
+              <label class="field-block lg:col-span-2">
+                <span id="label-followers" class="field-label">关注人数</span>
+                <input id="followers" name="followers" type="number" min="0" step="1" inputmode="numeric" class="field-input" placeholder="例如：100" required />
+              </label>
+
+              <label class="field-block lg:col-span-2">
+                <span id="label-views" class="field-label">浏览量</span>
+                <input id="views" name="views" type="number" min="0" step="1" inputmode="numeric" class="field-input" placeholder="例如：100" required />
+              </label>
+
+              <div class="lg:col-span-6 flex flex-col gap-3 border-t border-white/10 pt-4 md:flex-row md:items-center md:justify-between">
+                <span id="form-status" class="text-sm text-slate-400">填写完成后即可生成报告，标题与描述会由 AI 自动补全。</span>
+                <button id="submit-btn" type="submit" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">生成评估报告</button>
               </div>
-
-              <form id="evaluation-form" class="mt-6 grid gap-4 md:grid-cols-2">
-                <label class="field-block md:col-span-2">
-                  <span id="label-account-positioning" class="field-label">账号定位</span>
-                  <textarea id="accountPositioning" name="accountPositioning" class="field-input field-textarea" placeholder="例如：程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司" required>程序员 / AI 工程师 / 独立开发者 / 一人 AI 公司</textarea>
-                </label>
-
-                <label class="field-block md:col-span-2">
-                  <span id="label-question-url" class="field-label">问题链接</span>
-                  <input id="questionUrl" name="questionUrl" type="url" class="field-input" placeholder="https://www.zhihu.com/question/xxxxxx" required />
-                </label>
-
-                <label class="field-block">
-                  <span id="label-createdAt" class="field-label">问题创建时间</span>
-                  <input id="createdAt" name="createdAt" type="datetime-local" class="field-input" value="2026-01-30T12:39" required />
-                </label>
-
-                <label class="field-block">
-                  <span id="label-followers" class="field-label">关注人数</span>
-                  <input id="followers" name="followers" type="number" min="0" class="field-input" value="14" required />
-                </label>
-
-                <label class="field-block md:col-span-2">
-                  <span id="label-views" class="field-label">浏览量</span>
-                  <input id="views" name="views" type="number" min="0" class="field-input" value="2243" required />
-                </label>
-
-                <div class="md:col-span-2 flex flex-wrap items-center gap-3 pt-2">
-                  <button id="submit-btn" type="submit" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">开始分析！</button>
-                  <span id="form-status" class="text-sm text-slate-400">提交后会直接调用模型分析，并由模型补全标题与描述后回填下方报告。</span>
-                </div>
-              </form>
-            </div>
-
-            <div class="glass rounded-3xl p-6 lg:p-8">
-              <p id="flow-kicker" class="text-sm uppercase tracking-[0.2em] text-cyan-300">后台运算逻辑</p>
-              <h3 id="flow-title" class="mt-2 text-2xl font-bold">报告将如何生成</h3>
-              <div class="mt-5 space-y-4 text-sm leading-7 text-slate-300">
-                <div id="flow-step-1" class="rounded-2xl border border-white/10 bg-slate-900/60 p-4">① 解析你的问题文本，识别痛点、争议、搜索意图和垂直领域关键词。</div>
-                <div id="flow-step-2" class="rounded-2xl border border-white/10 bg-slate-900/60 p-4">② 结合创建时间、关注人数、浏览量，估算当前话题所处生命周期与活跃度。</div>
-                <div id="flow-step-3" class="rounded-2xl border border-white/10 bg-slate-900/60 p-4">③ 输出多维评分、结论建议、元数据卡片和可视化进度条，直接复用当前展示风格。</div>
-              </div>
-            </div>
+            </form>
           </div>
         </section>
 
         <section id="report" class="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
-          <div class="mb-6 flex items-end justify-between gap-4">
+          <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p id="report-kicker" class="text-sm uppercase tracking-[0.2em] text-violet-300">智能生成报告</p>
-              <h2 id="report-title" class="mt-2 text-3xl font-bold">知乎问题多维度打分评估表</h2>
-              <p id="report-subtitle" class="mt-2 text-slate-400">满分 60 分 ｜ 综合总分 36 分</p>
+              <h2 id="report-title" class="mt-2 text-3xl font-bold">知乎问题选题多维度打分评估表</h2>
+              <p id="report-subtitle" class="mt-3 text-base leading-7 text-slate-300 lg:text-lg">满分 60 分 ｜ 综合总分 0 分</p>
             </div>
-            <span id="report-conclusion-badge" class="rounded-full border border-amber-400/30 bg-amber-500/10 px-4 py-2 text-sm text-amber-200">结论：不适合作为主攻回答题</span>
+            <div class="flex flex-wrap items-end justify-end gap-3 self-end">
+              <span id="report-conclusion-badge" class="rounded-full border border-amber-400/30 bg-amber-500/10 px-4 py-2 text-sm text-amber-200">结论：等待生成报告</span>
+              <label for="fake-data-toggle" class="inline-flex cursor-pointer items-center gap-3 rounded-full border border-white/10 bg-slate-900/60 px-3 py-2 text-sm text-slate-200">
+                <span id="fake-data-label">开启假数据</span>
+                <span class="relative inline-flex items-center">
+                  <input id="fake-data-toggle" type="checkbox" class="peer sr-only" />
+                  <span class="pointer-events-none block h-6 w-11 rounded-full bg-slate-700 transition peer-checked:bg-violet-500"></span>
+                  <span class="pointer-events-none absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+                </span>
+              </label>
+            </div>
           </div>
 
           <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
@@ -197,11 +268,11 @@
 
             <div class="glass rounded-3xl p-6">
               <div class="overflow-hidden rounded-2xl border border-white/10">
-                <table class="table-soft min-w-full text-left text-sm">
+                <table class="table-soft min-w-full table-fixed text-left text-sm">
                   <thead class="bg-slate-900/80 text-slate-200">
                     <tr>
-                      <th id="score-th-dimension" class="px-4 py-3">评估维度</th>
-                      <th id="score-th-score" class="px-4 py-3">打分</th>
+                      <th id="score-th-dimension" class="w-[30%] px-4 py-3">评估维度</th>
+                      <th id="score-th-score" class="w-20 px-4 py-3">打分</th>
                       <th id="score-th-comment" class="px-4 py-3">分数评语</th>
                     </tr>
                   </thead>
@@ -221,16 +292,15 @@
               </div>
 
               <div class="mt-4 rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-sm text-slate-300">
-                <div id="meta-title" class="mb-2 font-semibold text-white">问题元数据</div>
-                <div class="grid gap-2 sm:grid-cols-2">
-                  <div id="meta-created">创建时间：2026-01-30 12:39:01</div>
-                  <div id="meta-followers">关注人数：14</div>
-                  <div id="meta-views">总浏览量：2243</div>
-                  <div id="meta-question-title">模型补全标题：等待模型补全</div>
-                </div>
-                <div class="mt-3 space-y-2">
-                  <a id="meta-source-url" href="#" target="_blank" rel="noreferrer" class="text-cyan-300 underline underline-offset-4">问题来源链接</a>
-                  <p id="meta-question-desc" class="text-slate-400">模型补全描述会展示在这里。</p>
+                <div id="meta-title" class="font-semibold text-white">问题信息</div>
+                <p id="meta-helper" class="mt-1 text-xs leading-5 text-slate-400">问题标题与问题描述会由 AI 根据链接和上下文自动补全，其余字段来自你的输入。</p>
+                <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                  <div id="meta-created" class="rounded-xl border border-white/10 bg-slate-950/40 p-3">问题创建时间：-</div>
+                  <div id="meta-followers" class="rounded-xl border border-white/10 bg-slate-950/40 p-3">关注人数：-</div>
+                  <div id="meta-views" class="rounded-xl border border-white/10 bg-slate-950/40 p-3">浏览量：-</div>
+                  <div id="meta-question-title" class="rounded-xl border border-white/10 bg-slate-950/40 p-3">问题标题（模型补全）：等待模型补全</div>
+                  <div id="meta-source-wrap" class="sm:col-span-2 rounded-xl border border-white/10 bg-slate-950/40 p-3">问题链接：<a id="meta-source-url" href="#" target="_blank" rel="noreferrer" class="break-all text-slate-300">-</a></div>
+                  <div id="meta-desc-wrap" class="sm:col-span-2 rounded-xl border border-white/10 bg-slate-950/40 p-3">问题描述（模型补全）：<span id="meta-question-desc" class="text-slate-300">等待模型补全</span></div>
                 </div>
               </div>
             </div>
@@ -238,10 +308,6 @@
         </section>
 
         <section class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          <div class="mb-6">
-            <p id="capabilities-kicker" class="text-sm uppercase tracking-[0.2em] text-cyan-300">核心能力</p>
-            <h2 id="capabilities-title" class="mt-2 text-3xl font-bold">四个主卡片，延续参考站的展示节奏</h2>
-          </div>
           <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             <article class="glass card-lift rounded-2xl p-5">
               <div class="text-2xl">🧭</div>
@@ -267,31 +333,48 @@
         </section>
 
         <section class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
-          <div class="glass rounded-3xl p-6 lg:p-8">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <p id="site-kicker" class="text-sm uppercase tracking-[0.2em] text-violet-300">站点结构</p>
-                <h2 id="site-title" class="mt-2 text-3xl font-bold">文档型信息架构已同步搭建</h2>
-              </div>
-              <div id="site-summary" class="text-sm text-slate-400">首页 + 指南页 + 参考页 + 示例页</div>
+          <div class="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p id="articles-kicker" class="text-sm uppercase tracking-[0.2em] text-cyan-300">最新文章</p>
+              <h2 id="articles-title" class="mt-2 text-3xl font-bold">从内容洞察到增长决策的最新思考</h2>
             </div>
-            <div class="mt-6 grid gap-4 md:grid-cols-3">
-              <a href="guide/index.html" class="card-lift rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <div id="guide-card-title" class="font-semibold text-white">Guide</div>
-                <p id="guide-card-desc" class="mt-2 text-sm text-slate-300">了解报告生成流程与页面组成。</p>
-              </a>
-              <a href="reference/index.html" class="card-lift rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <div id="reference-card-title" class="font-semibold text-white">Reference</div>
-                <p id="reference-card-desc" class="mt-2 text-sm text-slate-300">查看字段定义、评分逻辑与组件规范。</p>
-              </a>
-              <a href="examples/index.html" class="card-lift rounded-2xl border border-white/10 bg-slate-900/70 p-4">
-                <div id="examples-card-title" class="font-semibold text-white">Examples</div>
-                <p id="examples-card-desc" class="mt-2 text-sm text-slate-300">查看更多报告版式与内容呈现模板。</p>
-              </a>
-            </div>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <article class="glass card-lift rounded-2xl p-5">
+              <div id="article-1-tag" class="text-xs uppercase tracking-[0.2em] text-violet-300">Insight</div>
+              <h3 id="article-1-title" class="mt-3 text-lg font-semibold text-white">如何判断一个知乎问题是否值得回答</h3>
+              <p id="article-1-desc" class="mt-2 text-sm leading-6 text-slate-300">从痛点、流量、竞争和账号匹配度四个方向，快速判断内容投入价值。</p>
+            </article>
+            <article class="glass card-lift rounded-2xl p-5">
+              <div id="article-2-tag" class="text-xs uppercase tracking-[0.2em] text-cyan-300">Workflow</div>
+              <h3 id="article-2-title" class="mt-3 text-lg font-semibold text-white">AI 评估链路如何帮助选题提效</h3>
+              <p id="article-2-desc" class="mt-2 text-sm leading-6 text-slate-300">把表单输入、提示词组装和模型判断串联起来，形成可复用的分析闭环。</p>
+            </article>
+            <article class="glass card-lift rounded-2xl p-5">
+              <div id="article-3-tag" class="text-xs uppercase tracking-[0.2em] text-emerald-300">Growth</div>
+              <h3 id="article-3-title" class="mt-3 text-lg font-semibold text-white">从问题分析走向内容增长决策</h3>
+              <p id="article-3-desc" class="mt-2 text-sm leading-6 text-slate-300">不止是打分，更帮助你决定该不该投入、怎么回答以及如何放大结果。</p>
+            </article>
           </div>
         </section>
       </main>
+
+      <footer class="mx-auto max-w-7xl px-6 pb-10 pt-4 lg:px-8">
+        <div class="glass rounded-3xl p-6 lg:p-8">
+          <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+            <div class="max-w-xl">
+              <div id="footer-brand" class="text-lg font-semibold text-white">Media Helper AI</div>
+              <p id="footer-desc" class="mt-2 text-sm leading-6 text-slate-300">面向内容创作者与增长团队的 AI 内容洞察与选题评估工作台，帮助你更快判断问题价值、输出结论并形成高质量报告。</p>
+            </div>
+            <div class="grid gap-2 text-sm text-slate-300">
+              <a id="footer-link-guide" href="guide/index.html" class="footer-link">指南</a>
+              <a id="footer-link-reference" href="reference/index.html" class="footer-link">参考</a>
+              <a id="footer-link-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="footer-link">GitHub</a>
+            </div>
+          </div>
+          <div id="footer-copy" class="mt-6 border-t border-white/10 pt-4 text-xs text-slate-400">© 2026 Media Helper AI · AI 驱动的内容观察与增长决策体验</div>
+        </div>
+      </footer>
     </div>
     <script src="assets/app.js"></script>
   </body>

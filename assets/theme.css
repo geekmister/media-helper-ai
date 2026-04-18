@@ -90,6 +90,20 @@ body {
   border-color: rgba(167, 139, 250, 0.45);
 }
 
+.lang-option-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.footer-link {
+  transition: color 180ms ease;
+}
+
+.footer-link:hover {
+  color: #a78bfa;
+}
+
 .metric-line {
   height: 0.7rem;
   border-radius: 9999px;
@@ -501,20 +515,55 @@ body {
   border: 1px solid rgba(148, 163, 184, 0.18);
   background: rgba(15, 23, 42, 0.55);
   color: var(--text-main);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 6px;
+  padding: 6px 10px;
   font-size: 0.875rem;
   transition: all 180ms ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .nav-tool:hover {
   border-color: rgba(167, 139, 250, 0.5);
   background: rgba(15, 23, 42, 0.7);
-  transform: translateY(-1px);
+}
+
+.nav-pill-secondary {
+  border-color: rgba(148, 163, 184, 0.22);
+  background: rgba(15, 23, 42, 0.42);
+}
+
+/* 下拉菜单样式 */
+#lang-dropdown a,
+#version-dropdown a {
+  color: var(--text-main);
+  transition: background-color 180ms ease;
+}
+
+#lang-dropdown a:hover,
+#version-dropdown a:hover {
+  background-color: rgba(148, 163, 184, 0.1);
+}
+
+/* 亮色模式下的样式 */
+[data-theme="light"] #lang-dropdown,
+[data-theme="light"] #version-dropdown {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(148, 163, 184, 0.24);
+}
+
+[data-theme="light"] #lang-dropdown a {
+  color: var(--text-main);
+}
+
+[data-theme="light"] #lang-dropdown a:hover {
+  background-color: rgba(148, 163, 184, 0.1);
+}
+
+/* 分隔线样式 */
+[data-theme="light"] .h-6.w-px {
+  background-color: rgba(148, 163, 184, 0.24);
 }
 
 [data-theme="light"] .text-white,
