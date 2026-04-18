@@ -76,7 +76,7 @@ const UI_TEXT = {
     examplesCardDesc: '查看更多报告版式与内容呈现模板。',
     computing: '后台正在调用模型分析...',
     done: '分析完成，报告已回填到下方页面。',
-    doneFallback: '已完成本地兜底分析；配置模型密钥后会自动切换为真实大模型结果。',
+    doneFallback: '已完成纯前端本地分析；如连接 GMService，可自动切换为实时模型结果。',
     error: '生成失败，请确认 GMService 后台服务与模型配置可用。'
   },
   en: {
@@ -156,7 +156,7 @@ const UI_TEXT = {
     examplesCardDesc: 'See more layout patterns and report presentation ideas.',
     computing: 'Calling the model now...',
     done: 'Analysis completed and the report has been filled in below.',
-    doneFallback: 'Fallback analysis is complete. Add your model key to enable the live LLM path automatically.',
+    doneFallback: 'Pure frontend local analysis is complete. Connect GMService to enable live model results.',
     error: 'Generation failed. Please confirm the GMService backend and model configuration are available.'
   }
 };
@@ -252,6 +252,134 @@ function getFormPayload() {
     followers: Number(document.getElementById('followers')?.value || 0),
     views: Number(document.getElementById('views')?.value || 0),
     lang: currentLang
+  };
+}
+
+function clampScore(value, min = 1, max = 10) {
+  return Math.max(min, Math.min(max, Math.round(value)));
+}
+
+function scoreFollowers(value) {
+  if (value < 20) return 1;
+  if (value < 50) return 3;
+  if (value < 100) return 4;
+  if (value < 300) return 6;
+  if (value < 1000) return 8;
+  return 10;
+}
+
+function scoreViews(value) {
+  if (value < 300) return 1;
+  if (value < 1000) return 3;
+  if (value < 3000) return 5;
+  if (value < 10000) return 7;
+  if (value < 50000) return 9;
+  return 10;
+}
+
+function countKeywordHits(textBlob, keywords) {
+  const lowered = textBlob.toLowerCase();
+  return keywords.reduce((count, keyword) => count + (lowered.includes(keyword.toLowerCase()) ? 1 : 0), 0);
+}
+
+function getDecisionMeta(total) {
+  if (currentLang === 'en') {
+    if (total >= 48) return ['Highly Recommended', 'High Priority', 'Invest first'];
+    if (total >= 36) return ['Cautious Investment', 'Medium-low Priority', 'Use as supporting content'];
+    return ['Low Priority', 'Low Priority', 'Skip or lower the effort'];
+  }
+
+  if (total >= 48) return ['强烈推荐', '高优先级', '建议优先投入'];
+  if (total >= 36) return ['谨慎投入', '中低优先级', '作为补充布局'];
+  return ['低优先级', '低优先级', '建议跳过或降配'];
+}
+
+function formatCreatedAt(value) {
+  return (value || '').replace('T', ' ') || new Date().toLocaleString(currentLang === 'en' ? 'en-US' : 'zh-CN', { hour12: false });
+}
+
+function buildFrontendFallbackReport(payload) {
+  const accountPositioning = payload.accountPositioning || text('defaultAccountPositioning');
+  const questionUrl = payload.questionUrl || '';
+  const followers = Math.max(0, Number(payload.followers) || 0);
+  const views = Math.max(0, Number(payload.views) || 0);
+  const textBlob = [accountPositioning, questionUrl].join(' ');
+  const followerViewRatio = views / Math.max(followers, 1);
+
+  const emotionWords = ['离职', '独立开发', '一人公司', 'ai', '焦虑', '失业', '值不值得', '要不要', '转型', '创业', 'startup', 'indie', 'solo'];
+  const searchWords = ['如何', '怎么', '为什么', 'ai', '程序员', '独立开发', 'how', 'why', 'developer'];
+  const fitWords = ['程序员', '开发者', 'ai', '独立开发', '副业', '产品', '工程师', 'developer', 'engineer', 'indie', 'product'];
+  const competitionWords = ['ai', '副业', '赚钱', '独立开发', '创业', '程序员', 'startup', 'indie'];
+
+  const emotionScore = clampScore(4 + countKeywordHits(textBlob, emotionWords) * 1.1 + (questionUrl.includes('?') ? 1 : 0));
+  const activeScore = clampScore(scoreFollowers(followers) * 0.45 + scoreViews(views) * 0.4 + clampScore(followerViewRatio / 80, 1, 10) * 0.15);
+  const searchScore = clampScore(3 + countKeywordHits(textBlob, searchWords) * 1.05);
+  const fitScore = clampScore(4 + countKeywordHits(textBlob, fitWords) * 1.1);
+  const competitionScore = clampScore(8 - countKeywordHits(textBlob, competitionWords) * 0.8 + (fitScore >= 8 ? 1 : 0));
+  const monetizeScore = clampScore(emotionScore * 0.35 + fitScore * 0.35 + activeScore * 0.3);
+  const total = emotionScore + activeScore + searchScore + competitionScore + fitScore + monetizeScore;
+  const [level, heroBadge, heroAction] = getDecisionMeta(total);
+
+  if (currentLang === 'en') {
+    return {
+      title: 'Zhihu Question Multi-factor Evaluation',
+      total,
+      maxScore: 60,
+      level,
+      conclusion: total >= 36 ? 'Suitable as supporting content, not the main growth target' : 'Not worth heavy investment',
+      trafficVerdict: total >= 36 ? 'The topic has some discussion and search potential, but the natural traffic ceiling is moderate.' : 'Traffic upside appears limited in the current state.',
+      answerVerdict: total >= 36 ? 'It is usable as supporting content and aligns with the positioning.' : 'It is not ideal as a primary answer target.',
+      summary: `The browser has completed a pure frontend local analysis for this topic. Current fit is ${fitScore}/10 and activity is ${activeScore}/10.`,
+      heroAction,
+      heroBadge,
+      metadata: {
+        createdAt: formatCreatedAt(payload.createdAt),
+        followers,
+        views,
+        questionTitle: 'Frontend-inferred topic summary',
+        questionDescription: 'This result was generated directly in the browser from the submitted link and traffic metrics, with no Python runtime required.',
+        sourceUrl: questionUrl
+      },
+      metrics: [
+        { label: 'Emotion / Pain Point / Controversy', score: emotionScore, comment: emotionScore >= 7 ? 'Clear pain point and resonance.' : 'Emotional pull is limited.' },
+        { label: 'Followers & Activity', score: activeScore, comment: `The current base is ${activeScore >= 6 ? 'solid' : 'still weak'}.` },
+        { label: 'Search Traffic Potential', score: searchScore, comment: searchScore >= 7 ? 'Search intent is visible.' : 'Search demand exists but is moderate.' },
+        { label: 'Competition Saturation', score: competitionScore, comment: competitionScore >= 6 ? 'There is still room to enter.' : 'Competition is relatively strong.' },
+        { label: 'Track-to-Account Fit', score: fitScore, comment: fitScore >= 7 ? 'Highly aligned with the account.' : 'Alignment is moderate.' },
+        { label: 'Monetization / Growth Value', score: monetizeScore, comment: monetizeScore >= 6 ? 'There is some conversion and growth value.' : 'Growth efficiency is limited.' }
+      ],
+      source: 'frontend'
+    };
+  }
+
+  return {
+    title: '知乎问题多维度打分评估表',
+    total,
+    maxScore: 60,
+    level,
+    conclusion: total >= 36 ? '适合作为补充题材，非核心主攻' : '不建议投入过多精力',
+    trafficVerdict: total >= 36 ? '当前话题具备一定搜索和讨论空间，但自然流量天花板中等。' : '当前话题的自然流量增长空间较小。',
+    answerVerdict: total >= 36 ? '可作为补充题材回答，与账号定位较为贴合。' : '不适合作为重点回答题。',
+    summary: `浏览器已完成纯前端本地分析。当前账号匹配度为 ${fitScore}/10，活跃度为 ${activeScore}/10。`,
+    heroAction,
+    heroBadge,
+    metadata: {
+      createdAt: formatCreatedAt(payload.createdAt),
+      followers,
+      views,
+      questionTitle: '前端本地推断主题',
+      questionDescription: '该结果直接在浏览器端根据链接和流量数据生成，不依赖本项目中的 Python 运行时。',
+      sourceUrl: questionUrl
+    },
+    metrics: [
+      { label: '情绪 / 痛点 / 争议强度', score: emotionScore, comment: emotionScore >= 7 ? '痛点感较强，具备共鸣。' : '情绪张力偏弱。' },
+      { label: '关注者数量 & 活跃度', score: activeScore, comment: activeScore >= 6 ? '互动基础较好。' : '互动基础仍偏弱。' },
+      { label: '搜索流量潜力', score: searchScore, comment: searchScore >= 7 ? '存在一定搜索需求。' : '搜索势能一般。' },
+      { label: '赛道竞争饱和度', score: competitionScore, comment: competitionScore >= 6 ? '仍有切入空间。' : '竞争相对较强。' },
+      { label: '赛道与账号匹配度', score: fitScore, comment: fitScore >= 7 ? '与账号定位高度契合。' : '贴合度一般。' },
+      { label: '变现 / 涨粉价值', score: monetizeScore, comment: monetizeScore >= 6 ? '有一定涨粉承接价值。' : '转化效率有限。' }
+    ],
+    source: 'frontend'
   };
 }
 
@@ -431,19 +559,25 @@ function applyStaticText() {
 
 async function requestReport(payload) {
   const endpoint = `${resolveApiBase()}/api/evaluate`;
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  });
 
-  if (!response.ok) {
-    throw new Error(`Service error: ${response.status}`);
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Service error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.warn('GMService unavailable, using pure frontend analysis.', error);
+    return buildFrontendFallbackReport(payload);
   }
-
-  return response.json();
 }
 
 async function refreshLocalizedReport(silent = true) {
