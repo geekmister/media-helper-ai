@@ -10,12 +10,13 @@ const UI_TEXT = {
     langButton: 'EN',
     themeDark: '🌙 深色',
     themeLight: '☀️ 浅色',
-    heroPill: 'AI 内容评估工作台 · 高端展示版',
+    heroPill: 'AI 内容评估工作台',
     heroTitlePrefix: '输入账号与问题数据，',
     heroTitleAccent: '自动生成知乎问题评估报告',
     heroDesc: '现在的完整流程已经升级为：填写账号定位、问题链接、时间与流量数据，后台直接组装提示词并调用模型，最后把结果回填到下方高端报告视图。',
     heroPrimaryCta: '开始分析',
-    heroSecondaryCta: '浏览站点结构',
+    heroSecondaryCta: '什么是 Media Helper AI?',
+    heroGithubCta: 'GitHub',
     totalLabel: '综合评估得分',
     followersLabel: '关注人数',
     viewsLabel: '浏览量',
@@ -90,12 +91,13 @@ const UI_TEXT = {
     langButton: '中文',
     themeDark: '🌙 Dark',
     themeLight: '☀️ Light',
-    heroPill: 'AI Content Evaluation Workspace · Premium Edition',
+    heroPill: 'AI Content Evaluation Workspace',
     heroTitlePrefix: 'Input your account and question data,',
     heroTitleAccent: 'then generate a Zhihu evaluation report automatically',
     heroDesc: 'The full flow now works like this: enter account positioning, question link, time, and traffic data; the backend builds the prompt, calls the model, and fills the report below.',
     heroPrimaryCta: 'Start Analysis',
-    heroSecondaryCta: 'Browse Structure',
+    heroSecondaryCta: 'What is Media Helper AI?',
+    heroGithubCta: 'GitHub',
     totalLabel: 'Overall Score',
     followersLabel: 'Followers',
     viewsLabel: 'Views',
@@ -508,6 +510,7 @@ function applyStaticText() {
   setText('hero-desc', 'heroDesc');
   setText('hero-primary-cta', 'heroPrimaryCta');
   setText('hero-secondary-cta', 'heroSecondaryCta');
+  setText('hero-github-cta', 'heroGithubCta');
   setText('stat-total-label', 'totalLabel');
   setText('stat-followers-label', 'followersLabel');
   setText('stat-views-label', 'viewsLabel');

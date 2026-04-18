@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Media Helper AI logo">
+  <defs>
+    <linearGradient id="mhaGradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#mhaGradient)"/>
+  <path d="M16 44V20h6.2l9.8 12.2L41.8 20H48v24h-6V29.7L32 41.8 22 29.7V44Z" fill="#0f172a"/>
+</svg>
