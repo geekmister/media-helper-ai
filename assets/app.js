@@ -244,6 +244,14 @@ function setText(id, key, ...args) {
   }
 }
 
+function setElementText(id, value) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.textContent = value;
+  }
+  return element;
+}
+
 function getFormPayload() {
   return {
     accountPositioning: document.getElementById('accountPositioning')?.value.trim() || '',
@@ -432,19 +440,19 @@ function renderReport(report) {
   setText('answer-title', 'answerTitle');
   setText('meta-title', 'metaTitle');
 
-  document.getElementById('report-title').textContent = report.title;
-  document.getElementById('report-subtitle').textContent = text('reportSummary', report.maxScore, report.total);
-  document.getElementById('report-conclusion-badge').textContent = text('reportConclusion', report.conclusion);
-  document.getElementById('score-total').textContent = report.total;
-  document.getElementById('recommend-level').textContent = report.level;
-  document.getElementById('summary-text').textContent = report.summary;
-  document.getElementById('traffic-text').textContent = report.trafficVerdict;
-  document.getElementById('answer-text').textContent = report.answerVerdict;
-  document.getElementById('meta-created').textContent = text('metaCreated', report.metadata.createdAt);
-  document.getElementById('meta-followers').textContent = text('metaFollowers', report.metadata.followers);
-  document.getElementById('meta-views').textContent = text('metaViews', report.metadata.views);
-  document.getElementById('meta-question-title').textContent = text('metaQuestionTitle', report.metadata.questionTitle || '-');
-  document.getElementById('meta-question-desc').textContent = text('metaQuestionDesc', report.metadata.questionDescription || text('metaQuestionDescEmpty'));
+  setElementText('report-title', report.title);
+  setElementText('report-subtitle', text('reportSummary', report.maxScore, report.total));
+  setElementText('report-conclusion-badge', text('reportConclusion', report.conclusion));
+  setElementText('score-total', report.total);
+  setElementText('recommend-level', report.level);
+  setElementText('summary-text', report.summary);
+  setElementText('traffic-text', report.trafficVerdict);
+  setElementText('answer-text', report.answerVerdict);
+  setElementText('meta-created', text('metaCreated', report.metadata.createdAt));
+  setElementText('meta-followers', text('metaFollowers', report.metadata.followers));
+  setElementText('meta-views', text('metaViews', report.metadata.views));
+  setElementText('meta-question-title', text('metaQuestionTitle', report.metadata.questionTitle || '-'));
+  setElementText('meta-question-desc', text('metaQuestionDesc', report.metadata.questionDescription || text('metaQuestionDescEmpty')));
 
   const sourceLink = document.getElementById('meta-source-url');
   if (sourceLink) {
@@ -458,15 +466,18 @@ function renderReport(report) {
     }
   }
 
-  document.getElementById('headline-total').textContent = `${report.total} / ${report.maxScore}`;
-  document.getElementById('headline-followers').textContent = String(report.metadata.followers);
-  document.getElementById('headline-views').textContent = String(report.metadata.views);
-  document.getElementById('hero-action').textContent = report.heroAction;
-  document.getElementById('hero-summary').textContent = report.summary;
-  document.getElementById('hero-decision-badge').textContent = report.heroBadge;
+  setElementText('headline-total', `${report.total} / ${report.maxScore}`);
+  setElementText('headline-followers', String(report.metadata.followers));
+  setElementText('headline-views', String(report.metadata.views));
+  setElementText('hero-action', report.heroAction);
+  setElementText('hero-summary', report.summary);
+  setElementText('hero-decision-badge', report.heroBadge);
 
   const degree = Math.round((report.total / report.maxScore) * 360);
-  document.getElementById('score-ring').style.background = `conic-gradient(#8b5cf6 0 ${degree}deg, #22c55e ${degree}deg ${Math.min(360, degree + 36)}deg, rgba(255,255,255,0.08) ${Math.min(360, degree + 36)}deg 360deg)`;
+  const scoreRing = document.getElementById('score-ring');
+  if (scoreRing) {
+    scoreRing.style.background = `conic-gradient(#8b5cf6 0 ${degree}deg, #22c55e ${degree}deg ${Math.min(360, degree + 36)}deg, rgba(255,255,255,0.08) ${Math.min(360, degree + 36)}deg 360deg)`;
+  }
 
   renderMetrics(report.metrics);
 }
@@ -614,13 +625,40 @@ async function submitEvaluation(event) {
   event.preventDefault();
   const status = document.getElementById('form-status');
   const submitButton = document.getElementById('submit-btn');
+  const payload = getFormPayload();
+  const loadingMetrics = (DEFAULT_REPORTS[currentLang].metrics || []).map((item) => ({
+    ...item,
+    score: 0,
+    comment: currentLang === 'en' ? 'Waiting for analysis...' : '等待分析结果...'
+  }));
 
   submitButton.disabled = true;
   submitButton.classList.add('opacity-70');
   status.textContent = text('computing');
 
+  renderReport({
+    ...DEFAULT_REPORTS[currentLang],
+    total: 0,
+    level: currentLang === 'en' ? 'Analyzing' : '分析中',
+    summary: text('computing'),
+    heroAction: text('computing'),
+    heroBadge: currentLang === 'en' ? 'Analyzing' : '分析中',
+    conclusion: currentLang === 'en' ? 'Generating the latest report for this request.' : '正在生成本次请求的最新报告。',
+    trafficVerdict: currentLang === 'en' ? 'Waiting for the model response.' : '正在等待模型返回结果。',
+    answerVerdict: currentLang === 'en' ? 'The previous report will be replaced automatically.' : '旧报告将在本次完成后自动覆盖。',
+    metadata: {
+      createdAt: formatCreatedAt(payload.createdAt),
+      followers: payload.followers,
+      views: payload.views,
+      questionTitle: currentLang === 'en' ? 'Analyzing current request' : '正在分析当前请求',
+      questionDescription: currentLang === 'en' ? 'The latest response will appear here shortly.' : '最新返回结果稍后展示在这里。',
+      sourceUrl: payload.questionUrl
+    },
+    metrics: loadingMetrics
+  });
+
   try {
-    const report = await requestReport(getFormPayload());
+    const report = await requestReport(payload);
     renderReport(report);
     status.textContent = report.source === 'llm' ? text('done') : text('doneFallback');
     document.getElementById('report').scrollIntoView({ behavior: 'smooth', block: 'start' });
