@@ -674,9 +674,59 @@ async function submitEvaluation(event) {
   }
 }
 
+function initHeroModelMotion() {
+  const stage = document.getElementById('hero-brand-3d-stage');
+  const object = document.getElementById('hero-brand-3d-object');
+
+  if (!stage || !object) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+  const updateMotion = () => {
+    currentX += (targetX - currentX) * 0.12;
+    currentY += (targetY - currentY) * 0.12;
+
+    object.style.transform = `rotateX(${(-10 - currentY * 16).toFixed(2)}deg) rotateY(${(10 + currentX * 22).toFixed(2)}deg) scale(1.015)`;
+    stage.style.setProperty('--spotlight-x', `${50 + currentX * 14}%`);
+    stage.style.setProperty('--spotlight-y', `${26 + currentY * 12}%`);
+
+    requestAnimationFrame(updateMotion);
+  };
+
+  const resetMotion = () => {
+    targetX = 0;
+    targetY = 0;
+  };
+
+  const handlePointerMove = (event) => {
+    const rect = stage.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+    targetX = clamp(x, -1, 1);
+    targetY = clamp(y, -1, 1);
+  };
+
+  if (!prefersReducedMotion) {
+    stage.addEventListener('pointermove', handlePointerMove);
+    stage.addEventListener('mousemove', handlePointerMove);
+    stage.addEventListener('pointerleave', resetMotion);
+    stage.addEventListener('mouseleave', resetMotion);
+    requestAnimationFrame(updateMotion);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   applyStaticText();
   renderReport(DEFAULT_REPORTS[currentLang]);
+  initHeroModelMotion();
 
   document.getElementById('evaluation-form').addEventListener('submit', submitEvaluation);
   document.getElementById('theme-toggle').addEventListener('click', () => {
