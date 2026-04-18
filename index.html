@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Helper AI · 智能评估报告中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#f5f3ff',
+                400: '#a78bfa',
+                500: '#8b5cf6',
+                600: '#7c3aed'
+              }
+            },
+            boxShadow: {
+              glow: '0 0 0 1px rgba(139,92,246,.25), 0 20px 60px rgba(76,29,149,.35)'
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="assets/theme.css" />
+  </head>
+  <body class="text-slate-100">
+    <div class="grid-pattern min-h-screen">
+      <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+          <a href="index.html" class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
+            <div>
+              <div class="font-semibold">Media Helper AI</div>
+              <div class="text-xs text-slate-400">Insight Docs Experience</div>
+            </div>
+          </a>
+          <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex">
+            <a href="guide/index.html" class="hover:text-white">指南</a>
+            <a href="reference/index.html" class="hover:text-white">参考</a>
+            <a href="examples/index.html" class="hover:text-white">示例</a>
+            <a href="#report" class="hover:text-white">评估报告</a>
+          </nav>
+          <a href="#report" class="rounded-xl border border-violet-400/40 bg-violet-500/10 px-4 py-2 text-sm font-medium text-violet-100">查看方案</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-24">
+          <div class="space-y-8">
+            <span class="hero-pill inline-flex rounded-full px-3 py-1 text-sm text-violet-100">AI 内容评估工作台 · 高端展示版</span>
+            <div class="space-y-5">
+              <h1 class="max-w-3xl text-4xl font-black tracking-tight text-white md:text-6xl">多维度打分报告，
+                <span class="bg-gradient-to-r from-violet-300 via-cyan-300 to-emerald-300 bg-clip-text text-transparent">像产品官网一样展示</span>
+              </h1>
+              <p class="max-w-2xl text-lg leading-8 text-slate-300">基于参考站的现代文档型首页结构，重构为更适合内容评估、投放判断与账号选题决策的高端展示页。整体采用 Tailwind CSS 风格化实现。</p>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <a href="#report" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">查看示范报告</a>
+              <a href="guide/index.html" class="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200">浏览站点结构</a>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="glass rounded-2xl p-4">
+                <div class="text-2xl font-bold text-white">36 / 60</div>
+                <div class="mt-1 text-sm text-slate-400">综合评估得分</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="text-2xl font-bold text-white">14</div>
+                <div class="mt-1 text-sm text-slate-400">问题关注人数</div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="text-2xl font-bold text-white">2243</div>
+                <div class="mt-1 text-sm text-slate-400">累计浏览量</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-glow glass rounded-3xl p-5">
+            <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div>
+                  <p class="text-sm text-slate-400">本周热点机会判断</p>
+                  <h2 class="text-xl font-semibold">知乎内容价值雷达</h2>
+                </div>
+                <span class="rounded-full bg-emerald-500/15 px-3 py-1 text-xs text-emerald-300">中低优先级</span>
+              </div>
+              <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+                  <div class="text-sm text-slate-400">推荐动作</div>
+                  <div class="mt-2 text-lg font-semibold">转向更高权重选题</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-300">该题精准，但生命周期与互动基数较弱，建议作为补充而非主攻阵地。</p>
+                </div>
+                <div class="mini-chart">
+                  <div class="chart-bars">
+                    <span style="height: 90%"></span>
+                    <span style="height: 12%"></span>
+                    <span style="height: 70%"></span>
+                    <span style="height: 40%"></span>
+                    <span style="height: 100%"></span>
+                    <span style="height: 50%"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="report" class="mx-auto max-w-7xl px-6 pb-8 lg:px-8">
+          <div class="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.2em] text-violet-300">示范报告</p>
+              <h2 class="mt-2 text-3xl font-bold">知乎问题多维度打分评估表</h2>
+              <p class="mt-2 text-slate-400">满分 60 分 ｜ 综合总分 36 分</p>
+            </div>
+            <span class="rounded-full border border-amber-400/30 bg-amber-500/10 px-4 py-2 text-sm text-amber-200">结论：不适合作为主攻回答题</span>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+            <div class="glass rounded-3xl p-6">
+              <div class="flex items-center gap-5">
+                <div class="relative grid place-items-center">
+                  <div class="score-ring"></div>
+                  <div class="score-ring-label">
+                    <div class="text-3xl font-black text-white">36</div>
+                    <div class="text-xs uppercase tracking-[0.25em] text-slate-400">score</div>
+                  </div>
+                </div>
+                <div class="space-y-3">
+                  <div>
+                    <div class="text-sm text-slate-400">建议级别</div>
+                    <div class="text-xl font-semibold text-white">谨慎投入</div>
+                  </div>
+                  <p class="max-w-md text-sm leading-6 text-slate-300">选题情绪价值与账号定位高度匹配，但当前问题权重过低、关注活跃度不足，难以带来显著涨粉与搜索红利。</p>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-4">
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>情绪 / 痛点 / 争议强度</span><span>9 / 10</span></div>
+                  <div class="metric-line"><span style="width: 90%"></span></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>关注者数量 & 活跃度</span><span>1 / 10</span></div>
+                  <div class="metric-line"><span style="width: 10%"></span></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>搜索流量潜力</span><span>7 / 10</span></div>
+                  <div class="metric-line"><span style="width: 70%"></span></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>赛道竞争饱和度</span><span>4 / 10</span></div>
+                  <div class="metric-line"><span style="width: 40%"></span></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>赛道与账号匹配度</span><span>10 / 10</span></div>
+                  <div class="metric-line"><span style="width: 100%"></span></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>变现 / 涨粉价值</span><span>5 / 10</span></div>
+                  <div class="metric-line"><span style="width: 50%"></span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass rounded-3xl p-6">
+              <div class="overflow-hidden rounded-2xl border border-white/10">
+                <table class="table-soft min-w-full text-left text-sm">
+                  <thead class="bg-slate-900/80 text-slate-200">
+                    <tr>
+                      <th class="px-4 py-3">评估维度</th>
+                      <th class="px-4 py-3">打分</th>
+                      <th class="px-4 py-3">分数评语</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/10 bg-slate-950/40 text-slate-300">
+                    <tr>
+                      <td class="px-4 py-3">情绪 / 痛点 / 争议强度</td>
+                      <td class="px-4 py-3 font-semibold text-white">9</td>
+                      <td class="px-4 py-3">直击程序员职场选择核心痛点，垂直人群共鸣非常强。</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3">关注者数量 & 活跃度</td>
+                      <td class="px-4 py-3 font-semibold text-white">1</td>
+                      <td class="px-4 py-3">近 3 个月仅 14 人关注、2243 次浏览，实际互动接近停滞。</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3">搜索流量潜力</td>
+                      <td class="px-4 py-3 font-semibold text-white">7</td>
+                      <td class="px-4 py-3">关键词具备垂直搜索需求，但问题权重低，曝光受限。</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3">赛道竞争饱和度</td>
+                      <td class="px-4 py-3 font-semibold text-white">4</td>
+                      <td class="px-4 py-3">赛道整体竞争强，但单题回答量少，局部竞争压力不高。</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3">赛道与账号匹配度</td>
+                      <td class="px-4 py-3 font-semibold text-white">10</td>
+                      <td class="px-4 py-3">与程序员 / AI 工程师 / 独立开发者账号定位高度一致。</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3">变现 / 涨粉价值</td>
+                      <td class="px-4 py-3 font-semibold text-white">5</td>
+                      <td class="px-4 py-3">受众精准但流量底盘偏小，转化效率有限。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="mt-5 grid gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+                  <div class="text-sm text-emerald-300">流量增量</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-100">无明显自然流量增量，问题已过生命周期黄金期，推荐与搜索增长空间较小。</p>
+                </div>
+                <div class="rounded-2xl border border-rose-500/20 bg-rose-500/10 p-4">
+                  <div class="text-sm text-rose-300">是否适合回答</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-100">不适合重投入回答，建议优先布局更高热度、更强推荐势能的同类问题。</p>
+                </div>
+              </div>
+
+              <div class="mt-4 rounded-2xl border border-white/10 bg-slate-900/60 p-4 text-sm text-slate-300">
+                <div class="mb-2 font-semibold text-white">问题元数据</div>
+                <div class="grid gap-2 sm:grid-cols-3">
+                  <div>创建时间：2026-01-30 12:39:01</div>
+                  <div>关注人数：14</div>
+                  <div>总浏览量：2243</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+          <div class="mb-6">
+            <p class="text-sm uppercase tracking-[0.2em] text-cyan-300">核心能力</p>
+            <h2 class="mt-2 text-3xl font-bold">四个主卡片，延续参考站的展示节奏</h2>
+          </div>
+          <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <article class="glass card-lift rounded-2xl p-5">
+              <div class="text-2xl">🧭</div>
+              <h3 class="mt-4 text-lg font-semibold text-white">选题判断</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-300">快速识别值得投入的问题，降低无效创作与低曝光消耗。</p>
+            </article>
+            <article class="glass card-lift rounded-2xl p-5">
+              <div class="text-2xl">📊</div>
+              <h3 class="mt-4 text-lg font-semibold text-white">多维评分</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-300">从痛点、流量、竞争、匹配度与变现价值等多维展开量化。</p>
+            </article>
+            <article class="glass card-lift rounded-2xl p-5">
+              <div class="text-2xl">✨</div>
+              <h3 class="mt-4 text-lg font-semibold text-white">高端展示</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-300">以官网级视觉语言包装分析结果，适合演示、投标与对外汇报。</p>
+            </article>
+            <article class="glass card-lift rounded-2xl p-5">
+              <div class="text-2xl">⚡</div>
+              <h3 class="mt-4 text-lg font-semibold text-white">快速扩展</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-300">可继续扩充为完整文档站、案例库与自动化报告生成后台。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+          <div class="glass rounded-3xl p-6 lg:p-8">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p class="text-sm uppercase tracking-[0.2em] text-violet-300">站点结构</p>
+                <h2 class="mt-2 text-3xl font-bold">文档型信息架构已同步搭建</h2>
+              </div>
+              <div class="text-sm text-slate-400">首页 + 指南页 + 参考页 + 示例页</div>
+            </div>
+            <div class="mt-6 grid gap-4 md:grid-cols-3">
+              <a href="guide/index.html" class="card-lift rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+                <div class="font-semibold text-white">Guide</div>
+                <p class="mt-2 text-sm text-slate-300">了解报告生成流程与页面组成。</p>
+              </a>
+              <a href="reference/index.html" class="card-lift rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+                <div class="font-semibold text-white">Reference</div>
+                <p class="mt-2 text-sm text-slate-300">查看字段定义、评分逻辑与组件规范。</p>
+              </a>
+              <a href="examples/index.html" class="card-lift rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+                <div class="font-semibold text-white">Examples</div>
+                <p class="mt-2 text-sm text-slate-300">查看更多报告版式与内容呈现模板。</p>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
