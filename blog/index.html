@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog · Media Helper AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      (() => {
+        const theme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-mark.svg" />
+    <link rel="stylesheet" href="../assets/theme.css" />
+  </head>
+  <body data-page="blog-index" class="text-slate-100">
+    <div class="grid-pattern min-h-screen">
+      <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
+          <a href="../index.html" class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
+            <div>
+              <div class="font-semibold text-white">Media Helper AI</div>
+              <div class="text-xs text-slate-400">VitePress 风格博客中心</div>
+            </div>
+          </a>
+          <nav class="flex items-center gap-2">
+            <a id="blog-home-link" href="../index.html" class="nav-tool nav-pill-secondary">首页</a>
+            <button id="blog-lang-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换语言">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m5 8 6 6"></path>
+                <path d="m4 14 6-6 2-3"></path>
+                <path d="M2 5h12"></path>
+                <path d="M7 2h1"></path>
+                <path d="m22 22-5-10-5 10"></path>
+                <path d="M14 18h6"></path>
+              </svg>
+              <span id="blog-lang-label">EN</span>
+            </button>
+            <button id="theme-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换主题">
+              <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              <span id="theme-toggle-text">深色</span>
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      <main class="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-12">
+        <section class="blog-hero rounded-3xl border border-white/10 p-6 lg:p-8">
+          <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div class="max-w-3xl">
+              <span class="inline-flex rounded-full border border-cyan-400/40 bg-cyan-500/15 px-3 py-1 text-sm font-semibold text-cyan-100">Zhihu Growth Blog</span>
+              <h1 class="mt-4 text-4xl font-black tracking-tight text-white md:text-5xl">围绕知乎流量、变现与避坑策略的文章中心</h1>
+              <p class="mt-4 text-base leading-8 text-slate-100 md:text-lg">目前已收录 3 篇紧贴项目定位的核心文章，帮助你在回答前先判断：这个问题有没有流量、值不值得做、能不能带来转化。</p>
+              <div class="mt-6 flex flex-wrap gap-3">
+                <a href="#posts" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">浏览最新文章</a>
+                <a href="#topics" class="rounded-xl border border-white/10 px-5 py-3 font-semibold text-slate-200">查看专题方向</a>
+              </div>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              <div class="blog-stat-card">
+                <div class="blog-stat-label">文章总数</div>
+                <div id="blog-total-posts" class="blog-stat-value">0</div>
+              </div>
+              <div class="blog-stat-card">
+                <div class="blog-stat-label">专题方向</div>
+                <div id="blog-topic-count" class="blog-stat-value">0</div>
+              </div>
+              <div class="blog-stat-card">
+                <div class="blog-stat-label">最近更新</div>
+                <div id="blog-last-update" class="text-sm leading-6 text-slate-100">2026-04-19</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mt-6">
+          <div class="mb-4">
+            <div class="text-sm uppercase tracking-[0.2em] text-violet-300">Top Picks</div>
+            <h2 class="mt-2 text-2xl font-bold text-white">精选样例文章</h2>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <a href="./post.html?slug=zhihu-answer-no-traffic" class="glass card-lift rounded-2xl p-4">
+              <div class="text-xs uppercase tracking-[0.2em] text-violet-300">Traffic</div>
+              <p class="mt-3 text-base font-semibold text-white">你写的知乎回答为什么没人看？不是因为你写的不好，而是问题没流量！</p>
+            </a>
+            <a href="./post.html?slug=zhihu-monetize-questions" class="glass card-lift rounded-2xl p-4">
+              <div class="text-xs uppercase tracking-[0.2em] text-cyan-300">Monetization</div>
+              <p class="mt-3 text-base font-semibold text-white">什么样的知乎问题回答后更容易变现？</p>
+            </a>
+            <a href="./post.html?slug=zhihu-tags-do-not-answer" class="glass card-lift rounded-2xl p-4">
+              <div class="text-xs uppercase tracking-[0.2em] text-emerald-300">Warning</div>
+              <p class="mt-3 text-base font-semibold text-white">带有这几种标签的知乎问题千万不要答！！！</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="mt-8 grid gap-6 lg:grid-cols-[220px_1fr_280px]">
+          <aside class="space-y-4">
+            <div class="glass rounded-2xl p-5">
+              <div class="text-sm font-semibold text-white">浏览导航</div>
+              <div class="mt-3 space-y-2">
+                <a class="sidebar-link active" href="#posts">最新文章</a>
+                <a class="sidebar-link" href="#topics">专题方向</a>
+                <a class="sidebar-link" href="#mdx-power">MDX 能力</a>
+              </div>
+            </div>
+            <div class="glass rounded-2xl p-5" id="topics">
+              <div class="text-sm font-semibold text-white">专题方向</div>
+              <div id="category-list" class="mt-3 flex flex-wrap gap-2"></div>
+            </div>
+          </aside>
+
+          <div>
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div class="text-sm uppercase tracking-[0.2em] text-cyan-300">Latest Posts</div>
+                <h2 id="posts" class="mt-2 text-2xl font-bold text-white">文章列表</h2>
+              </div>
+              <input id="blog-search" type="search" placeholder="搜索标题 / 标签" class="field-input max-w-sm" />
+            </div>
+            <div id="featured-post" class="mb-5"></div>
+            <div id="post-grid" class="grid gap-4 md:grid-cols-2"></div>
+          </div>
+
+          <aside class="space-y-4">
+            <div class="glass rounded-2xl p-5">
+              <div class="text-sm font-semibold text-white">编辑推荐</div>
+              <p class="mt-3 text-sm leading-6 text-slate-300">优先阅读“问题没流量”和“更容易变现”的两类文章，它们最贴合当前项目的产品定位。</p>
+            </div>
+            <div id="mdx-power" class="glass rounded-2xl p-5">
+              <div class="text-sm font-semibold text-white">MDX 能力</div>
+              <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                <li>• 支持 Frontmatter 元数据</li>
+                <li>• 支持 Markdown 正文排版</li>
+                <li>• 支持自定义组件嵌入</li>
+                <li>• 支持文章目录自动生成</li>
+              </ul>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+    <script src="../assets/blog-content.js"></script>
+    <script src="../assets/blog.js"></script>
+  </body>
+</html>

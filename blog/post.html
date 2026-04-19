@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post · Media Helper AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      (() => {
+        const theme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-mark.svg" />
+    <link rel="stylesheet" href="../assets/theme.css" />
+  </head>
+  <body data-page="blog-post" class="text-slate-100">
+    <div class="grid-pattern min-h-screen">
+      <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
+          <a href="../index.html" class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
+            <div>
+              <div class="font-semibold text-white">Media Helper AI</div>
+              <div class="text-xs text-slate-400">MDX Article</div>
+            </div>
+          </a>
+          <div class="flex items-center gap-2">
+            <a id="blog-home-link" href="../index.html" class="nav-tool nav-pill-secondary">首页</a>
+            <button id="blog-lang-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换语言">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m5 8 6 6"></path>
+                <path d="m4 14 6-6 2-3"></path>
+                <path d="M2 5h12"></path>
+                <path d="M7 2h1"></path>
+                <path d="m22 22-5-10-5 10"></path>
+                <path d="M14 18h6"></path>
+              </svg>
+              <span id="blog-lang-label">EN</span>
+            </button>
+            <button id="theme-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换主题">
+              <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              <span id="theme-toggle-text">深色</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
+        <div class="grid gap-6 lg:grid-cols-[240px_1fr_220px]">
+          <aside class="glass h-fit rounded-2xl p-4">
+            <div class="mb-3 text-xs uppercase tracking-[0.2em] text-slate-400">Posts</div>
+            <div id="post-nav" class="space-y-2"></div>
+          </aside>
+
+          <article class="glass rounded-3xl p-6 lg:p-8">
+            <div class="border-b border-white/10 pb-5">
+              <div id="post-meta" class="text-sm text-slate-400">加载中...</div>
+              <h1 id="post-title" class="mt-3 text-4xl font-black tracking-tight text-white">正在加载文章</h1>
+              <p id="post-summary" class="mt-3 max-w-3xl text-base leading-7 text-slate-300"></p>
+            </div>
+            <div id="post-content" class="mdx-prose mt-6">
+              <p class="text-slate-300">正在编译 MDX 内容...</p>
+            </div>
+          </article>
+
+          <aside class="glass h-fit rounded-2xl p-4">
+            <div class="mb-3 text-xs uppercase tracking-[0.2em] text-slate-400">On this page</div>
+            <div id="post-toc" class="space-y-1"></div>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <script src="../assets/blog-content.js"></script>
+    <script src="../assets/blog.js"></script>
+  </body>
+</html>

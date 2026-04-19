@@ -45,7 +45,7 @@
             </div>
           </a>
           <div class="flex items-center gap-2">
-            <a id="nav-blog" href="guide/index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
+            <a id="nav-blog" href="blog/index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -58,7 +58,7 @@
                   <path d="m12 3 7 4v10l-7 4-7-4V7l7-4z"></path>
                   <path d="m12 12 7-4"></path>
                   <path d="M12 12 5 8"></path>
-                  <path d="v9"></path>
+                  <path d="M12 12v9"></path>
                 </svg>
                 <span id="nav-version-label">v1.0.0</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -148,7 +148,7 @@
             </div>
             <div class="flex flex-wrap gap-4">
               <a id="hero-primary-cta" href="#" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">开始智能评估</a>
-              <a id="hero-secondary-cta" href="guide/index.html" class="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200">什么是 Media Helper AI?</a>
+              <a id="hero-secondary-cta" href="blog/index.html" class="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200">浏览博客</a>
               <a id="hero-github-cta" href="https://github.com/geekmister/media-helper-ai.git" target="_blank" rel="noreferrer" class="rounded-xl border border-cyan-400/50 bg-cyan-500/15 px-5 py-3 font-semibold text-cyan-100">GitHub</a>
             </div>
 
@@ -346,21 +346,21 @@
             </div>
           </div>
           <div class="grid gap-4 md:grid-cols-3">
-            <article class="glass card-lift rounded-2xl p-5">
-              <div id="article-1-tag" class="text-xs uppercase tracking-[0.2em] text-violet-300">Insight</div>
-              <h3 id="article-1-title" class="mt-3 text-lg font-semibold text-white">如何判断一个知乎问题是否值得回答</h3>
-              <p id="article-1-desc" class="mt-2 text-sm leading-6 text-slate-300">从痛点、流量、竞争和账号匹配度四个方向，快速判断内容投入价值。</p>
-            </article>
-            <article class="glass card-lift rounded-2xl p-5">
-              <div id="article-2-tag" class="text-xs uppercase tracking-[0.2em] text-cyan-300">Workflow</div>
-              <h3 id="article-2-title" class="mt-3 text-lg font-semibold text-white">AI 评估链路如何帮助选题提效</h3>
-              <p id="article-2-desc" class="mt-2 text-sm leading-6 text-slate-300">把表单输入、提示词组装和模型判断串联起来，形成可复用的分析闭环。</p>
-            </article>
-            <article class="glass card-lift rounded-2xl p-5">
-              <div id="article-3-tag" class="text-xs uppercase tracking-[0.2em] text-emerald-300">Growth</div>
-              <h3 id="article-3-title" class="mt-3 text-lg font-semibold text-white">从问题分析走向内容增长决策</h3>
-              <p id="article-3-desc" class="mt-2 text-sm leading-6 text-slate-300">不止是打分，更帮助你决定该不该投入、怎么回答以及如何放大结果。</p>
-            </article>
+            <a href="blog/post.html?slug=zhihu-answer-no-traffic" class="glass card-lift block rounded-2xl p-5">
+              <div id="article-1-tag" class="text-xs uppercase tracking-[0.2em] text-violet-300">Traffic</div>
+              <h3 id="article-1-title" class="mt-3 text-lg font-semibold text-white">你写的知乎回答为什么没人看？不是因为你写的不好，而是问题没流量！</h3>
+              <p id="article-1-desc" class="mt-2 text-sm leading-6 text-slate-300">很多回答没人看，不是表达问题，而是你一开始就选中了没有自然流量的问题。</p>
+            </a>
+            <a href="blog/post.html?slug=zhihu-monetize-questions" class="glass card-lift block rounded-2xl p-5">
+              <div id="article-2-tag" class="text-xs uppercase tracking-[0.2em] text-cyan-300">Monetization</div>
+              <h3 id="article-2-title" class="mt-3 text-lg font-semibold text-white">什么样的知乎问题回答后更容易变现？</h3>
+              <p id="article-2-desc" class="mt-2 text-sm leading-6 text-slate-300">真正有商业价值的问题，往往自带决策意图、购买场景和明确的人群需求。</p>
+            </a>
+            <a href="blog/post.html?slug=zhihu-tags-do-not-answer" class="glass card-lift block rounded-2xl p-5">
+              <div id="article-3-tag" class="text-xs uppercase tracking-[0.2em] text-emerald-300">Warning</div>
+              <h3 id="article-3-title" class="mt-3 text-lg font-semibold text-white">带有这几种标签的知乎问题千万不要答！！！</h3>
+              <p id="article-3-desc" class="mt-2 text-sm leading-6 text-slate-300">高竞争、低搜索、低承接的题目会持续消耗时间，却很难带来增长结果。</p>
+            </a>
           </div>
         </section>
       </main>
@@ -378,7 +378,7 @@
             <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
               <div class="grid gap-3">
                 <div id="footer-nav-title" class="text-xs font-medium uppercase tracking-wider text-slate-500">导航</div>
-                <a id="footer-link-blog" href="#" class="text-sm text-slate-400 hover:text-white transition-colors">博客</a>
+                <a id="footer-link-blog" href="blog/index.html" class="text-sm text-slate-400 hover:text-white transition-colors">博客</a>
                 <a id="footer-link-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">GitHub</a>
               </div>
               <div class="grid gap-3">

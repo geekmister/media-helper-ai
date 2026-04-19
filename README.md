@@ -52,9 +52,8 @@ media-helper-ai.git/
 ├── assets/
 │   ├── app.js              # 原生交互逻辑与前端本地分析
 │   └── theme.css           # 主题样式与视觉系统
-├── guide/                  # 指南页
-├── reference/              # 参考页
-└── examples/               # 示例页
+├── blog/                   # 博客首页与文章详情页
+└── posts/                  # MDX 文章内容
 ```
 
 ---
