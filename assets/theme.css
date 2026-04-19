@@ -13,7 +13,6 @@
   --field-text: #ffffff;
   --field-placeholder: #64748b;
   --grid-line: rgba(255,255,255,0.04);
-  --mini-chart-bg: linear-gradient(180deg, rgba(15,23,42,0.8), rgba(15,23,42,0.45));
 }
 
 [data-theme="light"] {
@@ -31,7 +30,6 @@
   --field-text: #0f172a;
   --field-placeholder: #94a3b8;
   --grid-line: rgba(15,23,42,0.06);
-  --mini-chart-bg: linear-gradient(180deg, rgba(241,245,249,0.92), rgba(226,232,240,0.7));
 }
 
 html {
@@ -142,15 +140,6 @@ body {
   text-align: center;
 }
 
-.mini-chart {
-  position: relative;
-  height: 220px;
-  border-radius: 1rem;
-  overflow: hidden;
-  background: var(--mini-chart-bg);
-  border: 1px solid rgba(148,163,184,0.14);
-}
-
 .hero-visual-shell {
   position: relative;
   min-height: 430px;
@@ -194,10 +183,6 @@ body {
   transform-style: preserve-3d;
   transition: transform 160ms ease-out;
   will-change: transform;
-}
-
-.brand-3d-base {
-  display: none;
 }
 
 .robot-3d-object {
@@ -409,11 +394,6 @@ body {
   50% { transform: rotateX(4deg) rotateY(-6deg); }
 }
 
-@keyframes auroraShift {
-  0% { transform: translate3d(-2%, -1%, 0) scale(1); }
-  100% { transform: translate3d(2%, 1%, 0) scale(1.06); }
-}
-
 @keyframes orbitSpinA {
   from { transform: rotateX(72deg) rotateZ(0deg) translateZ(22px); }
   to { transform: rotateX(72deg) rotateZ(360deg) translateZ(22px); }
@@ -427,29 +407,6 @@ body {
 @keyframes pulseNode {
   0%, 100% { transform: scale(1); opacity: 0.9; }
   50% { transform: scale(1.25); opacity: 1; }
-}
-
-.mini-chart::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 100% 25%, 16.66% 100%;
-}
-
-.chart-bars {
-  position: absolute;
-  inset: 1.25rem;
-  display: flex;
-  align-items: end;
-  gap: 0.75rem;
-}
-
-.chart-bars span {
-  flex: 1;
-  border-radius: 0.75rem 0.75rem 0 0;
-  background: linear-gradient(180deg, rgba(167,139,250,0.95), rgba(34,211,238,0.7));
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.18);
 }
 
 .sidebar-link {

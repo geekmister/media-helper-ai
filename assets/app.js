@@ -3,13 +3,8 @@ const UI_TEXT = {
     pageTitle: 'Media Helper AI · 智能评估报告中心',
     brandTitle: '媒体助手 AI',
     brandSubtitle: 'AI 驱动的内容观察与增长决策体验',
-    navGuide: '指南',
-    navReference: '参考',
-    navExamples: '示例',
-    navReport: '评估报告',
     navBlog: '博客',
     navVersion: 'v1.0.0',
-    navCta: '立即分析',
     langButton: 'EN',
     themeDark: '🌙 深色',
     themeLight: '☀️ 浅色',
@@ -20,12 +15,6 @@ const UI_TEXT = {
     heroPrimaryCta: '开始分析',
     heroSecondaryCta: '什么是 Media Helper AI?',
     heroGithubCta: 'GitHub',
-    totalLabel: '综合评估得分',
-    followersLabel: '关注人数',
-    viewsLabel: '浏览量',
-    heroOverview: '后台能力概览',
-    heroEngineTitle: '提示词 + 模型分析引擎',
-    heroActionLabel: '推荐动作',
     evaluatorKicker: '智能分析',
     evaluatorTitle: '这个知乎问题，值不值得答？',
     evaluatorDesc: '输入账号定位、问题链接、问题创建时间、关注人数、浏览量，AI 会快速给出多维评分、流量判断与回答建议。',
@@ -39,11 +28,6 @@ const UI_TEXT = {
     viewsFormLabel: '浏览量',
     submitLabel: '生成评估报告',
     formIdle: '填写完成后即可生成报告，AI 会自动补全问题标题与问题描述。',
-    flowKicker: '后台运算逻辑',
-    flowTitle: 'AI 如何完成这次评估',
-    flowStep1: '① 读取问题元数据与账号定位，识别选题方向和内容场景。',
-    flowStep2: '② 结合创建时间、关注人数与浏览量，判断话题热度、生命周期和潜在价值。',
-    flowStep3: '③ 输出多维评分、结论建议与可视化报告，辅助内容决策。',
     reportKicker: '智能生成报告',
     fakeDataToggle: '开启假数据',
     fakeDataLoaded: '已加载假数据示例，可直接预览报告效果。',
@@ -79,12 +63,6 @@ const UI_TEXT = {
     cap3Desc: '自动汇总结论建议、问题信息与可视化结果，让报告表达更加清晰直观。',
     cap4Title: '演示扩展',
     cap4Desc: '既适合产品演示与方案汇报，也便于继续接入真实模型能力与后台服务。',
-    siteKicker: '站点结构',
-    siteTitle: '文档型信息架构已同步搭建',
-    siteSummary: '首页 + 指南页 + 参考页 + 示例页',
-    guideCardDesc: '了解报告生成流程与页面组成。',
-    referenceCardDesc: '查看字段定义、评分逻辑与组件规范。',
-    examplesCardDesc: '查看更多报告版式与内容呈现模板。',
     articlesKicker: '最新文章',
     articlesTitle: '从内容洞察到增长决策的最新思考',
     articlesDesc: '探索内容创作规律，挖掘流量增长机会，让每一个选题投入都更具价值。',
@@ -115,13 +93,8 @@ const UI_TEXT = {
     pageTitle: 'Media Helper AI · Smart Evaluation Center',
     brandTitle: 'Media Helper AI',
     brandSubtitle: 'AI-Powered Content Insight & Growth Decision Experience',
-    navGuide: 'Guide',
-    navReference: 'Reference',
-    navExamples: 'Examples',
-    navReport: 'Report',
     navBlog: 'Blog',
     navVersion: 'v1.0.0',
-    navCta: 'Analyze Now',
     langButton: '中文',
     themeDark: '🌙 Dark',
     themeLight: '☀️ Light',
@@ -132,12 +105,6 @@ const UI_TEXT = {
     heroPrimaryCta: 'Start Analysis',
     heroSecondaryCta: 'What is Media Helper AI?',
     heroGithubCta: 'GitHub',
-    totalLabel: 'Overall Score',
-    followersLabel: 'Followers',
-    viewsLabel: 'Views',
-    heroOverview: 'Backend Overview',
-    heroEngineTitle: 'Prompt + LLM Engine',
-    heroActionLabel: 'Suggested Action',
     evaluatorKicker: 'Smart Analysis',
     evaluatorTitle: 'Is this Zhihu question worth answering?',
     evaluatorDesc: 'Enter your positioning, question URL, created time, followers, and views to get scoring, traffic potential, and an answer recommendation.',
@@ -151,11 +118,6 @@ const UI_TEXT = {
     viewsFormLabel: 'Views',
     submitLabel: 'Generate Report',
     formIdle: 'Complete the fields to generate the report. AI will infer the question title and description automatically.',
-    flowKicker: 'Backend Logic',
-    flowTitle: 'How AI completes this evaluation',
-    flowStep1: '① Read the question metadata and account positioning to identify the topic direction and content context.',
-    flowStep2: '② Combine created time, followers, and views to judge heat, lifecycle, and potential value.',
-    flowStep3: '③ Output multi-factor scores, recommendations, and a visual report to support your content decision.',
     reportKicker: 'Generated Report',
     fakeDataToggle: 'Use demo data',
     fakeDataLoaded: 'Demo data has been loaded for preview.',
@@ -191,12 +153,6 @@ const UI_TEXT = {
     cap3Desc: 'Automatically generate recommendations, metadata, and visual results for a clearer final report.',
     cap4Title: 'Demo Ready',
     cap4Desc: 'Ideal for product demos and proposals, while remaining easy to connect with real model services later.',
-    siteKicker: 'Site Structure',
-    siteTitle: 'The documentation-style information architecture is ready',
-    siteSummary: 'Homepage + Guide + Reference + Examples',
-    guideCardDesc: 'Learn the report flow and page composition.',
-    referenceCardDesc: 'Check field definitions, scoring logic, and component rules.',
-    examplesCardDesc: 'See more layout patterns and report presentation ideas.',
     articlesKicker: 'Latest Articles',
     articlesTitle: 'Latest thinking on content insight and growth decisions',
     articlesDesc: 'Explore content creation patterns, uncover traffic growth opportunities, and make every topic investment more valuable.',
@@ -235,8 +191,6 @@ const DEFAULT_REPORTS = {
     trafficVerdict: '无自然流量增量，问题已过生命周期黄金期，无推荐与搜索增长空间。',
     answerVerdict: '不适合回答，投入产出比偏低，难以获得曝光与涨粉。',
     summary: '系统正在等待真实问题链接与账号定位数据，收到后会自动调用模型并生成完整评估报告。',
-    heroAction: '等待数据输入',
-    heroBadge: '待分析',
     metadata: {
       createdAt: '2026-01-30 12:39:01',
       followers: 14,
@@ -263,8 +217,6 @@ const DEFAULT_REPORTS = {
     trafficVerdict: 'There is no strong natural traffic upside left and recommendation growth is limited.',
     answerVerdict: 'It is not ideal for heavy investment because exposure and follower growth may stay weak.',
     summary: 'The system is waiting for a real question URL and account positioning so it can call the model and produce the final report.',
-    heroAction: 'Waiting for your input',
-    heroBadge: 'Pending',
     metadata: {
       createdAt: '2026-01-30 12:39:01',
       followers: 14,
@@ -294,8 +246,6 @@ const EMPTY_REPORTS = {
     trafficVerdict: '填写并提交后，这里会显示流量判断。',
     answerVerdict: '填写并提交后，这里会显示回答建议。',
     summary: '当前暂无结果。你可以填写上方信息进行分析，或开启假数据快速预览。',
-    heroAction: '等待数据输入',
-    heroBadge: '未开始',
     metadata: {
       createdAt: '-',
       followers: '-',
@@ -322,8 +272,6 @@ const EMPTY_REPORTS = {
     trafficVerdict: 'Traffic judgment will appear here after submission.',
     answerVerdict: 'The answer recommendation will appear here after submission.',
     summary: 'No result is being shown yet. Fill in the form above or enable demo data for a quick preview.',
-    heroAction: 'Waiting for input',
-    heroBadge: 'Idle',
     metadata: {
       createdAt: '-',
       followers: '-',
@@ -345,7 +293,6 @@ const EMPTY_REPORTS = {
 
 let currentLang = localStorage.getItem('mha-lang') === 'en' ? 'en' : 'zh';
 let currentTheme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
-let currentReport = EMPTY_REPORTS[currentLang];
 
 function resolveApiBase() {
   const queryBase = new URLSearchParams(window.location.search).get('apiBase');
@@ -413,16 +360,16 @@ function countKeywordHits(textBlob, keywords) {
   return keywords.reduce((count, keyword) => count + (lowered.includes(keyword.toLowerCase()) ? 1 : 0), 0);
 }
 
-function getDecisionMeta(total) {
+function getDecisionLevel(total) {
   if (currentLang === 'en') {
-    if (total >= 48) return ['Highly Recommended', 'High Priority', 'Invest first'];
-    if (total >= 36) return ['Cautious Investment', 'Medium-low Priority', 'Use as supporting content'];
-    return ['Low Priority', 'Low Priority', 'Skip or lower the effort'];
+    if (total >= 48) return 'Highly Recommended';
+    if (total >= 36) return 'Cautious Investment';
+    return 'Low Priority';
   }
 
-  if (total >= 48) return ['强烈推荐', '高优先级', '建议优先投入'];
-  if (total >= 36) return ['谨慎投入', '中低优先级', '作为补充布局'];
-  return ['低优先级', '低优先级', '建议跳过或降配'];
+  if (total >= 48) return '强烈推荐';
+  if (total >= 36) return '谨慎投入';
+  return '低优先级';
 }
 
 function formatCreatedAt(value) {
@@ -449,7 +396,7 @@ function buildFrontendFallbackReport(payload) {
   const competitionScore = clampScore(8 - countKeywordHits(textBlob, competitionWords) * 0.8 + (fitScore >= 8 ? 1 : 0));
   const monetizeScore = clampScore(emotionScore * 0.35 + fitScore * 0.35 + activeScore * 0.3);
   const total = emotionScore + activeScore + searchScore + competitionScore + fitScore + monetizeScore;
-  const [level, heroBadge, heroAction] = getDecisionMeta(total);
+  const level = getDecisionLevel(total);
 
   if (currentLang === 'en') {
     return {
@@ -461,8 +408,6 @@ function buildFrontendFallbackReport(payload) {
       trafficVerdict: total >= 36 ? 'The topic has some discussion and search potential, but the natural traffic ceiling is moderate.' : 'Traffic upside appears limited in the current state.',
       answerVerdict: total >= 36 ? 'It is usable as supporting content and aligns with the positioning.' : 'It is not ideal as a primary answer target.',
       summary: `The browser has completed a pure frontend local analysis for this topic. Current fit is ${fitScore}/10 and activity is ${activeScore}/10.`,
-      heroAction,
-      heroBadge,
       metadata: {
         createdAt: formatCreatedAt(payload.createdAt),
         followers,
@@ -492,8 +437,6 @@ function buildFrontendFallbackReport(payload) {
     trafficVerdict: total >= 36 ? '当前话题具备一定搜索和讨论空间，但自然流量天花板中等。' : '当前话题的自然流量增长空间较小。',
     answerVerdict: total >= 36 ? '可作为补充题材回答，与账号定位较为贴合。' : '不适合作为重点回答题。',
     summary: `浏览器已完成纯前端本地分析。当前账号匹配度为 ${fitScore}/10，活跃度为 ${activeScore}/10。`,
-    heroAction,
-    heroBadge,
     metadata: {
       createdAt: formatCreatedAt(payload.createdAt),
       followers,
@@ -517,8 +460,6 @@ function buildFrontendFallbackReport(payload) {
 function renderMetrics(metrics) {
   const metricList = document.getElementById('metric-list');
   const scoreTableBody = document.getElementById('score-table-body');
-  const heroBars = document.getElementById('hero-bars');
-
   if (metricList) {
     metricList.innerHTML = metrics
       .map(
@@ -546,13 +487,9 @@ function renderMetrics(metrics) {
       .join('');
   }
 
-  if (heroBars) {
-    heroBars.innerHTML = metrics.map((item) => `<span style="height: ${Math.max(10, item.score * 10)}%"></span>`).join('');
-  }
 }
 
 function renderReport(report) {
-  currentReport = report;
   setText('report-kicker', 'reportKicker');
   setText('fake-data-label', 'fakeDataToggle');
   setText('recommend-label', 'recommendLabel');
@@ -595,13 +532,6 @@ function renderReport(report) {
     sourceLink.style.display = 'inline';
   }
 
-  setElementText('headline-total', `${report.total} / ${report.maxScore}`);
-  setElementText('headline-followers', String(report.metadata.followers));
-  setElementText('headline-views', String(report.metadata.views));
-  setElementText('hero-action', report.heroAction);
-  setElementText('hero-summary', report.summary);
-  setElementText('hero-decision-badge', report.heroBadge);
-
   const degree = Math.round((report.total / report.maxScore) * 360);
   const scoreRing = document.getElementById('score-ring');
   if (scoreRing) {
@@ -639,13 +569,8 @@ function applyStaticText() {
 
   setText('brand-title', 'brandTitle');
   setText('brand-subtitle', 'brandSubtitle');
-  setText('nav-guide', 'navGuide');
-  setText('nav-reference', 'navReference');
-  setText('nav-examples', 'navExamples');
-  setText('nav-report', 'navReport');
   setText('nav-blog-label', 'navBlog');
   setText('nav-version-label', 'navVersion');
-  setText('nav-cta', 'navCta');
   setText('hero-pill', 'heroPill');
   setText('hero-title-prefix', 'heroTitlePrefix');
   setText('hero-title-accent', 'heroTitleAccent');
@@ -653,12 +578,6 @@ function applyStaticText() {
   setText('hero-primary-cta', 'heroPrimaryCta');
   setText('hero-secondary-cta', 'heroSecondaryCta');
   setText('hero-github-cta', 'heroGithubCta');
-  setText('stat-total-label', 'totalLabel');
-  setText('stat-followers-label', 'followersLabel');
-  setText('stat-views-label', 'viewsLabel');
-  setText('hero-overview', 'heroOverview');
-  setText('hero-engine-title', 'heroEngineTitle');
-  setText('hero-action-label', 'heroActionLabel');
   setText('evaluator-kicker', 'evaluatorKicker');
   setText('evaluator-title', 'evaluatorTitle');
   setText('evaluator-desc', 'evaluatorDesc');
@@ -669,11 +588,6 @@ function applyStaticText() {
   setText('label-views', 'viewsFormLabel');
   setText('submit-btn', 'submitLabel');
   setText('form-status', 'formIdle');
-  setText('flow-kicker', 'flowKicker');
-  setText('flow-title', 'flowTitle');
-  setText('flow-step-1', 'flowStep1');
-  setText('flow-step-2', 'flowStep2');
-  setText('flow-step-3', 'flowStep3');
   setText('capabilities-kicker', 'capabilitiesKicker');
   setText('capabilities-title', 'capabilitiesTitle');
   setText('capabilities-desc', 'capabilitiesDesc');
@@ -822,8 +736,6 @@ async function submitEvaluation(event) {
     total: 0,
     level: currentLang === 'en' ? 'Analyzing' : '分析中',
     summary: text('computing'),
-    heroAction: text('computing'),
-    heroBadge: currentLang === 'en' ? 'Analyzing' : '分析中',
     conclusion: currentLang === 'en' ? 'Generating the latest report for this request.' : '正在生成本次请求的最新报告。',
     trafficVerdict: currentLang === 'en' ? 'Waiting for the model response.' : '正在等待模型返回结果。',
     answerVerdict: currentLang === 'en' ? 'The previous report will be replaced automatically.' : '旧报告将在本次完成后自动覆盖。',
