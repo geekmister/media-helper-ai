@@ -1,5 +1,7 @@
 # Media Helper AI
 
+![alt text](image.png)
+
 > 一个面向选题评估与报告展示的纯前端静态项目：无 Python、无 Node、无框架、无构建流程，打开即可使用。
 
 ![Frontend](https://img.shields.io/badge/Role-Pure%20Frontend-8b5cf6)

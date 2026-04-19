@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>版本发布日志 · Media Helper AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#f5f3ff',
+                400: '#a78bfa',
+                500: '#8b5cf6',
+                600: '#7c3aed'
+              }
+            },
+            boxShadow: {
+              glow: '0 0 0 1px rgba(139,92,246,.25), 0 20px 60px rgba(76,29,149,.35)'
+            }
+          }
+        }
+      }
+    </script>
+    <script>
+      (() => {
+        const theme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="../assets/logo-mark.svg" />
+    <link rel="stylesheet" href="../assets/theme.css" />
+    <style>
+      .version-card {
+        transition: all 0.3s ease;
+      }
+      .version-card:hover {
+        transform: translateY(-2px);
+      }
+      .version-card.expanded {
+        border-color: rgba(139, 92, 246, 0.5);
+      }
+      .update-item {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeIn 0.3s ease forwards;
+      }
+      .update-item:nth-child(1) { animation-delay: 0.1s; }
+      .update-item:nth-child(2) { animation-delay: 0.2s; }
+      .update-item:nth-child(3) { animation-delay: 0.3s; }
+      .update-item:nth-child(4) { animation-delay: 0.4s; }
+      .update-item:nth-child(5) { animation-delay: 0.5s; }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .tag {
+        transition: all 0.2s ease;
+      }
+      .tag:hover {
+        transform: scale(1.05);
+      }
+      .back-to-top {
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+      }
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body class="text-slate-100">
+    <div class="grid-pattern min-h-screen">
+      <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-4 lg:px-8">
+          <a href="../index.html" class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
+            <div>
+              <div id="brand-title" class="font-semibold">Media Helper AI</div>
+              <div id="brand-subtitle" class="text-xs text-slate-400">AI 驱动的内容观察与增长决策体验</div>
+            </div>
+          </a>
+          <div class="flex items-center gap-2">
+            <a id="nav-blog" href="index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              <span id="nav-blog-label">博客</span>
+            </a>
+            <div class="relative">
+              <button id="nav-version" type="button" class="nav-tool nav-pill-secondary" aria-label="Version">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m12 3 7 4v10l-7 4-7-4V7l7-4z"></path>
+                  <path d="m12 12 7-4"></path>
+                  <path d="M12 12 5 8"></path>
+                  <path d="M12 12v9"></path>
+                </svg>
+                <span id="nav-version-label">v1.0.0</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+              <div id="version-dropdown" class="hidden absolute left-0 mt-2 w-44 rounded-lg border border-slate-700 bg-slate-900 shadow-lg z-50">
+                <a href="../changelog.html" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>📋</span>
+                  <span>版本发布日志</span>
+                </a>
+                <a href="#v1.0.0" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🚀</span>
+                  <span>v1.0.0 Stable</span>
+                </a>
+                <a href="#v1.1.0" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🧪</span>
+                  <span>v1.1.0 Preview</span>
+                </a>
+              </div>
+            </div>
+            <!-- 语言切换下拉菜单 -->
+            <div class="relative">
+              <button id="lang-toggle" type="button" class="nav-tool flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m5 8 6 6"></path>
+                  <path d="m4 14 6-6 2-3"></path>
+                  <path d="M2 5h12"></path>
+                  <path d="M7 2h1"></path>
+                  <path d="m22 22-5-10-5 10"></path>
+                  <path d="M14 18h6"></path>
+                </svg>
+                <span id="lang-toggle-label">EN</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+              <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-40 rounded-lg border border-slate-700 bg-slate-900 shadow-lg z-50">
+                <a id="lang-option-en" data-lang="en" href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🇺🇸</span>
+                  <span>English</span>
+                </a>
+                <a id="lang-option-zh" data-lang="zh" href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🇨🇳</span>
+                  <span>中文</span>
+                </a>
+              </div>
+            </div>
+            
+            <!-- 分隔线 -->
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+            
+            <!-- 暗黑/亮色模式开关 -->
+            <button id="theme-toggle" type="button" class="nav-tool">
+              <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+            
+            <!-- 分隔线 -->
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+            
+            <!-- GitHub 图标 -->
+            <a id="nav-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="nav-tool">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+          <div class="space-y-8">
+            <span class="hero-pill inline-flex rounded-full px-3 py-1 text-sm text-violet-100">版本发布日志</span>
+            <div class="space-y-5">
+              <h1 class="max-w-3xl text-4xl font-black tracking-tight leading-[1.18] text-white md:text-6xl md:leading-[1.15]">
+                产品更新记录
+              </h1>
+              <p class="max-w-2xl text-lg leading-8 text-slate-300">
+                查看 Media Helper AI 的最新功能更新、问题修复和性能优化。
+              </p>
+            </div>
+
+            <!-- 筛选和搜索功能 -->
+            <div class="glass rounded-2xl p-6">
+              <div class="grid gap-4 md:grid-cols-3">
+                <div>
+                  <label class="field-label block mb-2">更新类型</label>
+                  <select id="type-filter" class="field-input w-full">
+                    <option value="all">全部类型</option>
+                    <option value="feature">功能更新</option>
+                    <option value="fix">问题修复</option>
+                    <option value="optimization">性能优化</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label block mb-2">日期范围</label>
+                  <input type="date" id="date-filter" class="field-input w-full">
+                </div>
+                <div>
+                  <label class="field-label block mb-2">搜索</label>
+                  <div class="relative">
+                    <input type="text" id="search-input" placeholder="搜索版本或更新内容" class="field-input w-full pl-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 版本列表 -->
+            <div class="space-y-6" id="version-list">
+              <!-- v1.1.0 Preview -->
+              <div class="version-card glass rounded-3xl p-6 border border-slate-700" data-version="v1.1.0" data-date="2026-04-20" data-type="feature">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 font-bold text-slate-950">
+                      1.1
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <h2 class="text-2xl font-bold text-white">v1.1.0 Preview</h2>
+                        <span class="tag inline-flex items-center gap-1 rounded-full bg-orange-500/20 px-3 py-1 text-xs font-medium text-orange-200 border border-orange-500/30">
+                          <span>🧪</span>
+                          <span>预览版</span>
+                        </span>
+                      </div>
+                      <p class="text-sm text-slate-400">发布日期：2026-04-20</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <button class="share-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                      </svg>
+                      分享
+                    </button>
+                    <button class="expand-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
+                        <path d="M6 9l6 6 6-6"></path>
+                      </svg>
+                      展开
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="update-content mt-6 hidden space-y-6">
+                  <!-- 新增功能 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-green-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5v14"></path>
+                      </svg>
+                      新增功能
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        新增账号匹配度评估功能，基于用户输入的账号定位与问题相关性进行智能分析
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        支持批量导入问题链接，一次分析多个问题的可答性
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        新增内容赛道竞争分析，提供赛道饱和度和差异化建议
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        支持导出评估报告为 PDF 格式，便于分享和存档
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 改进优化 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                      </svg>
+                      改进优化
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        优化 AI 评估算法，提高评分准确性和一致性
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        改进用户界面响应速度，减少页面加载时间
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        优化移动端适配，提升在手机和平板上的使用体验
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 问题修复 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-purple-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      </svg>
+                      问题修复
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        修复了在某些浏览器中日期选择器显示异常的问题
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        修复了评分计算逻辑中的边界情况处理
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 已知问题 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-amber-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      已知问题
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        批量导入功能在处理超过 10 个链接时可能会出现性能问题
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        PDF 导出功能在某些特殊字符下可能会出现格式异常
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- v1.0.0 Stable -->
+              <div class="version-card glass rounded-3xl p-6 border border-slate-700 expanded" data-version="v1.0.0" data-date="2026-04-15" data-type="feature">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-400 font-bold text-slate-950">
+                      1.0
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <h2 class="text-2xl font-bold text-white">v1.0.0 Stable</h2>
+                        <span class="tag inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-medium text-emerald-200 border border-emerald-500/30">
+                          <span>🚀</span>
+                          <span>稳定版</span>
+                        </span>
+                      </div>
+                      <p class="text-sm text-slate-400">发布日期：2026-04-15</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <button class="share-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                      </svg>
+                      分享
+                    </button>
+                    <button class="expand-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
+                        <path d="M6 15l6-6 6 6"></path>
+                      </svg>
+                      收起
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="update-content mt-6 space-y-6">
+                  <!-- 新增功能 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-green-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5v14"></path>
+                      </svg>
+                      新增功能
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        初始版本发布，支持知乎问题可答性评估
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        提供账号定位、问题链接、创建时间、关注人数、浏览量等输入项
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        基于多维指标进行智能评分，包括情绪价值、流量潜力、竞争分析等
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        生成详细的评估报告，包含分数、建议和问题信息
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        支持中英文语言切换
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        实现暗黑/亮色模式切换
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 改进优化 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                      </svg>
+                      改进优化
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        优化用户界面设计，提升视觉体验
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        提高评估算法的准确性和响应速度
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        优化移动端适配
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 问题修复 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-purple-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      </svg>
+                      问题修复
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        修复了部分浏览器兼容性问题
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        修复了表单验证逻辑
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- v0.9.0 Beta -->
+              <div class="version-card glass rounded-3xl p-6 border border-slate-700" data-version="v0.9.0" data-date="2026-04-10" data-type="feature">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-400 font-bold text-slate-950">
+                      0.9
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <h2 class="text-2xl font-bold text-white">v0.9.0 Beta</h2>
+                        <span class="tag inline-flex items-center gap-1 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-medium text-blue-200 border border-blue-500/30">
+                          <span>🧪</span>
+                          <span>测试版</span>
+                        </span>
+                      </div>
+                      <p class="text-sm text-slate-400">发布日期：2026-04-10</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <button class="share-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                      </svg>
+                      分享
+                    </button>
+                    <button class="expand-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
+                        <path d="M6 9l6 6 6-6"></path>
+                      </svg>
+                      展开
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="update-content mt-6 hidden space-y-6">
+                  <!-- 新增功能 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-green-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5v14"></path>
+                      </svg>
+                      新增功能
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        测试版发布，实现基本的问题评估功能
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        支持基础的表单输入和评分系统
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        实现初步的报告生成功能
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <!-- 改进优化 -->
+                  <div>
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-300 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                      </svg>
+                      改进优化
+                    </h3>
+                    <ul class="space-y-2 pl-7">
+                      <li class="update-item list-disc text-slate-300">
+                        优化界面布局和用户体验
+                      </li>
+                      <li class="update-item list-disc text-slate-300">
+                        提高系统稳定性
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="mx-auto max-w-7xl px-6 pb-10 pt-4 lg:px-8">
+        <div class="glass rounded-3xl p-8">
+          <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            <div class="max-w-xs">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
+                <div id="footer-brand" class="text-base font-semibold text-white">Media Helper AI</div>
+              </div>
+              <p id="footer-desc" class="mt-3 text-sm leading-6 text-slate-400">AI 驱动的内容洞察与增长决策工具，帮助你更快判断问题价值。</p>
+            </div>
+            <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+              <div class="grid gap-3">
+                <div id="footer-nav-title" class="text-xs font-medium uppercase tracking-wider text-slate-500">导航</div>
+                <a id="footer-link-home" href="../index.html" class="text-sm text-slate-400 hover:text-white transition-colors">首页</a>
+                <a id="footer-link-blog" href="index.html" class="text-sm text-slate-400 hover:text-white transition-colors">博客</a>
+                <a id="footer-link-changelog" href="changelog.html" class="text-sm text-slate-400 hover:text-white transition-colors">版本日志</a>
+                <a id="footer-link-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">GitHub</a>
+              </div>
+              <div class="grid gap-3">
+                <div id="footer-links-title" class="text-xs font-medium uppercase tracking-wider text-slate-500">更多项目</div>
+                <a id="footer-link-geekmister" href="https://github.com/geekmister/geekmister" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">Geekmister</a>
+                <a id="footer-link-aumoji" href="https://github.com/geekmister/AUmoji" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">AUmoji</a>
+                <a id="footer-link-iplay" href="https://github.com/geekmister/IPlay" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">IPlay</a>
+              </div>
+            </div>
+          </div>
+          <div id="footer-copy" class="mt-8 flex flex-col items-center gap-2 text-xs text-slate-500 sm:flex-row sm:justify-between">
+            <span>© 2026 Geekmister. All rights reserved.</span>
+            <span class="flex items-center gap-1">
+              Built with <span class="text-rose-400">❤</span> Geekmister
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="back-to-top fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-violet-500 text-white shadow-glow">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 15-6-6-6 6"/>
+      </svg>
+    </button>
+    
+    <script>
+      // 展开/折叠功能
+      document.querySelectorAll('.expand-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const versionCard = this.closest('.version-card');
+          const content = versionCard.querySelector('.update-content');
+          const svg = this.querySelector('svg');
+          const text = this.textContent.trim();
+          
+          if (text.includes('展开')) {
+            content.classList.remove('hidden');
+            this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2"><path d="M6 15l6-6 6 6"></path></svg>收起';
+            versionCard.classList.add('expanded');
+          } else {
+            content.classList.add('hidden');
+            this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2"><path d="M6 9l6 6 6-6"></path></svg>展开';
+            versionCard.classList.remove('expanded');
+          }
+        });
+      });
+      
+      // 筛选功能
+      document.getElementById('type-filter').addEventListener('change', function() {
+        const selectedType = this.value;
+        document.querySelectorAll('.version-card').forEach(card => {
+          if (selectedType === 'all' || card.dataset.type === selectedType) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+      
+      // 日期筛选功能
+      document.getElementById('date-filter').addEventListener('change', function() {
+        const selectedDate = this.value;
+        if (!selectedDate) {
+          document.querySelectorAll('.version-card').forEach(card => {
+            card.style.display = 'block';
+          });
+          return;
+        }
+        
+        document.querySelectorAll('.version-card').forEach(card => {
+          if (card.dataset.date >= selectedDate) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+      
+      // 搜索功能
+      document.getElementById('search-input').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        document.querySelectorAll('.version-card').forEach(card => {
+          const version = card.dataset.version.toLowerCase();
+          const content = card.textContent.toLowerCase();
+          if (version.includes(searchTerm) || content.includes(searchTerm)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+      
+      // 分享功能
+      document.querySelectorAll('.share-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const version = this.closest('.version-card').dataset.version;
+          const url = window.location.href.split('#')[0] + '#' + version;
+          navigator.clipboard.writeText(url).then(() => {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>已复制';
+            setTimeout(() => {
+              this.innerHTML = originalText;
+            }, 2000);
+          });
+        });
+      });
+      
+      // 回到顶部按钮
+      const backToTopButton = document.getElementById('back-to-top');
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      
+      // 版本锚点跳转
+      if (window.location.hash) {
+        const versionHash = window.location.hash.substring(1);
+        const versionCard = document.querySelector(`[data-version="${versionHash}"]`);
+        if (versionCard) {
+          versionCard.scrollIntoView({ behavior: 'smooth' });
+          // 展开该版本
+          const expandBtn = versionCard.querySelector('.expand-btn');
+          if (expandBtn && expandBtn.textContent.includes('展开')) {
+            expandBtn.click();
+          }
+        }
+      }
+      
+      // 语言切换
+      document.querySelectorAll('.lang-option-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          const lang = this.dataset.lang;
+          document.getElementById('lang-toggle-label').textContent = lang.toUpperCase();
+          document.getElementById('lang-dropdown').classList.add('hidden');
+        });
+      });
+      
+      document.getElementById('lang-toggle').addEventListener('click', function() {
+        document.getElementById('lang-dropdown').classList.toggle('hidden');
+      });
+      
+      // 版本下拉菜单
+      document.getElementById('nav-version').addEventListener('click', function() {
+        document.getElementById('version-dropdown').classList.toggle('hidden');
+      });
+      
+      // 点击其他地方关闭下拉菜单
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('#lang-toggle') && !e.target.closest('#lang-dropdown')) {
+          document.getElementById('lang-dropdown').classList.add('hidden');
+        }
+        if (!e.target.closest('#nav-version') && !e.target.closest('#version-dropdown')) {
+          document.getElementById('version-dropdown').classList.add('hidden');
+        }
+      });
+      
+      // 主题切换
+      document.getElementById('theme-toggle').addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('mha-theme', newTheme);
+        
+        const themeIcon = document.getElementById('theme-icon');
+        if (newTheme === 'light') {
+          themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+        } else {
+          themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        }
+      });
+    </script>
+  </body>
+</html>
