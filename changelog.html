@@ -86,14 +86,17 @@
               <div id="brand-subtitle" class="text-xs text-slate-400">AI 驱动的内容观察与增长决策体验</div>
             </div>
           </a>
-          <div class="flex items-center gap-2">
-            <a id="nav-blog" href="index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
+          <nav class="flex items-center gap-2">
+            <a id="nav-blog" href="blog/index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
               </svg>
               <span id="nav-blog-label">博客</span>
             </a>
+
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+
             <div class="relative">
               <button id="nav-version" type="button" class="nav-tool nav-pill-secondary" aria-label="Version">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -108,7 +111,7 @@
                 </svg>
               </button>
               <div id="version-dropdown" class="hidden absolute left-0 mt-2 w-44 rounded-lg border border-slate-700 bg-slate-900 shadow-lg z-50">
-                <a href="../changelog.html" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                <a href="changelog.html" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
                   <span>📋</span>
                   <span>版本发布日志</span>
                 </a>
@@ -122,6 +125,9 @@
                 </a>
               </div>
             </div>
+
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+
             <!-- 语言切换下拉菜单 -->
             <div class="relative">
               <button id="lang-toggle" type="button" class="nav-tool flex items-center gap-2">
@@ -149,10 +155,9 @@
                 </a>
               </div>
             </div>
-            
-            <!-- 分隔线 -->
+
             <div class="h-6 w-px bg-slate-700 mx-2"></div>
-            
+
             <!-- 暗黑/亮色模式开关 -->
             <button id="theme-toggle" type="button" class="nav-tool">
               <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -167,10 +172,9 @@
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
               </svg>
             </button>
-            
-            <!-- 分隔线 -->
+
             <div class="h-6 w-px bg-slate-700 mx-2"></div>
-            
+
             <!-- GitHub 图标 -->
             <a id="nav-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="nav-tool">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -178,25 +182,25 @@
                 <path d="M9 18c-4.51 2-5-2-7-2"></path>
               </svg>
             </a>
-          </div>
+          </nav>
         </div>
       </header>
 
       <main>
-        <section class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+        <section class="mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-12">
           <div class="space-y-8">
-            <span class="hero-pill inline-flex rounded-full px-3 py-1 text-sm text-violet-100">版本发布日志</span>
+            <span class="inline-flex rounded-full border border-cyan-400/40 bg-cyan-500/15 px-3 py-1 text-sm font-semibold text-cyan-100">版本发布日志</span>
             <div class="space-y-5">
-              <h1 class="max-w-3xl text-4xl font-black tracking-tight leading-[1.18] text-white md:text-6xl md:leading-[1.15]">
+              <h1 class="max-w-3xl text-4xl font-black tracking-tight leading-[1.18] text-white md:text-5xl md:leading-[1.15]">
                 产品更新记录
               </h1>
-              <p class="max-w-2xl text-lg leading-8 text-slate-300">
+              <p class="max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
                 查看 Media Helper AI 的最新功能更新、问题修复和性能优化。
               </p>
             </div>
 
             <!-- 筛选和搜索功能 -->
-            <div class="glass rounded-2xl p-6">
+            <div class="glass rounded-2xl p-6 border border-white/10">
               <div class="grid gap-4 md:grid-cols-3">
                 <div>
                   <label class="field-label block mb-2">更新类型</label>
@@ -227,9 +231,9 @@
             <!-- 版本列表 -->
             <div class="space-y-6" id="version-list">
               <!-- v1.1.0 Preview -->
-              <div class="version-card glass rounded-3xl p-6 border border-slate-700" data-version="v1.1.0" data-date="2026-04-20" data-type="feature">
+              <div class="version-card glass rounded-3xl p-6 border border-white/10" data-version="v1.1.0" data-date="2026-04-20" data-type="feature">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 font-bold text-slate-950">
                       1.1
                     </div>
@@ -245,7 +249,7 @@
                     </div>
                   </div>
                   <div class="flex items-center gap-3">
-                    <button class="share-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                    <button class="share-btn rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
                         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
                         <polyline points="16 6 12 2 8 6"></polyline>
@@ -253,7 +257,7 @@
                       </svg>
                       分享
                     </button>
-                    <button class="expand-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                    <button class="expand-btn rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
                         <path d="M6 9l6 6 6-6"></path>
                       </svg>
@@ -265,7 +269,7 @@
                 <div class="update-content mt-6 hidden space-y-6">
                   <!-- 新增功能 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-green-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-cyan-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"></path>
                         <path d="M12 5v14"></path>
@@ -290,7 +294,7 @@
                   
                   <!-- 改进优化 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-violet-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
@@ -313,7 +317,7 @@
                   
                   <!-- 问题修复 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-purple-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-rose-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                       </svg>
@@ -352,9 +356,9 @@
               </div>
               
               <!-- v1.0.0 Stable -->
-              <div class="version-card glass rounded-3xl p-6 border border-slate-700 expanded" data-version="v1.0.0" data-date="2026-04-15" data-type="feature">
+              <div class="version-card glass rounded-3xl p-6 border border-white/10 expanded" data-version="v1.0.0" data-date="2026-04-15" data-type="feature">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-400 font-bold text-slate-950">
                       1.0
                     </div>
@@ -370,7 +374,7 @@
                     </div>
                   </div>
                   <div class="flex items-center gap-3">
-                    <button class="share-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                    <button class="share-btn rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
                         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
                         <polyline points="16 6 12 2 8 6"></polyline>
@@ -378,7 +382,7 @@
                       </svg>
                       分享
                     </button>
-                    <button class="expand-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                    <button class="expand-btn rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
                         <path d="M6 15l6-6 6 6"></path>
                       </svg>
@@ -390,7 +394,7 @@
                 <div class="update-content mt-6 space-y-6">
                   <!-- 新增功能 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-green-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-cyan-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"></path>
                         <path d="M12 5v14"></path>
@@ -421,7 +425,7 @@
                   
                   <!-- 改进优化 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-violet-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
@@ -444,7 +448,7 @@
                   
                   <!-- 问题修复 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-purple-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-rose-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                       </svg>
@@ -463,9 +467,9 @@
               </div>
               
               <!-- v0.9.0 Beta -->
-              <div class="version-card glass rounded-3xl p-6 border border-slate-700" data-version="v0.9.0" data-date="2026-04-10" data-type="feature">
+              <div class="version-card glass rounded-3xl p-6 border border-white/10" data-version="v0.9.0" data-date="2026-04-10" data-type="feature">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-400 font-bold text-slate-950">
                       0.9
                     </div>
@@ -481,7 +485,7 @@
                     </div>
                   </div>
                   <div class="flex items-center gap-3">
-                    <button class="share-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                    <button class="share-btn rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
                         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
                         <polyline points="16 6 12 2 8 6"></polyline>
@@ -489,7 +493,7 @@
                       </svg>
                       分享
                     </button>
-                    <button class="expand-btn rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
+                    <button class="expand-btn rounded-xl border border-white/10 bg-slate-900/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-2">
                         <path d="M6 9l6 6 6-6"></path>
                       </svg>
@@ -501,7 +505,7 @@
                 <div class="update-content mt-6 hidden space-y-6">
                   <!-- 新增功能 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-green-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-cyan-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"></path>
                         <path d="M12 5v14"></path>
@@ -523,7 +527,7 @@
                   
                   <!-- 改进优化 -->
                   <div>
-                    <h3 class="flex items-center gap-2 text-lg font-semibold text-blue-300 mb-3">
+                    <h3 class="flex items-center gap-2 text-lg font-semibold text-violet-300 mb-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
@@ -559,11 +563,10 @@
             </div>
             <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
               <div class="grid gap-3">
-                <div id="footer-nav-title" class="text-xs font-medium uppercase tracking-wider text-slate-500">导航</div>
-                <a id="footer-link-home" href="../index.html" class="text-sm text-slate-400 hover:text-white transition-colors">首页</a>
-                <a id="footer-link-blog" href="index.html" class="text-sm text-slate-400 hover:text-white transition-colors">博客</a>
-                <a id="footer-link-changelog" href="changelog.html" class="text-sm text-slate-400 hover:text-white transition-colors">版本日志</a>
-                <a id="footer-link-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">GitHub</a>
+                <div id="footer-nav-label" class="text-xs font-medium uppercase tracking-wider text-slate-500">导航</div>
+                <a href="index.html" class="text-sm text-slate-400 hover:text-white transition-colors">首页</a>
+                <a href="blog/index.html" class="text-sm text-slate-400 hover:text-white transition-colors">博客</a>
+                <a href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">GitHub</a>
               </div>
               <div class="grid gap-3">
                 <div id="footer-links-title" class="text-xs font-medium uppercase tracking-wider text-slate-500">更多项目</div>
@@ -584,7 +587,7 @@
     </div>
     
     <!-- 回到顶部按钮 -->
-    <button id="back-to-top" class="back-to-top fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-violet-500 text-white shadow-glow">
+    <button id="back-to-top" class="back-to-top fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500 text-white shadow-glow">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="m18 15-6-6-6 6"/>
       </svg>
