@@ -2,7 +2,7 @@ const UI_TEXT = {
   zh: {
     pageTitle: 'Media Helper AI · 智能评估报告中心',
     brandTitle: '媒体助手 AI',
-    brandSubtitle: 'AI 驱动的内容洞察、选题评估',
+    brandSubtitle: 'AI 驱动的内容观察与增长决策体验',
     navGuide: '指南',
     navReference: '参考',
     navExamples: '示例',
@@ -13,7 +13,7 @@ const UI_TEXT = {
     langButton: 'EN',
     themeDark: '🌙 深色',
     themeLight: '☀️ 浅色',
-    heroPill: 'AI驱动的内容观察、选题评估',
+    heroPill: 'AI 驱动的内容观察与增长决策体验',
     heroTitlePrefix: '输入知乎问题元数据，',
     heroTitleAccent: '自动生成知乎问题可答性评估报告',
     heroDesc: '输入账号定位、问题链接、问题创建时间、关注人数、浏览量，AI 会快速给出多维评分、流量判断与回答建议。',
@@ -68,16 +68,17 @@ const UI_TEXT = {
     metaDescLabel: '问题描述（模型补全）：',
     metaQuestionDesc: (value) => value,
     metaQuestionDescEmpty: '等待模型补全',
-    capabilitiesKicker: '',
-    capabilitiesTitle: '',
-    cap1Title: '链接理解',
-    cap1Desc: '把问题链接直接交给模型，让它结合上下文完成判断。',
-    cap2Title: '模型评分',
-    cap2Desc: '按你的提示词模板请求大模型并拿回结构化结果。',
-    cap3Title: '报告回填',
-    cap3Desc: '把 JSON 自动解析成高端可视化分析报告。',
-    cap4Title: '快速扩展',
-    cap4Desc: '后续可继续接入真实账号体系、历史记录和导出能力。',
+    capabilitiesKicker: '核心能力',
+    capabilitiesTitle: '从问题输入到结论输出的一体化分析体验',
+    capabilitiesDesc: '围绕内容选题评估场景，Media Helper AI 将问题理解、价值判断、报告呈现与演示体验整合为一个完整工作流。',
+    cap1Title: '选题识别',
+    cap1Desc: '快速识别一个问题是否值得投入，减少低价值选题带来的时间消耗。',
+    cap2Title: '多维评估',
+    cap2Desc: '围绕流量、竞争、匹配度与增长潜力输出结构化评分，辅助内容判断。',
+    cap3Title: '结论生成',
+    cap3Desc: '自动汇总结论建议、问题信息与可视化结果，让报告表达更加清晰直观。',
+    cap4Title: '演示扩展',
+    cap4Desc: '既适合产品演示与方案汇报，也便于继续接入真实模型能力与后台服务。',
     siteKicker: '站点结构',
     siteTitle: '文档型信息架构已同步搭建',
     siteSummary: '首页 + 指南页 + 参考页 + 示例页',
@@ -86,6 +87,7 @@ const UI_TEXT = {
     examplesCardDesc: '查看更多报告版式与内容呈现模板。',
     articlesKicker: '最新文章',
     articlesTitle: '从内容洞察到增长决策的最新思考',
+    articlesDesc: '探索内容创作规律，挖掘流量增长机会，让每一个选题投入都更具价值。',
     article1Tag: 'Insight',
     article1Title: '如何判断一个知乎问题是否值得回答',
     article1Desc: '从痛点、流量、竞争和账号匹配度四个方向，快速判断内容投入价值。',
@@ -96,11 +98,14 @@ const UI_TEXT = {
     article3Title: '从问题分析走向内容增长决策',
     article3Desc: '不止是打分，更帮助你决定该不该投入、怎么回答以及如何放大结果。',
     footerBrand: '媒体助手 AI',
-    footerDesc: '面向内容创作者与增长团队的 AI 内容洞察与选题评估工作台，帮助你更快判断问题价值、输出结论并形成高质量报告。',
-    footerGuide: '指南',
-    footerReference: '参考',
+    footerDesc: 'AI 驱动的内容洞察与增长决策工具，帮助你更快判断问题价值。',
+    footerLinksTitle: '更多项目',
+    footerNavTitle: '导航',
+    footerBlog: '博客',
     footerGithub: 'GitHub',
-    footerCopy: '© 2026 Media Helper AI · AI 驱动的内容观察与增长决策体验',
+    footerLinkGeekmister: 'Geekmister',
+    footerLinkAumoji: 'AUmoji',
+    footerLinkIplay: 'IPlay',
     computing: '后台正在调用模型分析...',
     done: '分析完成，报告已回填到下方页面。',
     doneFallback: '已完成纯前端本地分析；如连接 GMService，可自动切换为实时模型结果。',
@@ -109,7 +114,7 @@ const UI_TEXT = {
   en: {
     pageTitle: 'Media Helper AI · Smart Evaluation Center',
     brandTitle: 'Media Helper AI',
-    brandSubtitle: 'AI-Powered Content Insight & Topic Evaluation',
+    brandSubtitle: 'AI-Powered Content Insight & Growth Decision Experience',
     navGuide: 'Guide',
     navReference: 'Reference',
     navExamples: 'Examples',
@@ -120,7 +125,7 @@ const UI_TEXT = {
     langButton: '中文',
     themeDark: '🌙 Dark',
     themeLight: '☀️ Light',
-    heroPill: 'AI-Driven Content Insight & Topic Evaluation',
+    heroPill: 'AI-Driven Content Insight & Growth Decision Experience',
     heroTitlePrefix: 'Input Zhihu question metadata,',
     heroTitleAccent: 'then generate an answerability evaluation report automatically',
     heroDesc: 'Enter your positioning, question URL, created time, followers, and views, and AI will quickly return scoring, traffic judgment, and an answer recommendation.',
@@ -175,16 +180,17 @@ const UI_TEXT = {
     metaDescLabel: 'Question Description (AI-inferred):',
     metaQuestionDesc: (value) => value,
     metaQuestionDescEmpty: 'Waiting for model inference',
-    capabilitiesKicker: '',
-    capabilitiesTitle: '',
-    cap1Title: 'URL Understanding',
-    cap1Desc: 'Pass the question URL straight into the model and let it reason with context.',
-    cap2Title: 'LLM Scoring',
-    cap2Desc: 'Send your prompt template to the model and receive a structured result.',
-    cap3Title: 'Report Fillback',
-    cap3Desc: 'Parse the JSON and transform it into a premium visual report.',
-    cap4Title: 'Fast Expansion',
-    cap4Desc: 'This can later grow into account history, exports, and deeper analysis.',
+    capabilitiesKicker: 'Core Capabilities',
+    capabilitiesTitle: 'An integrated evaluation flow from question input to final decision',
+    capabilitiesDesc: 'Media Helper AI combines topic understanding, value judgment, report rendering, and demo presentation into one streamlined workflow.',
+    cap1Title: 'Topic Discovery',
+    cap1Desc: 'Quickly identify whether a question is worth investing in and avoid low-value topic waste.',
+    cap2Title: 'Multi-factor Scoring',
+    cap2Desc: 'Score traffic, competition, fit, and growth potential in a structured and readable way.',
+    cap3Title: 'Conclusion Output',
+    cap3Desc: 'Automatically generate recommendations, metadata, and visual results for a clearer final report.',
+    cap4Title: 'Demo Ready',
+    cap4Desc: 'Ideal for product demos and proposals, while remaining easy to connect with real model services later.',
     siteKicker: 'Site Structure',
     siteTitle: 'The documentation-style information architecture is ready',
     siteSummary: 'Homepage + Guide + Reference + Examples',
@@ -193,6 +199,7 @@ const UI_TEXT = {
     examplesCardDesc: 'See more layout patterns and report presentation ideas.',
     articlesKicker: 'Latest Articles',
     articlesTitle: 'Latest thinking on content insight and growth decisions',
+    articlesDesc: 'Explore content creation patterns, uncover traffic growth opportunities, and make every topic investment more valuable.',
     article1Tag: 'Insight',
     article1Title: 'How to judge whether a Zhihu question is worth answering',
     article1Desc: 'Quickly evaluate the content opportunity from pain points, traffic, competition, and account fit.',
@@ -204,10 +211,13 @@ const UI_TEXT = {
     article3Desc: 'It is not only about scoring, but also about deciding whether to invest and how to amplify the result.',
     footerBrand: 'Media Helper AI',
     footerDesc: 'An AI content insight and topic evaluation workspace for creators and growth teams, helping you judge question value faster and produce clearer reports.',
-    footerGuide: 'Guide',
-    footerReference: 'Reference',
+    footerBlog: 'Blog',
     footerGithub: 'GitHub',
-    footerCopy: '© 2026 Media Helper AI · AI-driven content insight and growth decision experience',
+    footerLinksTitle: 'More Projects',
+    footerNavTitle: 'Navigation',
+    footerLinkGeekmister: 'Geekmister',
+    footerLinkAumoji: 'AUmoji',
+    footerLinkIplay: 'IPlay',
     computing: 'Calling the model now...',
     done: 'Analysis completed and the report has been filled in below.',
     doneFallback: 'Pure frontend local analysis is complete. Connect GMService to enable live model results.',
@@ -666,6 +676,7 @@ function applyStaticText() {
   setText('flow-step-3', 'flowStep3');
   setText('capabilities-kicker', 'capabilitiesKicker');
   setText('capabilities-title', 'capabilitiesTitle');
+  setText('capabilities-desc', 'capabilitiesDesc');
   setText('cap-1-title', 'cap1Title');
   setText('cap-1-desc', 'cap1Desc');
   setText('cap-2-title', 'cap2Title');
@@ -676,6 +687,7 @@ function applyStaticText() {
   setText('cap-4-desc', 'cap4Desc');
   setText('articles-kicker', 'articlesKicker');
   setText('articles-title', 'articlesTitle');
+  setText('articles-desc', 'articlesDesc');
   setText('article-1-tag', 'article1Tag');
   setText('article-1-title', 'article1Title');
   setText('article-1-desc', 'article1Desc');
@@ -687,10 +699,13 @@ function applyStaticText() {
   setText('article-3-desc', 'article3Desc');
   setText('footer-brand', 'footerBrand');
   setText('footer-desc', 'footerDesc');
-  setText('footer-link-guide', 'footerGuide');
-  setText('footer-link-reference', 'footerReference');
+  setText('footer-nav-title', 'footerNavTitle');
+  setText('footer-link-blog', 'footerBlog');
   setText('footer-link-github', 'footerGithub');
-  setText('footer-copy', 'footerCopy');
+  setText('footer-links-title', 'footerLinksTitle');
+  setText('footer-link-geekmister', 'footerLinkGeekmister');
+  setText('footer-link-aumoji', 'footerLinkAumoji');
+  setText('footer-link-iplay', 'footerLinkIplay');
 
   const langButtonLabel = document.getElementById('lang-toggle-label');
   if (langButtonLabel) {
