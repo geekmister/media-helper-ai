@@ -70,13 +70,13 @@
                   <span>📋</span>
                   <span>版本发布日志</span>
                 </a>
-                <a href="changelog.html#v1.0.0" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
-                  <span>🚀</span>
-                  <span>v1.0.0 Stable</span>
-                </a>
                 <a href="changelog.html#v1.1.0" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
                   <span>🧪</span>
                   <span>v1.1.0 Preview</span>
+                </a>
+                <a href="changelog.html#v1.0.0" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🚀</span>
+                  <span>v1.0.0 Stable</span>
                 </a>
               </div>
             </div>
@@ -403,5 +403,98 @@
       </footer>
     </div>
     <script src="assets/app.js"></script>
+    <script src="assets/changelog-content.js"></script>
+    <script>
+      // 等待DOM加载完成
+      document.addEventListener('DOMContentLoaded', function() {
+        // 语言翻译对象
+        const translations = {
+          zh: {
+            nav: {
+              changelog: '产品更新记录'
+            }
+          },
+          en: {
+            nav: {
+              changelog: 'Product Update History'
+            }
+          }
+        };
+        
+        // 获取当前语言（从 app.js 中获取）
+        function getCurrentLang() {
+          return localStorage.getItem('mha-lang') === 'en' ? 'en' : 'zh';
+        }
+        
+        // 更新版本导航
+        function updateVersionNavigation() {
+          const changelogData = window.PRECOMPILED_CHANGELOG || [];
+          if (changelogData.length === 0) return;
+          
+          // 按版本号排序（从高到低）
+          const sortedVersions = [...changelogData].sort((a, b) => {
+            const v1 = a.version.replace('v', '').split('.').map(Number);
+            const v2 = b.version.replace('v', '').split('.').map(Number);
+            for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
+              const num1 = v1[i] || 0;
+              const num2 = v2[i] || 0;
+              if (num1 !== num2) return num2 - num1;
+            }
+            return 0;
+          });
+          
+          // 更新导航栏版本号
+          const versionLabel = document.getElementById('nav-version-label');
+          if (versionLabel) {
+            versionLabel.textContent = sortedVersions[0].version;
+          }
+          
+          // 清空下拉菜单
+          const versionDropdown = document.getElementById('version-dropdown');
+          if (versionDropdown) {
+            versionDropdown.innerHTML = '';
+            
+            // 添加产品更新记录链接
+            const changelogLink = document.createElement('a');
+            changelogLink.href = 'changelog.html';
+            changelogLink.className = 'lang-option-item block px-4 py-2 text-sm hover:bg-slate-800';
+            changelogLink.innerHTML = '<span class="mr-2">📋</span><span>' + translations[getCurrentLang()].nav.changelog + '</span>';
+            versionDropdown.appendChild(changelogLink);
+            
+            // 添加版本选项
+            sortedVersions.forEach(version => {
+              const versionLink = document.createElement('a');
+              versionLink.href = `changelog.html#${version.version}`;
+              versionLink.className = 'lang-option-item block px-4 py-2 text-sm hover:bg-slate-800';
+              versionLink.innerHTML = '<span class="mr-2">🚀</span><span>' + version.version + '</span>';
+              versionDropdown.appendChild(versionLink);
+            });
+          }
+        }
+        
+        // 初始化版本导航
+        updateVersionNavigation();
+        
+        // 监听语言切换事件
+        const langOptions = document.querySelectorAll('#lang-dropdown [data-lang]');
+        langOptions.forEach(item => {
+          item.addEventListener('click', function() {
+            setTimeout(updateVersionNavigation, 100);
+          });
+        });
+        
+        // 覆盖app.js中的setText函数，确保版本号正确显示
+        if (window.setText) {
+          const originalSetText = window.setText;
+          window.setText = function(id, key) {
+            if (id === 'nav-version-label') {
+              // 跳过版本号的设置，使用我们自己的版本号
+              return;
+            }
+            originalSetText(id, key);
+          };
+        }
+      });
+    </script>
   </body>
 </html>
