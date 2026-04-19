@@ -27,19 +27,40 @@
           </a>
           <nav class="flex items-center gap-2">
             <a id="blog-home-link" href="../index.html" class="nav-tool nav-pill-secondary">首页</a>
-            <button id="blog-lang-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换语言">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m5 8 6 6"></path>
-                <path d="m4 14 6-6 2-3"></path>
-                <path d="M2 5h12"></path>
-                <path d="M7 2h1"></path>
-                <path d="m22 22-5-10-5 10"></path>
-                <path d="M14 18h6"></path>
-              </svg>
-              <span id="blog-lang-label">EN</span>
-            </button>
-            <button id="theme-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换主题">
-              <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+
+            <div class="relative">
+              <button id="blog-lang-toggle" type="button" class="nav-tool flex items-center gap-2" aria-label="切换语言">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m5 8 6 6"></path>
+                  <path d="m4 14 6-6 2-3"></path>
+                  <path d="M2 5h12"></path>
+                  <path d="M7 2h1"></path>
+                  <path d="m22 22-5-10-5 10"></path>
+                  <path d="M14 18h6"></path>
+                </svg>
+                <span id="blog-lang-label">EN</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+              <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-40 rounded-lg border border-slate-700 bg-slate-900 shadow-lg z-50">
+                <a id="lang-option-en" data-lang="en" href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🇺🇸</span>
+                  <span>English</span>
+                </a>
+                <a id="lang-option-zh" data-lang="zh" href="#" class="lang-option-item block px-4 py-2 text-sm hover:bg-slate-800">
+                  <span>🇨🇳</span>
+                  <span>中文</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+
+            <button id="theme-toggle" type="button" class="nav-tool">
+              <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -50,8 +71,16 @@
                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
               </svg>
-              <span id="theme-toggle-text">深色</span>
             </button>
+
+            <div class="h-6 w-px bg-slate-700 mx-2"></div>
+
+            <a id="nav-github" href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="nav-tool">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+              </svg>
+            </a>
           </nav>
         </div>
       </header>
@@ -60,97 +89,83 @@
         <section class="blog-hero rounded-3xl border border-white/10 p-6 lg:p-8">
           <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div class="max-w-3xl">
-              <span class="inline-flex rounded-full border border-cyan-400/40 bg-cyan-500/15 px-3 py-1 text-sm font-semibold text-cyan-100">Zhihu Growth Blog</span>
-              <h1 class="mt-4 text-4xl font-black tracking-tight text-white md:text-5xl">围绕知乎流量、变现与避坑策略的文章中心</h1>
-              <p class="mt-4 text-base leading-8 text-slate-100 md:text-lg">目前已收录 3 篇紧贴项目定位的核心文章，帮助你在回答前先判断：这个问题有没有流量、值不值得做、能不能带来转化。</p>
+              <span id="hero-badge" class="inline-flex rounded-full border border-cyan-400/40 bg-cyan-500/15 px-3 py-1 text-sm font-semibold text-cyan-100">Zhihu Growth Blog</span>
+              <h1 id="hero-title" class="mt-4 text-4xl font-black tracking-tight text-white md:text-5xl" style="line-height: 1.3;">围绕知乎流量、变现与避坑策略的文章中心</h1>
+              <p id="hero-desc" class="mt-4 text-base leading-8 text-slate-100 md:text-lg">目前已收录 3 篇紧贴项目定位的核心文章，帮助你在回答前先判断：这个问题有没有流量、值不值得做、能不能带来转化。</p>
               <div class="mt-6 flex flex-wrap gap-3">
-                <a href="#posts" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">浏览最新文章</a>
-                <a href="#topics" class="rounded-xl border border-white/10 px-5 py-3 font-semibold text-slate-200">查看专题方向</a>
+                <a id="btn-browse" href="#posts" class="rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white shadow-glow">浏览最新文章</a>
+                <a id="btn-topics" href="#topics" class="rounded-xl border border-white/10 px-5 py-3 font-semibold text-slate-200">查看专题方向</a>
               </div>
             </div>
-            <div class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-              <div class="blog-stat-card">
-                <div class="blog-stat-label">文章总数</div>
-                <div id="blog-total-posts" class="blog-stat-value">0</div>
-              </div>
-              <div class="blog-stat-card">
-                <div class="blog-stat-label">专题方向</div>
-                <div id="blog-topic-count" class="blog-stat-value">0</div>
-              </div>
-              <div class="blog-stat-card">
-                <div class="blog-stat-label">最近更新</div>
-                <div id="blog-last-update" class="text-sm leading-6 text-slate-100">2026-04-19</div>
+            <div id="hero-brand-3d-stage" class="brand-3d-stage" aria-label="Media Helper AI 3D 机器人展示区">
+              <div class="brand-3d-float">
+                <div id="hero-brand-3d-object" class="brand-3d-object robot-3d-object" role="img" aria-label="写作中的小机器人 3D 模型">
+                  <div class="robot-halo"></div>
+                  <div class="robot-orbit orbit-a"></div>
+                  <div class="robot-orbit orbit-b"></div>
+                  <div class="robot-antenna"></div>
+                  <div class="robot-head">
+                    <span class="robot-eye robot-eye-left"></span>
+                    <span class="robot-eye robot-eye-right"></span>
+                    <span class="robot-mouth robot-mouth-writing"></span>
+                  </div>
+                  <div class="robot-neck"></div>
+                  <div class="robot-body"><span class="robot-core">M</span></div>
+                  <div class="robot-arm robot-arm-left robot-arm-writing"></div>
+                  <div class="robot-arm robot-arm-right robot-arm-holding"></div>
+                  <div class="robot-leg robot-leg-left"></div>
+                  <div class="robot-leg robot-leg-right"></div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section class="mt-6">
-          <div class="mb-4">
-            <div class="text-sm uppercase tracking-[0.2em] text-violet-300">Top Picks</div>
-            <h2 class="mt-2 text-2xl font-bold text-white">精选样例文章</h2>
+        <section class="mt-8">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div id="latest-label" class="text-sm uppercase tracking-[0.2em] text-cyan-300">最新文章</div>
+              <h2 id="posts-title" class="mt-2 text-2xl font-bold text-white">文章列表</h2>
+            </div>
+            <input id="blog-search" type="search" placeholder="搜索标题 / 标签" class="field-input max-w-sm" />
           </div>
-          <div class="grid gap-4 md:grid-cols-3">
-            <a href="./post.html?slug=zhihu-answer-no-traffic" class="glass card-lift rounded-2xl p-4">
-              <div class="text-xs uppercase tracking-[0.2em] text-violet-300">Traffic</div>
-              <p class="mt-3 text-base font-semibold text-white">你写的知乎回答为什么没人看？不是因为你写的不好，而是问题没流量！</p>
-            </a>
-            <a href="./post.html?slug=zhihu-monetize-questions" class="glass card-lift rounded-2xl p-4">
-              <div class="text-xs uppercase tracking-[0.2em] text-cyan-300">Monetization</div>
-              <p class="mt-3 text-base font-semibold text-white">什么样的知乎问题回答后更容易变现？</p>
-            </a>
-            <a href="./post.html?slug=zhihu-tags-do-not-answer" class="glass card-lift rounded-2xl p-4">
-              <div class="text-xs uppercase tracking-[0.2em] text-emerald-300">Warning</div>
-              <p class="mt-3 text-base font-semibold text-white">带有这几种标签的知乎问题千万不要答！！！</p>
-            </a>
-          </div>
-        </section>
-
-        <section class="mt-8 grid gap-6 lg:grid-cols-[220px_1fr_280px]">
-          <aside class="space-y-4">
-            <div class="glass rounded-2xl p-5">
-              <div class="text-sm font-semibold text-white">浏览导航</div>
-              <div class="mt-3 space-y-2">
-                <a class="sidebar-link active" href="#posts">最新文章</a>
-                <a class="sidebar-link" href="#topics">专题方向</a>
-                <a class="sidebar-link" href="#mdx-power">MDX 能力</a>
-              </div>
-            </div>
-            <div class="glass rounded-2xl p-5" id="topics">
-              <div class="text-sm font-semibold text-white">专题方向</div>
-              <div id="category-list" class="mt-3 flex flex-wrap gap-2"></div>
-            </div>
-          </aside>
-
-          <div>
-            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <div class="text-sm uppercase tracking-[0.2em] text-cyan-300">Latest Posts</div>
-                <h2 id="posts" class="mt-2 text-2xl font-bold text-white">文章列表</h2>
-              </div>
-              <input id="blog-search" type="search" placeholder="搜索标题 / 标签" class="field-input max-w-sm" />
-            </div>
-            <div id="featured-post" class="mb-5"></div>
-            <div id="post-grid" class="grid gap-4 md:grid-cols-2"></div>
-          </div>
-
-          <aside class="space-y-4">
-            <div class="glass rounded-2xl p-5">
-              <div class="text-sm font-semibold text-white">编辑推荐</div>
-              <p class="mt-3 text-sm leading-6 text-slate-300">优先阅读“问题没流量”和“更容易变现”的两类文章，它们最贴合当前项目的产品定位。</p>
-            </div>
-            <div id="mdx-power" class="glass rounded-2xl p-5">
-              <div class="text-sm font-semibold text-white">MDX 能力</div>
-              <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
-                <li>• 支持 Frontmatter 元数据</li>
-                <li>• 支持 Markdown 正文排版</li>
-                <li>• 支持自定义组件嵌入</li>
-                <li>• 支持文章目录自动生成</li>
-              </ul>
-            </div>
-          </aside>
+          <div id="post-grid" class="grid gap-4"></div>
         </section>
       </main>
+
+      <footer class="mx-auto max-w-7xl px-6 pb-10 pt-4 lg:px-8">
+        <div class="glass rounded-3xl p-8">
+          <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            <div class="max-w-xs">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
+                <div class="text-base font-semibold text-white">Media Helper AI</div>
+              </div>
+              <p class="mt-3 text-sm leading-6 text-slate-400">AI 驱动的内容洞察与增长决策工具，帮助你更快判断问题价值。</p>
+            </div>
+            <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+              <div class="grid gap-3">
+                <div id="footer-nav-label" class="text-xs font-medium uppercase tracking-wider text-slate-500">导航</div>
+                <a href="../index.html" class="text-sm text-slate-400 hover:text-white transition-colors">首页</a>
+                <a href="index.html" class="text-sm text-slate-400 hover:text-white transition-colors">博客</a>
+                <a href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">GitHub</a>
+              </div>
+              <div class="grid gap-3">
+                <div id="footer-projects-label" class="text-xs font-medium uppercase tracking-wider text-slate-500">更多项目</div>
+                <a href="https://github.com/geekmister/geekmister" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">Geekmister</a>
+                <a href="https://github.com/geekmister/AUmoji" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">AUmoji</a>
+                <a href="https://github.com/geekmister/IPlay" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">IPlay</a>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-col items-center gap-2 text-xs text-slate-500 sm:flex-row sm:justify-between">
+            <span id="footer-copyright">© 2026 Geekmister. All rights reserved.</span>
+            <span id="footer-built" class="flex items-center gap-1">
+              Built with <span class="text-rose-400">❤</span> Geekmister
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
     <script src="../assets/blog-content.js"></script>
     <script src="../assets/blog.js"></script>

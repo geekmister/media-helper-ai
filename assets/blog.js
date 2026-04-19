@@ -38,6 +38,74 @@ function applyLanguage(lang) {
     langLabel.textContent = currentBlogLang === 'en' ? '中文' : 'EN';
   }
 
+  const heroBadge = document.getElementById('hero-badge');
+  if (heroBadge) {
+    heroBadge.textContent = currentBlogLang === 'en' ? 'Zhihu Growth Blog' : '知乎增长博客';
+  }
+
+  const heroTitle = document.getElementById('hero-title');
+  if (heroTitle) {
+    heroTitle.textContent = currentBlogLang === 'en'
+      ? 'A content center for Zhihu traffic, monetization and strategy'
+      : '围绕知乎流量、变现与避坑策略的文章中心';
+  }
+
+  const heroDesc = document.getElementById('hero-desc');
+  if (heroDesc) {
+    heroDesc.textContent = currentBlogLang === 'en'
+      ? 'Currently has 3 core articles closely aligned with the project positioning, helping you determine before answering: whether this question has traffic, is worth doing, and can bring conversions.'
+      : '目前已收录 3 篇紧贴项目定位的核心文章，帮助你在回答前先判断：这个问题有没有流量、值不值得做、能不能带来转化。';
+  }
+
+  const btnBrowse = document.getElementById('btn-browse');
+  if (btnBrowse) {
+    btnBrowse.textContent = currentBlogLang === 'en' ? 'Browse Latest' : '浏览最新文章';
+  }
+
+  const btnTopics = document.getElementById('btn-topics');
+  if (btnTopics) {
+    btnTopics.textContent = currentBlogLang === 'en' ? 'View Topics' : '查看专题方向';
+  }
+
+  const postsTitle = document.getElementById('posts-title');
+  if (postsTitle) {
+    postsTitle.textContent = currentBlogLang === 'en' ? 'Article List' : '文章列表';
+  }
+
+  const latestLabel = document.getElementById('latest-label');
+  if (latestLabel) {
+    latestLabel.textContent = currentBlogLang === 'en' ? 'Latest Posts' : '最新文章';
+  }
+
+  const footerNavLabel = document.getElementById('footer-nav-label');
+  if (footerNavLabel) {
+    footerNavLabel.textContent = currentBlogLang === 'en' ? 'Navigation' : '导航';
+  }
+
+  const footerProjectsLabel = document.getElementById('footer-projects-label');
+  if (footerProjectsLabel) {
+    footerProjectsLabel.textContent = currentBlogLang === 'en' ? 'More Projects' : '更多项目';
+  }
+
+  const footerCopyright = document.getElementById('footer-copyright');
+  if (footerCopyright) {
+    footerCopyright.textContent = currentBlogLang === 'en'
+      ? '© 2026 Geekmister. All rights reserved.'
+      : '© 2026 Geekmister. 保留所有权利.';
+  }
+
+  const footerBuilt = document.getElementById('footer-built');
+  if (footerBuilt) {
+    footerBuilt.innerHTML = currentBlogLang === 'en'
+      ? 'Built with <span class="text-rose-400">❤</span> Geekmister'
+      : '使用 <span class="text-rose-400">❤</span> Geekmister';
+  }
+
+  const searchInput = document.getElementById('blog-search');
+  if (searchInput) {
+    searchInput.placeholder = currentBlogLang === 'en' ? 'Search title / tags' : '搜索标题 / 标签';
+  }
+
   applyTheme(localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark');
 }
 
@@ -52,9 +120,31 @@ function initThemeToggle() {
   }
 
   const langButton = document.getElementById('blog-lang-toggle');
-  if (langButton) {
-    langButton.addEventListener('click', () => {
-      applyLanguage(currentBlogLang === 'en' ? 'zh' : 'en');
+  const langDropdown = document.getElementById('lang-dropdown');
+
+  if (langButton && langDropdown) {
+    langButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      langDropdown.classList.toggle('hidden');
+    });
+
+    const langOptions = langDropdown.querySelectorAll('a');
+    langOptions.forEach((option) => {
+      option.addEventListener('click', (e) => {
+        e.preventDefault();
+        const lang = option.dataset.lang || 'en';
+        if (lang !== currentBlogLang) {
+          applyLanguage(lang);
+        }
+        langDropdown.classList.add('hidden');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+        langDropdown.classList.add('hidden');
+      }
     });
   }
 }
@@ -136,7 +226,12 @@ function renderGrid(posts) {
           </div>
           <h3 class="mt-3 text-xl font-semibold text-white">${post.title || post.slug}</h3>
           <p class="mt-2 text-sm leading-6 text-slate-300">${post.summary || ''}</p>
-          <div class="mt-4 flex flex-wrap gap-2">${formatTags(post.tags)}</div>
+          <div class="mt-3 flex items-center gap-3 text-xs text-slate-400">
+            <span>${post.date || ''}</span>
+            <span>•</span>
+            <span>${post.author || 'Geekmister'}</span>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2">${formatTags(post.tags)}</div>
         </a>
       `
     )
