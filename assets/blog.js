@@ -107,6 +107,15 @@ function applyLanguage(lang) {
   }
 
   applyTheme(localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark');
+  
+  // 重新渲染页面内容以反映语言变化
+  const page = document.body.dataset.page;
+  if (page === 'blog-index') {
+    renderBlogIndex();
+  }
+  if (page === 'blog-post') {
+    renderBlogPost();
+  }
 }
 
 function initThemeToggle() {
@@ -171,11 +180,21 @@ function extractHeadings(content) {
 }
 
 async function loadPost(post) {
-  const content = String(post.content || '').replace(/^#\s+.+\n+/, '');
+  // 根据当前语言选择加载对应的内容
+  const lang = currentBlogLang;
+  const postContent = lang === 'en' && post.translations?.en?.content 
+    ? post.translations.en.content 
+    : post.content;
+  const content = String(postContent || '').replace(/^#\s+.+\n+/, '');
+  
   return {
     ...post,
     content,
-    headings: extractHeadings(content)
+    headings: extractHeadings(content),
+    // 保存当前语言版本的内容引用
+    currentTitle: lang === 'en' && post.translations?.en?.title ? post.translations.en.title : post.title,
+    currentSummary: lang === 'en' && post.translations?.en?.summary ? post.translations.en.summary : post.summary,
+    currentTags: lang === 'en' && post.translations?.en?.tags ? post.translations.en.tags : post.tags
   };
 }
 
@@ -193,17 +212,17 @@ function renderFeatured(post) {
     <a href="./post.html?slug=${post.slug}" class="block overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${post.accent} p-[1px]">
       <div class="h-full rounded-[calc(1.5rem-1px)] bg-slate-950/85 p-6 lg:p-7">
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="text-xs uppercase tracking-[0.2em] text-violet-300">Featured</div>
+          <div class="text-xs uppercase tracking-[0.2em] text-violet-300">${currentBlogLang === 'en' ? 'Featured' : '精选'}</div>
           <div class="text-xs text-slate-300">${displayCategory(post.category)} · ${post.readingTime || '5 min'}</div>
         </div>
-        <h3 class="mt-3 text-2xl font-bold text-white">${post.title || post.slug}</h3>
-        <p class="mt-3 text-sm leading-7 text-slate-300">${post.summary || ''}</p>
+        <h3 class="mt-3 text-2xl font-bold text-white">${post.currentTitle || post.title || post.slug}</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${post.currentSummary || post.summary || ''}</p>
         <div class="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-400">
           <span>${post.date || ''}</span>
           <span>•</span>
           <span>${post.author || 'Geekmister'}</span>
         </div>
-        <div class="mt-4 flex flex-wrap gap-2">${formatTags(post.tags)}</div>
+        <div class="mt-4 flex flex-wrap gap-2">${formatTags(post.currentTags || post.tags)}</div>
       </div>
     </a>
   `;
@@ -213,7 +232,7 @@ function renderGrid(posts) {
   const target = document.getElementById('post-grid');
   if (!target) return;
   if (!posts.length) {
-    target.innerHTML = '<div class="glass rounded-2xl p-5 text-sm text-slate-300">未找到匹配的文章，请换个关键词试试。</div>';
+    target.innerHTML = `<div class="glass rounded-2xl p-5 text-sm text-slate-300">${currentBlogLang === 'en' ? 'No matching articles found, please try another keyword.' : '未找到匹配的文章，请换个关键词试试。'}</div>`;
     return;
   }
   target.innerHTML = posts
@@ -224,14 +243,14 @@ function renderGrid(posts) {
             <span class="text-xs uppercase tracking-[0.2em] text-cyan-300">${displayCategory(post.category)}</span>
             <span class="text-xs text-slate-400">${post.readingTime || '4 min'}</span>
           </div>
-          <h3 class="mt-3 text-xl font-semibold text-white">${post.title || post.slug}</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-300">${post.summary || ''}</p>
+          <h3 class="mt-3 text-xl font-semibold text-white">${post.currentTitle || post.title || post.slug}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-300">${post.currentSummary || post.summary || ''}</p>
           <div class="mt-3 flex items-center gap-3 text-xs text-slate-400">
             <span>${post.date || ''}</span>
             <span>•</span>
             <span>${post.author || 'Geekmister'}</span>
           </div>
-          <div class="mt-3 flex flex-wrap gap-2">${formatTags(post.tags)}</div>
+          <div class="mt-3 flex flex-wrap gap-2">${formatTags(post.currentTags || post.tags)}</div>
         </a>
       `
     )
@@ -240,27 +259,28 @@ function renderGrid(posts) {
 
 function displayCategory(category = '') {
   const map = {
-    Traffic: '流量判断',
-    Monetization: '变现问题',
-    Warning: '避坑策略'
+    Traffic: currentBlogLang === 'en' ? 'Traffic' : '流量判断',
+    Monetization: currentBlogLang === 'en' ? 'Monetization' : '变现问题',
+    Warning: currentBlogLang === 'en' ? 'Warning' : '避坑策略'
   };
-  return map[category] || category || '专题';
+  return map[category] || category || (currentBlogLang === 'en' ? 'Topic' : '专题');
 }
 
 function renderCategories(posts, onSelect, activeTag = '') {
   const target = document.getElementById('category-list');
   if (!target) return;
-  const tags = ['全部', ...new Set(posts.map((post) => displayCategory(post.category)))];
+  const allLabel = currentBlogLang === 'en' ? 'All' : '全部';
+  const tags = [allLabel, ...new Set(posts.map((post) => displayCategory(post.category)))];
   target.innerHTML = tags
     .map((tag) => {
-      const active = (tag === '全部' && !activeTag) || tag === activeTag;
+      const active = (tag === allLabel && !activeTag) || tag === activeTag;
       return `<button type="button" data-tag="${tag}" class="topic-chip ${active ? 'topic-chip-active' : ''}">${tag}</button>`;
     })
     .join('');
 
   target.querySelectorAll('[data-tag]').forEach((button) => {
     button.addEventListener('click', () => {
-      const next = button.dataset.tag === '全部' ? '' : button.dataset.tag || '';
+      const next = button.dataset.tag === allLabel ? '' : button.dataset.tag || '';
       onSelect(next);
     });
   });
@@ -425,8 +445,8 @@ async function renderBlogIndex() {
   const applyFilters = () => {
     const keyword = search?.value.trim().toLowerCase() || '';
     const filtered = posts.filter((post) => {
-      const tags = Array.isArray(post.tags) ? post.tags.join(' ') : '';
-      const matchesText = `${post.title || ''} ${post.summary || ''} ${tags}`.toLowerCase().includes(keyword);
+      const tags = Array.isArray(post.currentTags || post.tags) ? (post.currentTags || post.tags).join(' ') : '';
+      const matchesText = `${post.currentTitle || post.title || ''} ${post.currentSummary || post.summary || ''} ${tags}`.toLowerCase().includes(keyword);
       const matchesTag = !activeTag || displayCategory(post.category) === activeTag;
       return matchesText && matchesTag;
     });
@@ -450,16 +470,16 @@ async function renderBlogPost() {
   const posts = await Promise.all(BLOG_POSTS.map(loadPost));
   const current = posts.find((post) => post.slug === slug) || posts[0];
 
-  document.title = `${current.title || 'Post'} · Media Helper AI`;
+  document.title = `${current.currentTitle || current.title || 'Post'} · Media Helper AI`;
 
   const postTitle = document.getElementById('post-title');
   const postMeta = document.getElementById('post-meta');
   const postSummary = document.getElementById('post-summary');
   const postContent = document.getElementById('post-content');
 
-  if (postTitle) postTitle.textContent = current.title || current.slug;
+  if (postTitle) postTitle.textContent = current.currentTitle || current.title || current.slug;
   if (postMeta) postMeta.textContent = `${current.date || ''} · ${current.author || 'Geekmister'} · ${current.readingTime || '5 min'}`;
-  if (postSummary) postSummary.textContent = current.summary || '';
+  if (postSummary) postSummary.textContent = current.currentSummary || current.summary || '';
 
   renderPostNav(posts, current.slug);
   renderToc(current.headings);
