@@ -6,32 +6,13 @@
     <title>版本发布日志 · Media Helper AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                50: '#f5f3ff',
-                400: '#a78bfa',
-                500: '#8b5cf6',
-                600: '#7c3aed'
-              }
-            },
-            boxShadow: {
-              glow: '0 0 0 1px rgba(139,92,246,.25), 0 20px 60px rgba(76,29,149,.35)'
-            }
-          }
-        }
-      }
-    </script>
-    <script>
       (() => {
         const theme = localStorage.getItem('mha-theme') === 'light' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
-    <link rel="icon" type="image/svg+xml" href="../assets/logo-mark.svg" />
-    <link rel="stylesheet" href="../assets/theme.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
+    <link rel="stylesheet" href="assets/theme.css" />
     <style>
       .version-card {
         transition: all 0.3s ease;
@@ -78,20 +59,20 @@
   <body class="text-slate-100">
     <div class="grid-pattern min-h-screen">
       <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-4 lg:px-8">
-          <a href="../index.html" class="flex items-center gap-3">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
+          <a href="index.html" class="flex items-center gap-3">
             <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 font-black text-slate-950">M</div>
             <div>
-              <div id="brand-title" class="font-semibold">Media Helper AI</div>
-              <div id="brand-subtitle" class="text-xs text-slate-400">AI 驱动的内容观察与增长决策体验</div>
+              <div class="font-semibold text-white">Media Helper AI</div>
+              <div class="text-xs text-slate-400">AI 驱动的内容观察与增长决策体验</div>
             </div>
           </a>
           <nav class="flex items-center gap-2">
+            <a id="nav-home" href="index.html" class="nav-tool nav-pill-secondary" aria-label="Home">
+              <span id="nav-home-label">首页</span>
+            </a>
+
             <a id="nav-blog" href="blog/index.html" class="nav-tool nav-pill-secondary" aria-label="Blog">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
               <span id="nav-blog-label">博客</span>
             </a>
 
@@ -231,7 +212,7 @@
             <!-- 版本列表 -->
             <div class="space-y-6" id="version-list">
               <!-- v1.1.0 Preview -->
-              <div class="version-card glass rounded-3xl p-6 border border-white/10" data-version="v1.1.0" data-date="2026-04-20" data-type="feature">
+              <div class="version-card glass rounded-3xl p-6 border border-white/10 card-lift" data-version="v1.1.0" data-date="2026-04-20" data-type="feature">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 font-bold text-slate-950">
@@ -356,7 +337,7 @@
               </div>
               
               <!-- v1.0.0 Stable -->
-              <div class="version-card glass rounded-3xl p-6 border border-white/10 expanded" data-version="v1.0.0" data-date="2026-04-15" data-type="feature">
+              <div class="version-card glass rounded-3xl p-6 border border-white/10 card-lift expanded" data-version="v1.0.0" data-date="2026-04-15" data-type="feature">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-400 font-bold text-slate-950">
@@ -467,7 +448,7 @@
               </div>
               
               <!-- v0.9.0 Beta -->
-              <div class="version-card glass rounded-3xl p-6 border border-white/10" data-version="v0.9.0" data-date="2026-04-10" data-type="feature">
+              <div class="version-card glass rounded-3xl p-6 border border-white/10 card-lift" data-version="v0.9.0" data-date="2026-04-10" data-type="feature">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-400 font-bold text-slate-950">
@@ -569,10 +550,10 @@
                 <a href="https://github.com/geekmister/media-helper-ai" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">GitHub</a>
               </div>
               <div class="grid gap-3">
-                <div id="footer-links-title" class="text-xs font-medium uppercase tracking-wider text-slate-500">更多项目</div>
-                <a id="footer-link-geekmister" href="https://github.com/geekmister/geekmister" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">Geekmister</a>
-                <a id="footer-link-aumoji" href="https://github.com/geekmister/AUmoji" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">AUmoji</a>
-                <a id="footer-link-iplay" href="https://github.com/geekmister/IPlay" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">IPlay</a>
+                <div id="footer-projects-label" class="text-xs font-medium uppercase tracking-wider text-slate-500">更多项目</div>
+                <a href="https://github.com/geekmister/geekmister" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">Geekmister</a>
+                <a href="https://github.com/geekmister/AUmoji" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">AUmoji</a>
+                <a href="https://github.com/geekmister/IPlay" target="_blank" rel="noreferrer" class="text-sm text-slate-400 hover:text-white transition-colors">IPlay</a>
               </div>
             </div>
           </div>
