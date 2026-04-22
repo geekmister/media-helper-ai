@@ -3,265 +3,351 @@
 const fs = require('fs');
 const path = require('path');
 
-// 文章数据
-const posts = [];
+const ROOT = __dirname;
+const ASSETS_DIR = path.join(ROOT, 'assets');
+const DIST_DIR = path.join(ROOT, 'dist');
+const POSTS_ZH_DIR = path.join(ROOT, 'posts', 'zh');
+const POSTS_EN_DIR = path.join(ROOT, 'posts', 'en');
+const CHANGELOG_DIR = path.join(ROOT, 'changelog');
 
-// 读取中文文章
-const zhPostsDir = path.join(__dirname, 'posts', 'zh');
-if (fs.existsSync(zhPostsDir)) {
-  const zhFiles = fs.readdirSync(zhPostsDir).filter(file => file.endsWith('.md'));
-  
-  zhFiles.forEach(file => {
-    const filePath = path.join(zhPostsDir, file);
-    const content = fs.readFileSync(filePath, 'utf8');
-    
-    // 解析元数据
-    const metaMatch = content.match(/---[\s\S]*?---/);
-    let meta = {};
-    if (metaMatch) {
-      const metaContent = metaMatch[0].replace(/---/g, '').trim();
-      metaContent.split('\n').forEach(line => {
-        const [key, value] = line.split(':').map(item => item.trim());
-        if (key && value) {
-          meta[key] = value.replace(/['"]/g, '');
-        }
-      });
-    }
-    
-    // 提取内容
-    const postContent = content.replace(/---[\s\S]*?---/, '').trim();
-    
-    // 生成slug
-    const slug = meta.slug || file.replace('.md', '');
-    
-    // 构建文章对象
-    const post = {
-      slug: slug,
-      accent: meta.accent || 'from-violet-500/30 to-cyan-400/20',
-      category: meta.category || 'General',
-      title: meta.title || 'Untitled',
-      date: meta.date || new Date().toISOString().split('T')[0],
-      author: meta.author || 'Geekmister',
-      readingTime: meta.readingTime || '5 min',
-      tags: meta.tags ? meta.tags.split(',').map(tag => tag.trim()) : [],
-      summary: meta.summary || '',
-      content: postContent,
-      translations: {}
-    };
-    
-    // 检查对应的英文文章
-    const enFilePath = path.join(__dirname, 'posts', 'en', `${slug}.md`);
-    if (fs.existsSync(enFilePath)) {
-      const enContent = fs.readFileSync(enFilePath, 'utf8');
-      
-      // 解析英文元数据
-      const enMetaMatch = enContent.match(/---[\s\S]*?---/);
-      let enMeta = {};
-      if (enMetaMatch) {
-        const enMetaContent = enMetaMatch[0].replace(/---/g, '').trim();
-        enMetaContent.split('\n').forEach(line => {
-          const [key, value] = line.split(':').map(item => item.trim());
-          if (key && value) {
-            enMeta[key] = value.replace(/['"]/g, '');
-          }
-        });
-      }
-      
-      // 提取英文内容
-      const enPostContent = enContent.replace(/---[\s\S]*?---/, '').trim();
-      
-      // 添加英文翻译
-      post.translations.en = {
-        title: enMeta.title || post.title,
-        summary: enMeta.summary || post.summary,
-        content: enPostContent,
-        tags: enMeta.tags ? enMeta.tags.split(',').map(tag => tag.trim()) : post.tags
-      };
-    }
-    
-    posts.push(post);
-  });
+const DEPLOY_FILES = ['index.html', 'changelog.html'];
+const DEPLOY_DIRS = ['blog'];
+const DEPLOY_ASSETS = ['app.js', 'blog.js', 'theme.css', 'logo-mark.svg', 'blog-content.js', 'changelog-content.js'];
+const BUILD_TIMESTAMP = new Date().toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
+
+function ensureDir(dirPath) {
+  fs.mkdirSync(dirPath, { recursive: true });
 }
 
-// 生成blog-content.js
-const outputPath = path.join(__dirname, 'assets', 'blog-content.js');
-const outputContent = `window.PRECOMPILED_BLOG_POSTS = ${JSON.stringify(posts, null, 2)};`;
+function cleanDir(dirPath) {
+  fs.rmSync(dirPath, { recursive: true, force: true });
+  ensureDir(dirPath);
+}
 
-fs.writeFileSync(outputPath, outputContent);
+function writeText(filePath, content) {
+  ensureDir(path.dirname(filePath));
+  fs.writeFileSync(filePath, content, 'utf8');
+}
 
-console.log(`Generated blog-content.js with ${posts.length} posts`);
+function copyFile(sourcePath, targetPath) {
+  ensureDir(path.dirname(targetPath));
+  fs.copyFileSync(sourcePath, targetPath);
+}
 
-// 解析changelog文件
-const changelogDir = path.join(__dirname, 'changelog');
-const changelogVersions = [];
+function copyDir(sourcePath, targetPath) {
+  if (!fs.existsSync(sourcePath)) {
+    return;
+  }
 
-if (fs.existsSync(changelogDir)) {
-  const changelogFiles = fs.readdirSync(changelogDir).filter(file => file.endsWith('.md') && !file.endsWith('.en.md'));
-  
-  changelogFiles.forEach(file => {
-    const filePath = path.join(changelogDir, file);
+  ensureDir(targetPath);
+
+  for (const entry of fs.readdirSync(sourcePath, { withFileTypes: true })) {
+    const from = path.join(sourcePath, entry.name);
+    const to = path.join(targetPath, entry.name);
+
+    if (entry.isDirectory()) {
+      copyDir(from, to);
+    } else {
+      copyFile(from, to);
+    }
+  }
+}
+
+function parseValue(rawValue) {
+  const value = rawValue.trim();
+
+  if (!value) {
+    return '';
+  }
+
+  if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    return value.slice(1, -1);
+  }
+
+  if (value.startsWith('[') && value.endsWith(']')) {
+    return value
+      .slice(1, -1)
+      .split(',')
+      .map((item) => item.trim().replace(/^['"]|['"]$/g, ''))
+      .filter(Boolean);
+  }
+
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
+
+  return value;
+}
+
+function parseFrontmatter(markdown) {
+  const match = markdown.match(/^---\n([\s\S]*?)\n---\n*/);
+  if (!match) {
+    return { meta: {}, body: markdown.trim() };
+  }
+
+  const meta = {};
+  let activeArrayKey = null;
+
+  for (const rawLine of match[1].split('\n')) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    if (line.startsWith('- ') && activeArrayKey) {
+      meta[activeArrayKey].push(line.replace(/^-\s*/, '').trim().replace(/^['"]|['"]$/g, ''));
+      continue;
+    }
+
+    activeArrayKey = null;
+    const separatorIndex = line.indexOf(':');
+    if (separatorIndex === -1) continue;
+
+    const key = line.slice(0, separatorIndex).trim();
+    const rawValue = line.slice(separatorIndex + 1).trim();
+
+    if (!rawValue) {
+      meta[key] = [];
+      activeArrayKey = key;
+      continue;
+    }
+
+    meta[key] = parseValue(rawValue);
+  }
+
+  return {
+    meta,
+    body: markdown.slice(match[0].length).trim()
+  };
+}
+
+function readMarkdownFile(filePath) {
+  const source = fs.readFileSync(filePath, 'utf8');
+  return parseFrontmatter(source);
+}
+
+function getReadingTime(text) {
+  const normalized = text.replace(/<[^>]+>/g, ' ');
+  const tokenCount = (normalized.match(/[\u4e00-\u9fff]|\b\w+\b/g) || []).length;
+  const minutes = Math.max(1, Math.ceil(tokenCount / 220));
+  return `${minutes} min`;
+}
+
+function loadLocalizedPost(filePath, fallback = {}) {
+  const { meta, body } = readMarkdownFile(filePath);
+  const slug = String(meta.slug || fallback.slug || path.basename(filePath).replace(/\.mdx?$/, ''));
+  const tags = Array.isArray(meta.tags)
+    ? meta.tags
+    : String(meta.tags || '')
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter(Boolean);
+
+  return {
+    slug,
+    accent: meta.accent || fallback.accent || 'from-violet-500/30 to-cyan-400/20',
+    category: meta.category || fallback.category || 'General',
+    title: meta.title || fallback.title || slug,
+    date: meta.date || fallback.date || new Date().toISOString().slice(0, 10),
+    author: meta.author || fallback.author || 'Geekmister',
+    readingTime: meta.readingTime || fallback.readingTime || getReadingTime(body),
+    tags: tags.length ? tags : (fallback.tags || []),
+    summary: meta.summary || fallback.summary || '',
+    content: body
+  };
+}
+
+function buildPosts() {
+  if (!fs.existsSync(POSTS_ZH_DIR)) {
+    return [];
+  }
+
+  const files = fs
+    .readdirSync(POSTS_ZH_DIR)
+    .filter((file) => /\.mdx?$/.test(file))
+    .sort();
+
+  const posts = files.map((fileName) => {
+    const zhPath = path.join(POSTS_ZH_DIR, fileName);
+    const zhPost = loadLocalizedPost(zhPath);
+    const translations = {};
+
+    const enPath = path.join(POSTS_EN_DIR, `${zhPost.slug}.md`);
+    if (fs.existsSync(enPath)) {
+      const enPost = loadLocalizedPost(enPath, zhPost);
+      translations.en = {
+        title: enPost.title,
+        summary: enPost.summary,
+        content: enPost.content,
+        tags: enPost.tags
+      };
+    }
+
+    return {
+      ...zhPost,
+      translations
+    };
+  });
+
+  return posts.sort((left, right) => String(right.date).localeCompare(String(left.date)));
+}
+
+function extractSectionItems(content, headings) {
+  const escapedHeadings = headings.map((heading) => heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const sectionRegex = new RegExp(`##\\s+(?:${escapedHeadings})[\\s\\S]*?(?=\\n##\\s+|$)`, 'i');
+  const match = content.match(sectionRegex);
+
+  if (!match) {
+    return [];
+  }
+
+  return match[0]
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith('-'))
+    .map((line) => line.replace(/^-\s*/, ''));
+}
+
+function parseVersionNumber(version) {
+  return String(version)
+    .replace(/^v/i, '')
+    .split('.')
+    .map((item) => Number(item) || 0);
+}
+
+function compareVersions(left, right) {
+  const a = parseVersionNumber(left.version || left);
+  const b = parseVersionNumber(right.version || right);
+  const length = Math.max(a.length, b.length);
+
+  for (let index = 0; index < length; index += 1) {
+    const delta = (b[index] || 0) - (a[index] || 0);
+    if (delta !== 0) {
+      return delta;
+    }
+  }
+
+  return 0;
+}
+
+function buildChangelog() {
+  if (!fs.existsSync(CHANGELOG_DIR)) {
+    return [];
+  }
+
+  const files = fs
+    .readdirSync(CHANGELOG_DIR)
+    .filter((file) => file.endsWith('.md') && !file.endsWith('.en.md'));
+
+  const changelog = files.map((fileName) => {
+    const filePath = path.join(CHANGELOG_DIR, fileName);
     const content = fs.readFileSync(filePath, 'utf8');
-    
-    // 解析版本号
     const versionMatch = content.match(/^#\s+(v[\d.]+)/m);
-    const version = versionMatch ? versionMatch[1] : file.replace('.md', '');
-    
-    // 解析发布日期
-    const dateMatch = content.match(/发布日期：([\d-]+)/m);
+    const dateMatch = content.match(/发布日期[:：]\s*([\d-]+)/m);
+    const version = versionMatch ? versionMatch[1] : fileName.replace(/\.md$/, '');
     const date = dateMatch ? dateMatch[1] : '';
-    
-    // 解析各个部分
-    const sections = {
-      features: [],
-      optimizations: [],
-      fixes: [],
-      knownIssues: []
-    };
-    
-    // 提取新增功能
-    const featuresMatch = content.match(/## 新增功能[\s\S]*?(?=##|$)/);
-    if (featuresMatch) {
-      const featuresContent = featuresMatch[0].replace(/## 新增功能/, '').trim();
-      sections.features = featuresContent
-        .split('\n')
-        .filter(line => line.trim().startsWith('-'))
-        .map(line => line.trim().replace(/^-\s*/, ''))
-        .filter(item => item);
-    }
-    
-    // 提取改进优化
-    const optimizationsMatch = content.match(/## 改进优化.*?[\s\S]*?(?=##|$)/);
-    if (optimizationsMatch) {
-      const optimizationsContent = optimizationsMatch[0].replace(/## 改进优化.*?/, '').trim();
-      sections.optimizations = optimizationsContent
-        .split('\n')
-        .filter(line => line.trim().startsWith('-'))
-        .map(line => line.trim().replace(/^-\s*/, ''))
-        .filter(item => item);
-    }
-    
-    // 提取问题修复
-    const fixesMatch = content.match(/## 问题修复[\s\S]*?(?=##|$)/);
-    if (fixesMatch) {
-      const fixesContent = fixesMatch[0].replace(/## 问题修复/, '').trim();
-      sections.fixes = fixesContent
-        .split('\n')
-        .filter(line => line.trim().startsWith('-'))
-        .map(line => line.trim().replace(/^-\s*/, ''))
-        .filter(item => item);
-    }
-    
-    // 提取已知问题
-    const knownIssuesMatch = content.match(/## 已知问题[\s\S]*?(?=##|$)/);
-    if (knownIssuesMatch) {
-      const knownIssuesContent = knownIssuesMatch[0].replace(/## 已知问题/, '').trim();
-      sections.knownIssues = knownIssuesContent
-        .split('\n')
-        .filter(line => line.trim().startsWith('-'))
-        .map(line => line.trim().replace(/^-\s*/, ''))
-        .filter(item => item);
-    }
-    
-    // 构建版本对象
-    const versionData = {
-      version: version,
-      date: date,
-      type: 'feature', // 默认类型
-      sections: sections,
+
+    const item = {
+      version,
+      date,
+      type: 'feature',
+      sections: {
+        features: extractSectionItems(content, ['新增功能', '功能更新']),
+        optimizations: extractSectionItems(content, ['改进优化', '性能优化']),
+        fixes: extractSectionItems(content, ['问题修复']),
+        knownIssues: extractSectionItems(content, ['已知问题'])
+      },
       translations: {}
     };
-    
-    // 检查对应的英文文件
-    const enFilePath = path.join(__dirname, 'changelog', `${version}.en.md`);
+
+    const enFilePath = path.join(CHANGELOG_DIR, `${version}.en.md`);
     if (fs.existsSync(enFilePath)) {
       const enContent = fs.readFileSync(enFilePath, 'utf8');
-      
-      // 解析英文发布日期
-      const enDateMatch = enContent.match(/Release Date: ([\d-]+)/m);
-      const enDate = enDateMatch ? enDateMatch[1] : date;
-      
-      // 解析英文各个部分
-      const enSections = {
-        features: [],
-        optimizations: [],
-        fixes: [],
-        knownIssues: []
-      };
-      
-      // 提取英文新增功能
-      const enFeaturesMatch = enContent.match(/## New Features[\s\S]*?(?=##|$)/);
-      if (enFeaturesMatch) {
-        const enFeaturesContent = enFeaturesMatch[0].replace(/## New Features/, '').trim();
-        enSections.features = enFeaturesContent
-          .split('\n')
-          .filter(line => line.trim().startsWith('-'))
-          .map(line => line.trim().replace(/^-\s*/, ''))
-          .filter(item => item);
-      }
-      
-      // 提取英文改进优化
-      const enOptimizationsMatch = enContent.match(/## Improvements[\s\S]*?(?=##|$)/);
-      if (enOptimizationsMatch) {
-        const enOptimizationsContent = enOptimizationsMatch[0].replace(/## Improvements/, '').trim();
-        enSections.optimizations = enOptimizationsContent
-          .split('\n')
-          .filter(line => line.trim().startsWith('-'))
-          .map(line => line.trim().replace(/^-\s*/, ''))
-          .filter(item => item);
-      }
-      
-      // 提取英文问题修复
-      const enFixesMatch = enContent.match(/## Bug Fixes[\s\S]*?(?=##|$)/);
-      if (enFixesMatch) {
-        const enFixesContent = enFixesMatch[0].replace(/## Bug Fixes/, '').trim();
-        enSections.fixes = enFixesContent
-          .split('\n')
-          .filter(line => line.trim().startsWith('-'))
-          .map(line => line.trim().replace(/^-\s*/, ''))
-          .filter(item => item);
-      }
-      
-      // 提取英文已知问题
-      const enKnownIssuesMatch = enContent.match(/## Known Issues[\s\S]*?(?=##|$)/);
-      if (enKnownIssuesMatch) {
-        const enKnownIssuesContent = enKnownIssuesMatch[0].replace(/## Known Issues/, '').trim();
-        enSections.knownIssues = enKnownIssuesContent
-          .split('\n')
-          .filter(line => line.trim().startsWith('-'))
-          .map(line => line.trim().replace(/^-\s*/, ''))
-          .filter(item => item);
-      }
-      
-      // 添加英文翻译
-      versionData.translations.en = {
-        date: enDate,
-        sections: enSections
+      const enDateMatch = enContent.match(/Release Date[:：]\s*([\d-]+)/i);
+
+      item.translations.en = {
+        date: enDateMatch ? enDateMatch[1] : date,
+        sections: {
+          features: extractSectionItems(enContent, ['New Features', 'Features']),
+          optimizations: extractSectionItems(enContent, ['Improvements', 'Optimizations']),
+          fixes: extractSectionItems(enContent, ['Bug Fixes', 'Fixes']),
+          knownIssues: extractSectionItems(enContent, ['Known Issues'])
+        }
       };
     }
-    
-    changelogVersions.push(versionData);
+
+    return item;
   });
-  
-  // 按版本号排序（从高到低）
-  changelogVersions.sort((a, b) => {
-    const aParts = a.version.replace('v', '').split('.').map(Number);
-    const bParts = b.version.replace('v', '').split('.').map(Number);
-    
-    for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
-      const aVal = aParts[i] || 0;
-      const bVal = bParts[i] || 0;
-      if (aVal !== bVal) {
-        return bVal - aVal;
-      }
-    }
-    return 0;
-  });
-  
-  // 生成changelog-content.js
-  const changelogOutputPath = path.join(__dirname, 'assets', 'changelog-content.js');
-  const changelogOutputContent = `window.PRECOMPILED_CHANGELOG = ${JSON.stringify(changelogVersions, null, 2)};`;
-  
-  fs.writeFileSync(changelogOutputPath, changelogOutputContent);
-  
-  console.log(`Generated changelog-content.js with ${changelogVersions.length} versions`);
+
+  return changelog.sort(compareVersions);
 }
+
+function writeCompiledData(posts, changelog) {
+  const blogPayload = `window.PRECOMPILED_BLOG_POSTS = ${JSON.stringify(posts, null, 2)};\n`;
+  const changelogPayload = `window.PRECOMPILED_CHANGELOG = ${JSON.stringify(changelog, null, 2)};\n`;
+
+  writeText(path.join(ASSETS_DIR, 'blog-content.js'), blogPayload);
+  writeText(path.join(ASSETS_DIR, 'changelog-content.js'), changelogPayload);
+}
+
+function buildVersionedAssetName(assetName) {
+  const ext = path.extname(assetName);
+  const base = path.basename(assetName, ext);
+  return `${base}.${BUILD_TIMESTAMP}${ext}`;
+}
+
+function rewriteAssetReferences(filePath, assetMap) {
+  let html = fs.readFileSync(filePath, 'utf8');
+
+  for (const [originalName, versionedName] of Object.entries(assetMap)) {
+    html = html.replaceAll(`assets/${originalName}`, `assets/${versionedName}`);
+    html = html.replaceAll(`../assets/${originalName}`, `../assets/${versionedName}`);
+  }
+
+  fs.writeFileSync(filePath, html, 'utf8');
+}
+
+function buildDeployBundle() {
+  cleanDir(DIST_DIR);
+
+  for (const fileName of DEPLOY_FILES) {
+    copyFile(path.join(ROOT, fileName), path.join(DIST_DIR, fileName));
+  }
+
+  for (const dirName of DEPLOY_DIRS) {
+    copyDir(path.join(ROOT, dirName), path.join(DIST_DIR, dirName));
+  }
+
+  const assetMap = Object.fromEntries(
+    DEPLOY_ASSETS.map((assetName) => [assetName, buildVersionedAssetName(assetName)])
+  );
+
+  for (const [assetName, versionedName] of Object.entries(assetMap)) {
+    copyFile(path.join(ASSETS_DIR, assetName), path.join(DIST_DIR, 'assets', versionedName));
+  }
+
+  writeText(path.join(DIST_DIR, 'assets', 'asset-manifest.json'), JSON.stringify({
+    timestamp: BUILD_TIMESTAMP,
+    assets: assetMap
+  }, null, 2));
+
+  rewriteAssetReferences(path.join(DIST_DIR, 'index.html'), assetMap);
+  rewriteAssetReferences(path.join(DIST_DIR, 'changelog.html'), assetMap);
+  rewriteAssetReferences(path.join(DIST_DIR, 'blog', 'index.html'), assetMap);
+  rewriteAssetReferences(path.join(DIST_DIR, 'blog', 'post.html'), assetMap);
+
+  return assetMap;
+}
+
+function main() {
+  const posts = buildPosts();
+  const changelog = buildChangelog();
+
+  writeCompiledData(posts, changelog);
+  const assetMap = buildDeployBundle();
+
+  console.log(`Build complete: ${posts.length} posts, ${changelog.length} changelog versions.`);
+  console.log(`Asset version timestamp: ${BUILD_TIMESTAMP}`);
+  console.log(`Versioned assets: ${Object.values(assetMap).join(', ')}`);
+  console.log(`CDN-ready static output: ${path.join(DIST_DIR)}`);
+}
+
+main();
